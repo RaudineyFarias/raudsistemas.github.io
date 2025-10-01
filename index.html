@@ -97,6 +97,112 @@
 
     /* Rodapé */
     footer { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); z-index: 5; color: #8a8a92; font-size: 12px; text-align: center; pointer-events: none; }
+    .backdrop.center { z-index: 50; }
+    .modal { position: fixed; inset: 50% auto auto 50%; transform: translate(-50%, -46%) scale(.96); width: min(92vw, 840px); max-height: min(78vh, 720px); background: rgba(10,10,12,.96); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 30px 120px -20px rgba(0,0,0,.8); z-index: 60; display: grid; grid-template-rows: auto 1fr; opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; }
+    .modal.open { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
+    .modal header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px; border-bottom: 1px solid var(--border); }
+    .tabs { display: inline-flex; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+    .tabs button { padding: 8px 14px; color: var(--text-2); background: transparent; border: 0; cursor: pointer; font-weight: 600; }
+    .tabs button.active { color: var(--text-1); background: color-mix(in oklab, var(--accent) 18%, transparent); }
+    .modal .close { border: 1px solid var(--border); background: var(--glass); border-radius: 999px; padding: 8px; color: var(--text-1); cursor: pointer; }
+    .modal .content { padding: 14px; overflow: auto; }
+    .panel { display: none; }
+    .panel.active { display: block; }
+        
+     /* Botão central “Sobre”  */
+    .center-btn{
+      position: fixed;
+      top: 16px;
+      right: 2px;                /* logo abaixo do seu nome */
+      transform: translateX(-50%);
+      z-index: 25;
+      border: 1px solid var(--border);
+      background: var(--glass);
+      color: #90cdf4;
+      backdrop-filter: blur(8px);
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: .3px;
+      box-shadow: 0 10px 30px -10px rgba(34,211,238,.35),
+                  0 0 0 1px rgba(255,255,255,.04) inset;
+      cursor: pointer;
+      transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+    }
+    .center-btn:hover{
+      background: var(--glass-2);
+      box-shadow: 0 12px 34px -10px rgba(34,211,238,.55),
+                  0 0 0 1px rgba(255,255,255,.06) inset;
+    }
+    /* ajuste responsivo: em telas muito pequenas, desce um pouco */
+    @media (max-width: 420px){
+      .center-btn{ top: 88px; }
+    }
+
+      /* ================= CONTATOS ================= */
+  .fab-contact{
+    position: fixed;
+    bottom: 18px;
+    right: 18px;
+    z-index: 26;
+    border: 1px solid var(--border);
+    background: var(--glass);
+    color: #90cdf4;
+    backdrop-filter: blur(8px);
+    padding: 12px 16px;
+    border-radius: 999px;
+    font-weight: 700;
+    letter-spacing: .3px;
+    box-shadow: 0 10px 30px -10px rgba(34,211,238,.35),
+                0 0 0 1px rgba(255,255,255,.04) inset;
+    cursor: pointer;
+    transition: background .2s ease, box-shadow .2s ease, transform .2s ease;
+  }
+  .fab-contact:hover{ background: var(--glass-2); transform: translateY(-1px); }
+
+  .backdrop.contact { z-index: 35; }
+
+  /* Drawer de contatos reaproveita .drawer.left */
+  .drawer.contact { width: min(92vw, 520px); }
+
+  /* Grid dos botões sociais */
+  .social-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    padding: 8px 2px 2px;
+  }
+  @media (min-width: 680px){ .social-grid{ grid-template-columns: repeat(4, 1fr); } }
+
+  .social-btn{
+    display: grid;
+    place-items: center;
+    gap: 8px;
+    padding: 18px 12px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--glass);
+    color: var(--text-1);
+    text-decoration: none;
+    font-weight: 700;
+    letter-spacing: .2px;
+    transition: transform .15s ease, background .2s ease, box-shadow .2s ease;
+    box-shadow: 0 10px 30px -16px rgba(34,211,238,.25);
+  }
+  .social-btn:hover{
+    background: var(--glass-2);
+    transform: translateY(-2px);
+  }
+  .social-btn svg{ width: 28px; height: 28px; }
+
+  /* Cores sutis por marca (borda brilho) */
+  .social-btn.whatsapp{ box-shadow: 0 10px 28px -18px rgba(37,211,102,.55); }
+  .social-btn.instagram{ box-shadow: 0 10px 28px -18px rgba(228,64,95,.55); }
+  .social-btn.github{ box-shadow: 0 10px 28px -18px rgba(255,255,255,.18); }
+  .social-btn.linkedin{ box-shadow: 0 10px 28px -18px rgba(14,118,168,.55); }
+
+  .social-btn span{ font-size: 12px; color: var(--text-2); font-weight: 600; }
+
   </style>
 </head>
 <body>
@@ -106,6 +212,15 @@
   <h1 class="hero-title" aria-label="Nome do proprietário do portfólio">
     <span>Raudiney Farias</span>
   </h1>
+
+<button class="center-btn" id="btn-center"
+        aria-controls="modal-sobre" aria-expanded="false">
+  Sobre
+</button>
+  <button class="fab-contact" id="btn-contact"
+        aria-controls="drawer-contact" aria-expanded="false" aria-label="Abrir contatos">
+  Contato
+</button>
 
   <main>
     <section class="hero-grid" aria-label="Apresentação com foto e logos">
@@ -125,13 +240,14 @@
         <p class="tagline">Designer & Desenvolvedor — criando experiências visuais e sistemas sob medida.</p>
       </div>
 
+
       <!-- Logo direita -->
       <div class="card-logo" aria-label="Logo lateral direita">
         <!-- TODO: troque o src pelo seu arquivo de logo -->
         <img src="logo_nova.png" alt="Logo 2" />
       </div>
     </section>
-	
+
     <!-- <br><br><p class="helper">Portfólio dark com gradiente, partículas dinâmicas e compartimentos laterais para visualizar meus trabalhos.</p> -->
   </main>
 
@@ -151,6 +267,8 @@
   <!-- Backdrops -->
   <div class="backdrop" id="backdrop-left"></div>
   <div class="backdrop" id="backdrop-right"></div>
+  <div class="backdrop contact" id="backdrop-contact"></div>
+
 
   <!-- Drawers -->
   <aside class="drawer left" id="drawer-left" aria-hidden="true" aria-label="Artes e logos">
@@ -177,6 +295,179 @@
     </div>
   </aside>
 
+  <aside class="drawer left contact" id="drawer-contact" aria-hidden="true" aria-label="Contatos">
+  <header>
+    <h3>Entrar em contato</h3>
+    <button class="icon-btn" data-close="contact" aria-label="Fechar contatos">✕</button>
+  </header>
+  <div class="content">
+    <p style="color:var(--text-2); margin:0 0 10px;">
+      Me encontre nas redes.
+      <!-- ou fale direto pelo WhatsApp -->
+    </p>
+    <div class="social-grid">
+      
+      <!-- WhatsApp para adicionar depois target="_blank" rel="noopener" href="#"-->
+      <a class="social-btn whatsapp" id="link-whatsapp" >
+       
+        <!-- <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M20.52 3.48A11.9 11.9 0 0 0 12.05 0C5.45 0 .15 5.29.15 11.88c0 2.1.55 4.15 1.6 5.97L0 24l6.33-1.66a11.84 11.84 0 0 0 5.72 1.46h.01c6.6 0 11.9-5.29 11.9-11.88a11.8 11.8 0 0 0-3.44-8.44ZM12.06 21.3h-.01a9.5 9.5 0 0 1-4.85-1.3l-.35-.2-3.76.98 1-3.66-.23-.38a9.4 9.4 0 0 1-1.45-5.02C2.31 6.58 6.5 2.4 12.06 2.4a9.66 9.66 0 0 1 9.66 9.48c0 5.23-4.43 9.42-9.66 9.42Zm5.52-7.08c-.3-.15-1.77-.87-2.05-.96-.28-.1-.48-.15-.68.15-.2.3-.77.96-.95 1.16-.17.2-.35.23-.65.08-.3-.15-1.27-.46-2.42-1.47-.9-.77-1.5-1.72-1.67-2.02-.17-.3-.02-.47.13-.62.14-.14.3-.35.46-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.68-1.63-.94-2.23-.25-.6-.5-.5-.68-.5-.18 0-.38-.02-.58-.02-.2 0-.53.08-.82.38-.28.3-1.08 1.05-1.08 2.55 0 1.5 1.1 2.96 1.26 3.16.15.2 2.2 3.36 5.32 4.61.74.32 1.32.5 1.76.64.74.23 1.42.2 1.96.12.6-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35Z"/>
+        </svg> -->
+        <div>
+          <!-- WhatsApp -->
+          <span>Sem Contato</span>
+        </div>
+      </a>
+
+      <!-- Instagram -->
+      <a class="social-btn instagram" id="link-instagram" target="_blank" rel="noopener" href="#">
+        <!-- Ícone Instagram -->
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7Zm0 2h10c1.66 0 3 1.34 3 3v10c0 1.66-1.34 3-3 3H7c-1.66 0-3-1.34-3-3V7c0-1.66 1.34-3 3-3Zm11 1.75a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5ZM12 7a5 5 0 1 0 .001 10.001A5 5 0 0 0 12 7Zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z"/>
+        </svg>
+        <div>
+          Instagram
+          <span>@raudineyfarias</span>
+        </div>
+      </a>
+
+      <!-- GitHub -->
+      <a class="social-btn github" id="link-github" target="_blank" rel="noopener" href="#">
+        <!-- Ícone GitHub -->
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.11.79-.25.79-.56v-2.06c-3.22.7-3.9-1.4-3.9-1.4-.53-1.34-1.3-1.7-1.3-1.7-1.06-.73.08-.72.08-.72 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.72 1.26 3.39.96.11-.76.41-1.26.75-1.55-2.57-.29-5.28-1.28-5.28-5.69 0-1.26.45-2.28 1.2-3.09-.12-.29-.52-1.46.11-3.05 0 0 .98-.31 3.2 1.18a11.1 11.1 0 0 1 5.83 0c2.22-1.49 3.19-1.18 3.19-1.18.63 1.59.23 2.76.11 3.05.75.81 1.2 1.83 1.2 3.09 0 4.42-2.71 5.39-5.29 5.67.42.36.8 1.07.8 2.16v3.2c0 .31.2.68.8.56A11.5 11.5 0 0 0 12 .5Z"/>
+        </svg>
+        <div>
+          GitHub
+          <span>/RaudineyFarias</span>
+        </div>
+      </a>
+
+      <!-- LinkedIn -->
+      <a class="social-btn linkedin" id="link-linkedin" target="_blank" rel="noopener" href="#">
+        <!-- Ícone LinkedIn -->
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M4.98 3.5a2.5 2.5 0 1 0 0 5.001A2.5 2.5 0 0 0 4.98 3.5ZM3 9h4v12H3V9Zm7 0h3.85v1.64h.05c.54-1.02 1.85-2.1 3.8-2.1 4.06 0 4.8 2.67 4.8 6.13V21h-4v-5.33c0-1.27-.02-2.9-1.77-2.9-1.78 0-2.05 1.38-2.05 2.8V21h-3.88V9Z"/>
+        </svg>
+        <div>
+          LinkedIn
+          <span>/in/raudineyfarias</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</aside>
+
+  <!-- Backdrop do modal central -->
+<div class="backdrop center" id="backdrop-center"></div>
+
+
+<!-- Modal central: Sobre (com duas abas) -->
+<section class="modal" id="modal-sobre" role="dialog" aria-modal="true" aria-labelledby="sobre-title" aria-hidden="true">
+<header>
+<div class="tabs" role="tablist" aria-label="Sobre Tabs">
+<button id="tab-sobre" class="active" role="tab" aria-controls="panel-sobre" aria-selected="true">Sobre mim</button>
+<button id="tab-cert" role="tab" aria-controls="panel-cert" aria-selected="false">Certificados</button>
+</div>
+<button class="close" id="close-sobre" aria-label="Fechar Sobre">✕</button>
+</header>
+<div class="content">
+<article id="panel-sobre" class="panel active" role="tabpanel" aria-labelledby="tab-sobre">
+<h2 id="sobre-title" style="margin:0 0 8px 0;">Sobre mim</h2>
+<p style="color: var(--text-2); line-height: 1.6;"><p>
+    Olá, meu nome é <strong>Raudiney Farias</strong>, tenho 30 anos e atualmente atuo como
+    <strong>Supervisor em um provedor de internet</strong>, liderando equipe e assegurando a qualidade das operações.<br/>
+    Antes dessa posição, construí uma trajetória de mais de quatro anos na área administrativa como <strong>Analista Administrativo</strong>,
+    com experiência em <strong>contas a pagar e a receber, tesouraria e cotações</strong>.<br/>
+    Tenho domínio avançado de <strong>Excel</strong> e conhecimentos em <strong>Python, Java, JavaScript, HTML e CSS</strong>,
+    além de prática com <strong>bancos de dados</strong>, unindo gestão e tecnologia para otimizar processos e gerar insights estratégicos.<br/>
+    Também utilizo <strong>Power BI</strong> para análises de dados e sou certificado em <strong>Manutenção e Suporte em Informática</strong>,
+    com vivência em redes estruturadas, configuração de equipamentos e suporte integral a usuários.
+  </p>
+
+  <p>
+    Hoje, busco <strong>novos desafios que unam gestão, liderança e tecnologia</strong>, contribuindo para a inovação,
+    eficiência e crescimento sustentável das organizações.
+  </p>
+
+
+  <h2>Sistema de Gestão Integrada</h2>
+  <p>
+    Desenvolvido por mim com <strong>Django</strong> e <strong>MySQL</strong>, o sistema integra rotinas essenciais do negócio,
+    com foco em <strong>segurança (LGPD)</strong>, usabilidade e escalabilidade.<br/>
+    Inclui <strong>modo offline</strong>, <strong>exportação para Excel/PDF</strong> e <strong>dashboards interativos</strong>
+    para apoiar decisões estratégicas.
+  </p>
+
+  <h3>Principais Funcionalidades</h3>
+  <ul>
+    <li>
+      <strong>Controle de Vendas:</strong> cadastro, edição e exclusão com acompanhamento do ciclo completo; emissão de recibos e reimpressão de comprovantes; relatórios exportáveis para Excel ou PDF.
+    </li>
+    <li>
+      <strong>Gestão de Estoque:</strong> monitoramento de mercadorias com informações completas; atualização automática após movimentações; filtros por categoria, fornecedor ou período.
+    </li>
+    <li>
+      <strong>Controle Financeiro:</strong> <em>Contas a Pagar</em> com registro de despesas e baixa automática; <em>Caixa Geral</em> com pagamentos de contas, saídas para depósitos bancários, adiantamentos a fornecedores e devoluções.
+    </li>
+    <li>
+      <strong>Usuários e Permissões:</strong> níveis de acesso (Master, Gerente Geral, Usuário Comum, Consultor) e rastreamento de ações por usuário.
+    </li>
+    <li>
+      <strong>Emissão de Cupom Fiscal:</strong> conformidade com a legislação do Estado da Paraíba e preparo para integração futura com certificados digitais.
+    </li>
+    <li>
+      <strong>Relatórios &amp; Dashboards:</strong> resumo visual de métricas financeiras e de estoque; dashboards interativos com gráficos.
+    </li>
+    <li>
+      <strong>Interface Intuitiva:</strong> design moderno, minimalista e responsivo; filtros de pesquisa e navegação simplificada.
+    </li>
+  </ul>
+
+  <h3>Tecnologias Utilizadas</h3>
+  <ul>
+    <li><strong>Backend:</strong> Django e MySQL</li>
+    <li><strong>Frontend:</strong> HTML e CSS (templates Django)</li>
+    <li><strong>Integração com Excel:</strong> exportação e importação de dados</li>
+  </ul>
+
+  <h3>Diferenciais</h3>
+  <ul>
+    <li>Segurança e conformidade com a <strong>LGPD</strong></li>
+    <li>Funcionalidade <strong>offline</strong></li>
+    <li>Mensagens de feedback claras para o usuário</li>
+  </ul>
+</article>
+<article id="panel-cert" class="panel" role="tabpanel" aria-labelledby="tab-cert">
+<h2 style="margin:0 0 8px 0;">Certificados</h2>
+<ul style="margin:0; padding-left: 18px; line-height:1.7; color: var(--text-2);">
+            <li>Técnico em Manutenção e Suporte em Informática</li>
+            <li>Análise e Desenvolvimento de Sistemas - (Cursando)</li>
+            <li>Excel Básico - (Fundação Bradesco)</li>
+            <li>Excel Intermediário - (Fundação Bradesco)</li>
+            <li>Excel Avançado - (Fundação Bradesco)</li>
+            <li>Mikrotick básico - (Rede Brasil)</li>
+            <li>Criando um site simples com html, css e JavaScript - (Fundação Bradesco)</li>
+            <li>Algoritmos - (Curso Em Video)</li>
+            <li>Por dentro da segurança cibernética - (Senai SP)</li>
+            <li>Css - (Ada Tech)</li>
+            <li>Html - (Ada Tech)</li>
+            <li>Figma Para Dev’s - (Ada Tech)</li>
+            <li>Git e Versionamento - (Ada Tech)</li>
+            <li>Introdução a Infraestrutura Web - (Ada Tech)</li>
+            <li>Introdução a NodeJS - (Ada Tech)</li>
+            <li>Lógica de programação em JavaScript (Ada Tech)</li>
+            <li>Lógica de programação Intermediária em JavaScript (Ada Tech)</li>
+            <li>Introdução ao Java - (Ada Tech)</li>
+            <li>Programação Orientada a Objetos em Java - (Ada Tech)</li>
+            <li>Desing Pattens em Java - (Ada Tech)</li>
+            <li>Python - Noções básicas - (Ada Tech)</li>
+            <li>Rede e sistemas - (Ada Tech)</li>
+</ul>
+</article>
+</div>
+</section>
+
   <footer>© <span id="year"></span> Raudiney Farias · Feito com carinho</footer>
 
   <script>
@@ -191,7 +482,7 @@
       "logos_artes/camaro.png",
       "logos_artes/porshe.png",
       "logos_artes/ferrari.png",
-      "logos_artes/HAYABUSA.png",
+      "logos_artes/HAYABuSA.png",
       "logos_artes/africa_twin.png",
       "logos_artes/swat.png",
       "logos_artes/bart_vibes.png",
@@ -223,7 +514,6 @@
       "raudsistemas/gestao_mkt_login.png",
       "raudsistemas/gestao_mkt_tela_principal.png",
     ];
-
     // Preencher dinamicamente as imagens nas galerias
     function fillGallery(containerId, images, prefix = 'Projeto') {
       const el = document.getElementById(containerId);
@@ -375,9 +665,124 @@
       // limpar ao sair
       window.addEventListener('beforeunload', () => cancelAnimationFrame(rafId));
     })();
+        // ===== BOTÃO “Sobre” -> abre/fecha o modal central =====
+    const btnCenter = document.getElementById('btn-center');
+    const modalSobre = document.getElementById('modal-sobre');
+    const backdropCenter = document.getElementById('backdrop-center');
+    const closeSobre = document.getElementById('close-sobre'); // já existe no seu HTML
+
+    function openModalSobre(){
+      if(!modalSobre) return;
+      modalSobre.classList.add('open');
+      if(backdropCenter) backdropCenter.classList.add('open');
+      if(btnCenter) btnCenter.setAttribute('aria-expanded','true');
+      setBodyLock(true);
+    }
+    function closeModalSobre(){
+      if(!modalSobre) return;
+      modalSobre.classList.remove('open');
+      if(backdropCenter) backdropCenter.classList.remove('open');
+      if(btnCenter) btnCenter.setAttribute('aria-expanded','false');
+      // libera scroll só se os drawers também estiverem fechados
+      if (!drawerL.classList.contains('open') && !drawerR.classList.contains('open')){
+        setBodyLock(false);
+      }
+    }
+
+    // eventos
+    if(btnCenter) btnCenter.addEventListener('click', openModalSobre);
+    if(backdropCenter) backdropCenter.addEventListener('click', closeModalSobre);
+    if(closeSobre) closeSobre.addEventListener('click', closeModalSobre);
+
+    // ESC fecha modal e drawers (sem erro se a função não existir)
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeDrawer();
+        closeModalSobre();
+      }
+    });
+    // ===== Abas do modal (Sobre / Certificados) =====
+    const tabSobre = document.getElementById('tab-sobre');
+    const tabCert  = document.getElementById('tab-cert');
+    const panelSobre = document.getElementById('panel-sobre');
+    const panelCert  = document.getElementById('panel-cert');
+
+    function activateTab(which){
+      const isSobre = which === 'sobre';
+      // botões
+      tabSobre.classList.toggle('active', isSobre);
+      tabCert.classList.toggle('active', !isSobre);
+      tabSobre.setAttribute('aria-selected', String(isSobre));
+      tabCert.setAttribute('aria-selected', String(!isSobre));
+      // painéis
+      panelSobre.classList.toggle('active', isSobre);
+      panelCert.classList.toggle('active', !isSobre);
+    }
+
+    if (tabSobre && tabCert) {
+      tabSobre.addEventListener('click', () => activateTab('sobre'));
+      tabCert.addEventListener('click',  () => activateTab('cert'));
+    }
+    
+    // =================== CONTATOS ===================
+    // 3.1) Configuração dos seus perfis — PREENCHA AQUI
+    const SOCIAL = {
+      // whatsapp: "https://wa.me/5583XXXXXXXXX?text=Ol%C3%A1%20Raudiney%2C%20vim%20pelo%20portf%C3%B3lio%21",
+      instagram: "https://instagram.com/raudineyfarias",
+      github: "https://github.com/RaudineyFarias",
+      linkedin: "https://www.linkedin.com/in/raudiney-farias-337247237/"
+    };
+
+    // 3.2) Amarra os links nos botões
+    document.getElementById('link-whatsapp').href = SOCIAL.whatsapp;
+    document.getElementById('link-instagram').href = SOCIAL.instagram;
+    document.getElementById('link-github').href   = SOCIAL.github;
+    document.getElementById('link-linkedin').href = SOCIAL.linkedin;
+
+    // 3.3) Elementos do drawer de contatos
+    const drawerC = document.getElementById('drawer-contact');
+    const backdropC = document.getElementById('backdrop-contact');
+    const btnC = document.getElementById('btn-contact');
+
+    // Função auxiliar para saber se algum drawer está aberto
+    function anyDrawerOpen(){
+      return drawerL.classList.contains('open')
+          || drawerR.classList.contains('open')
+          || drawerC.classList.contains('open');
+    }
+
+    // Abre/fecha contatos
+    function openContact(){
+      // fecha outros para não sobrepor
+      closeDrawer('left');
+      closeDrawer('right');
+      drawerC.classList.add('open');
+      backdropC.classList.add('open');
+      btnC?.setAttribute('aria-expanded','true');
+      setBodyLock(true);
+    }
+    function closeContact(){
+      drawerC.classList.remove('open');
+      backdropC.classList.remove('open');
+      btnC?.setAttribute('aria-expanded','false');
+      if (!anyDrawerOpen() && !document.getElementById('modal-sobre')?.classList.contains('open')){
+        setBodyLock(false);
+      }
+    }
+
+    // Botões/backs
+    btnC?.addEventListener('click', () => {
+      const isOpen = drawerC.classList.contains('open');
+      isOpen ? closeContact() : openContact();
+    });
+    backdropC?.addEventListener('click', closeContact);
+    document.querySelector('[data-close="contact"]')?.addEventListener('click', closeContact);
+
+    // ESC fecha também contatos (aproveita seu handler global)
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeContact(); });
+
+
+
   </script>
 </body>
 </html>
-
-
-
