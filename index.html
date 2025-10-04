@@ -210,6 +210,49 @@
   .viewer-wrap img { max-width: 100%; max-height: 62vh; border-radius: 12px; border: 1px solid var(--border); background: var(--glass); box-shadow: 0 10px 40px -18px rgba(34,211,238,.25); }
   .viewer-caption { color: var(--text-2); font-size: 13px; padding: 8px 14px 14px; border-top: 1px solid var(--border); }
   .backdrop.viewer { z-index: 55; } /* acima do drawer, abaixo do modal */
+  /* Nav do viewer */
+  .viewer-nav{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 70;
+    border: 1px solid var(--border);
+    background: var(--glass);
+    padding: 8px 10px;
+    border-radius: 12px;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+  }
+  .viewer-nav:hover{ background: var(--glass-2); }
+  .viewer-nav.prev{ left: 10px; }
+  .viewer-nav.next{ right: 10px; }
+
+  .viewer-counter{
+    position: absolute;
+    bottom: 12px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 70;
+    border: 1px solid var(--border);
+    background: var(--glass);
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    color: var(--text-2);
+    backdrop-filter: blur(8px);
+  }
+
+  .viewer-hint{
+    position: absolute;
+    bottom: 12px; right: 12px;
+    z-index: 70;
+    border: 1px solid var(--border);
+    background: var(--glass);
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    color: var(--text-2);
+    backdrop-filter: blur(8px);
+  }
 
 
   </style>
@@ -384,6 +427,12 @@
   </header>
 
   <div class="content viewer-wrap">
+        <!-- Controles do viewer -->
+    <button class="viewer-nav prev" id="viewer-prev" aria-label="Imagem anterior">◀</button>
+    <button class="viewer-nav next" id="viewer-next" aria-label="Próxima imagem">▶</button>
+    <div class="viewer-counter" id="viewer-counter">1/1</div>
+    <div class="viewer-hint" id="viewer-hint">Duplo clique: zoom</div>
+
     <img id="viewer-img" alt="Imagem selecionada" />
   </div>
 
@@ -826,19 +875,18 @@
     window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeContact(); });
 
     // ============ VIEWER (modal de imagem) ============
-// Configuração das logos por marca (troque os caminhos se preferir)
+// ============ VIEWER (modal de imagem) com Navegação + Zoom ============
 const BRAND_LOGOS = {
-  raudsistemas: "logo_nova.png",       // <- logo do RaudSistemas
-  byrdnart:     "Logo versão 2.png"     // <- logo do byrdnart
+  raudsistemas: "logo_nova.png",
+  byrdnart:     "Logo versão 2.png"
 };
 
-// Heurística simples: se o caminho/sugestão tiver 'raudsistemas' ou 'rds', é RaudSistemas; senão, byrdnart
 function detectBrand(src) {
   const s = (src || "").toLowerCase();
   return /raudsistemas|\/rds_|_rds|gestao_mkt|lista_espera/.test(s) ? "raudsistemas" : "byrdnart";
 }
 
-// Elementos do viewer
+// Elementos
 const viewerModal   = document.getElementById('modal-viewer');
 const viewerImg     = document.getElementById('viewer-img');
 const viewerLogo    = document.getElementById('viewer-logo');
@@ -846,56 +894,238 @@ const viewerTitle   = document.getElementById('viewer-title');
 const viewerCaption = document.getElementById('viewer-caption-text');
 const viewerClose   = document.getElementById('viewer-close');
 const viewerBack    = document.getElementById('backdrop-viewer');
+const viewerPrevBtn = document.getElementById('viewer-prev');
+const viewerNextBtn = document.getElementById('viewer-next');
+const viewerCounter = document.getElementById('viewer-counter');
+const viewerHint    = document.getElementById('viewer-hint');
 
-// Abre/fecha
-function openViewer(src, caption) {
-  if (!viewerModal) return;
-  // Define imagem
-  viewerImg.src = src;
-  viewerImg.alt = caption || "Imagem selecionada";
+// Estado da galeria
+let currentGalleryName = null;  // 'artes' | 'sistemas'
+let currentGallery = [];        // array de srcs
+let currentIndex = 0;
 
-  // Define logo por marca
+// Estado de zoom/pan
+let scale = 1, minScale = 1, maxScale = 3;
+let tx = 0, ty = 0; // translate
+let dragging = false, lastX = 0, lastY = 0;
+
+// Util
+function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
+
+function applyTransform(){
+  viewerImg.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+  viewerImg.style.transition = 'transform .06s linear';
+  viewerImg.style.cursor = scale > 1 ? 'grab' : 'auto';
+}
+
+function resetTransform(){
+  scale = 1; tx = 0; ty = 0;
+  applyTransform();
+}
+
+function updateCaptionAndBrand(src, caption){
   const brand = detectBrand(src);
   viewerLogo.src = BRAND_LOGOS[brand] || BRAND_LOGOS.byrdnart;
   viewerLogo.alt = `Logo ${brand}`;
   viewerTitle.textContent = brand === "raudsistemas" ? "RaudSistemas" : "byrdnart";
   viewerCaption.textContent = caption || "";
+}
 
-  // Exibe modal
+function updateCounter(){
+  if (!currentGallery.length) { viewerCounter.textContent = "—"; return; }
+  viewerCounter.textContent = `${currentIndex+1}/${currentGallery.length}`;
+}
+
+function updateArrowsVisibility(){
+  const show = currentGallery.length > 1;
+  viewerPrevBtn.style.display = show ? 'block' : 'none';
+  viewerNextBtn.style.display = show ? 'block' : 'none';
+  viewerCounter.style.display = show ? 'block' : 'none';
+}
+
+function openViewerByIndex(galleryName, index){
+  currentGalleryName = galleryName;
+  currentGallery = galleryName === 'sistemas' ? imagesSistemas : imagesArtes;
+  currentIndex = clamp(index, 0, currentGallery.length - 1);
+  const src = currentGallery[currentIndex];
+  const caption = (galleryName === 'sistemas' ? 'Sistema ' : 'Arte/Logo ') + (currentIndex + 1);
+
+  // carrega
+  viewerImg.src = src;
+  viewerImg.alt = caption;
+  updateCaptionAndBrand(src, caption);
+  updateCounter();
+  updateArrowsVisibility();
+  resetTransform();
+
   viewerModal.classList.add('open');
   viewerBack.classList.add('open');
   setBodyLock(true);
 }
 
+function openViewerFromClick(src, caption){
+  // tenta identificar de qual galeria veio
+  let name = 'artes';
+  let idx = imagesArtes.indexOf(src);
+  if (idx === -1){
+    name = 'sistemas';
+    idx = imagesSistemas.indexOf(src);
+  }
+  if (idx === -1) idx = 0;
+  openViewerByIndex(name, idx);
+}
+
 function closeViewer() {
   viewerModal.classList.remove('open');
   viewerBack.classList.remove('open');
-  // libera scroll se nada mais estiver aberto
   const sobreOpen = document.getElementById('modal-sobre')?.classList.contains('open');
   if (!drawerL.classList.contains('open') && !drawerR.classList.contains('open') && !sobreOpen) {
     setBodyLock(false);
   }
 }
 
-// Eventos de fechamento
+// Navegação
+function go(delta){
+  if (!currentGallery.length) return;
+  currentIndex = (currentIndex + delta + currentGallery.length) % currentGallery.length;
+  const src = currentGallery[currentIndex];
+  const caption = (currentGalleryName === 'sistemas' ? 'Sistema ' : 'Arte/Logo ') + (currentIndex + 1);
+  viewerImg.src = src;
+  viewerImg.alt = caption;
+  updateCaptionAndBrand(src, caption);
+  updateCounter();
+  resetTransform();
+}
+
+// Eventos básicos
 viewerClose?.addEventListener('click', closeViewer);
 viewerBack?.addEventListener('click', closeViewer);
-window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeViewer(); });
+viewerPrevBtn?.addEventListener('click', () => go(-1));
+viewerNextBtn?.addEventListener('click', () => go(+1));
+
+window.addEventListener('keydown', (e) => {
+  if (!viewerModal.classList.contains('open')) return;
+  if (e.key === 'Escape') closeViewer();
+  if (e.key === 'ArrowLeft') go(-1);
+  if (e.key === 'ArrowRight') go(+1);
+});
 
 // Delegação de clique nas galerias
-function attachViewer(containerId) {
+function attachViewer(containerId, galleryName) {
   const container = document.getElementById(containerId);
   if (!container) return;
   container.addEventListener('click', (ev) => {
     const img = ev.target.closest('img');
     if (!img) return;
-    const fig = img.closest('figure');
-    const caption = fig?.querySelector('figcaption')?.textContent?.trim() || img.alt || "";
-    openViewer(img.getAttribute('src'), caption);
+    const src = img.getAttribute('src');
+    let idx = (galleryName === 'sistemas' ? imagesSistemas : imagesArtes).indexOf(src);
+    if (idx < 0) idx = 0;
+    openViewerByIndex(galleryName, idx);
   });
 }
-attachViewer('grid-artes');
-attachViewer('grid-sistemas');
+attachViewer('grid-artes', 'artes');
+attachViewer('grid-sistemas', 'sistemas');
+
+// ==================== ZOOM + PAN ====================
+function toggleZoom(centerX, centerY){
+  const rect = viewerImg.getBoundingClientRect();
+  const cx = centerX ?? (rect.left + rect.width/2);
+  const cy = centerY ?? (rect.top + rect.height/2);
+
+  const prevScale = scale;
+  scale = (scale === 1) ? 2.2 : 1;
+
+  // ajustar translate para focar no ponto clicado
+  const dx = cx - (rect.left + rect.width/2);
+  const dy = cy - (rect.top + rect.height/2);
+
+  tx = (scale > 1) ? (-dx * (scale - 1)) : 0;
+  ty = (scale > 1) ? (-dy * (scale - 1)) : 0;
+
+  applyTransform();
+}
+
+viewerImg.addEventListener('dblclick', (e) => {
+  e.preventDefault();
+  toggleZoom(e.clientX, e.clientY);
+});
+
+viewerImg.addEventListener('mousedown', (e) => {
+  if (scale === 1) return;
+  dragging = true;
+  viewerImg.style.cursor = 'grabbing';
+  lastX = e.clientX;
+  lastY = e.clientY;
+});
+window.addEventListener('mousemove', (e) => {
+  if (!dragging) return;
+  const dx = e.clientX - lastX;
+  const dy = e.clientY - lastY;
+  lastX = e.clientX; lastY = e.clientY;
+  tx += dx; ty += dy;
+  applyTransform();
+});
+window.addEventListener('mouseup', () => {
+  dragging = false;
+  if (scale > 1) viewerImg.style.cursor = 'grab';
+});
+
+// Zoom com scroll (sem cores/styles)
+viewerImg.addEventListener('wheel', (e) => {
+  if (!viewerModal.classList.contains('open')) return;
+  e.preventDefault();
+  const rect = viewerImg.getBoundingClientRect();
+  const cx = e.clientX, cy = e.clientY;
+
+  let newScale = clamp(scale + (e.deltaY < 0 ? 0.2 : -0.2), minScale, maxScale);
+
+  // recalcular translate mantendo foco
+  const preX = (cx - rect.left - tx) / scale;
+  const preY = (cy - rect.top  - ty) / scale;
+  scale = newScale;
+  tx = cx - rect.left - preX * scale;
+  ty = cy - rect.top  - preY * scale;
+
+  applyTransform();
+}, { passive: false });
+
+// Swipe no mobile para navegar
+let touchStartX = 0, touchStartY = 0, touchMoved = false;
+viewerImg.addEventListener('touchstart', (e) => {
+  if (!e.touches[0]) return;
+  touchMoved = false;
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+
+viewerImg.addEventListener('touchmove', (e) => {
+  if (!e.touches[0]) return;
+  const dx = e.touches[0].clientX - touchStartX;
+  const dy = e.touches[0].clientY - touchStartY;
+  if (Math.hypot(dx, dy) > 10) touchMoved = true;
+
+  // quando com zoom, transformar em pan
+  if (scale > 1){
+    tx += dx * 0.08;
+    ty += dy * 0.08;
+    applyTransform();
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }
+}, { passive: true });
+
+viewerImg.addEventListener('touchend', (e) => {
+  // swipe para navegar só se NÃO estiver com zoom
+  if (scale === 1 && touchMoved){
+    // checa direção
+    const endX = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientX : touchStartX;
+    const dx = endX - touchStartX;
+    if (Math.abs(dx) > 40){
+      if (dx < 0) go(+1); else go(-1);
+    }
+  }
+}, { passive: true });
+
 
 
   </script>
