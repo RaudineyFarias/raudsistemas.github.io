@@ -202,6 +202,15 @@
   .social-btn.linkedin{ box-shadow: 0 10px 28px -18px rgba(14,118,168,.55); }
 
   .social-btn span{ font-size: 12px; color: var(--text-2); font-weight: 600; }
+  /* === Modal de imagem (viewer) === */
+  .modal.image-viewer { grid-template-rows: auto 1fr auto; }
+  .modal.image-viewer header { gap: 10px; }
+  #viewer-logo { height: 28px; object-fit: contain; filter: drop-shadow(0 0 12px rgba(34,211,238,.28)); }
+  .viewer-wrap { display: grid; place-items: center; padding: 10px; }
+  .viewer-wrap img { max-width: 100%; max-height: 62vh; border-radius: 12px; border: 1px solid var(--border); background: var(--glass); box-shadow: 0 10px 40px -18px rgba(34,211,238,.25); }
+  .viewer-caption { color: var(--text-2); font-size: 13px; padding: 8px 14px 14px; border-top: 1px solid var(--border); }
+  .backdrop.viewer { z-index: 55; } /* acima do drawer, abaixo do modal */
+
 
   </style>
 </head>
@@ -315,7 +324,7 @@
         </svg> -->
         <div>
           <!-- WhatsApp -->
-          <!-- <span>Sem Contato</span> -->
+          <span>Sem Contato</span>
         </div>
       </a>
 
@@ -360,6 +369,29 @@
 
   <!-- Backdrop do modal central -->
 <div class="backdrop center" id="backdrop-center"></div>
+
+<!-- Backdrop do viewer -->
+<div class="backdrop viewer" id="backdrop-viewer"></div>
+
+<!-- Modal de Visualização de Imagem -->
+<section class="modal image-viewer" id="modal-viewer" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="viewer-title">
+  <header>
+    <div style="display:flex; align-items:center; gap:10px;">
+      <img id="viewer-logo" alt="Logo da marca" />
+      <h3 id="viewer-title" style="margin:0; font-size:16px; color:var(--accent);">Visualização</h3>
+    </div>
+    <button class="close" id="viewer-close" aria-label="Fechar visualização">✕</button>
+  </header>
+
+  <div class="content viewer-wrap">
+    <img id="viewer-img" alt="Imagem selecionada" />
+  </div>
+
+  <div class="viewer-caption">
+    <span id="viewer-caption-text">—</span>
+  </div>
+</section>
+
 
 
 <!-- Modal central: Sobre (com duas abas) -->
@@ -482,7 +514,7 @@
       "logos_artes/camaro.png",
       "logos_artes/porshe.png",
       "logos_artes/ferrari.png",
-      "logos_artes/hayabusa.png",
+      "logos_artes/HAYABuSA.png",
       "logos_artes/africa_twin.png",
       "logos_artes/swat.png",
       "logos_artes/bart_vibes.png",
@@ -502,6 +534,7 @@
       "logos_artes/pequenos_adoradores.png",
     ];
     const imagesSistemas = [
+      "raudsistemas/raudsistemas.png",
       "raudsistemas/rds_login.png",
       "raudsistemas/rds_tela_principal.png",
       "raudsistemas/tela_principal_rds.png",
@@ -514,12 +547,14 @@
       "raudsistemas/dashboard_rds3.png",
       "raudsistemas/dashboard_rds4.png",
       "raudsistemas/dashboard_rds5.png",
+      "raudsistemas/lista_espera.png",
       "raudsistemas/l_e_login.png",
       "raudsistemas/l_e_tela_principal.png",
       "raudsistemas/l_e_tela_principal_menu.png",
       "raudsistemas/l_e_tela_principal_modelos.png",
       "raudsistemas/l_e_tela_principal_modelos_2.png",
       "raudsistemas/l_e_tela_dashboard.png",
+      "raudsistemas/monitor_marketing.png",
       "raudsistemas/gestao_mkt_login.png",
       "raudsistemas/gestao_mkt_tela_principal.png",
     ];
@@ -790,11 +825,79 @@
     // ESC fecha também contatos (aproveita seu handler global)
     window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeContact(); });
 
+    // ============ VIEWER (modal de imagem) ============
+// Configuração das logos por marca (troque os caminhos se preferir)
+const BRAND_LOGOS = {
+  raudsistemas: "logo_nova.png",       // <- logo do RaudSistemas
+  byrdnart:     "Logo versão 2.png"     // <- logo do byrdnart
+};
+
+// Heurística simples: se o caminho/sugestão tiver 'raudsistemas' ou 'rds', é RaudSistemas; senão, byrdnart
+function detectBrand(src) {
+  const s = (src || "").toLowerCase();
+  return /raudsistemas|\/rds_|_rds|gestao_mkt|lista_espera/.test(s) ? "raudsistemas" : "byrdnart";
+}
+
+// Elementos do viewer
+const viewerModal   = document.getElementById('modal-viewer');
+const viewerImg     = document.getElementById('viewer-img');
+const viewerLogo    = document.getElementById('viewer-logo');
+const viewerTitle   = document.getElementById('viewer-title');
+const viewerCaption = document.getElementById('viewer-caption-text');
+const viewerClose   = document.getElementById('viewer-close');
+const viewerBack    = document.getElementById('backdrop-viewer');
+
+// Abre/fecha
+function openViewer(src, caption) {
+  if (!viewerModal) return;
+  // Define imagem
+  viewerImg.src = src;
+  viewerImg.alt = caption || "Imagem selecionada";
+
+  // Define logo por marca
+  const brand = detectBrand(src);
+  viewerLogo.src = BRAND_LOGOS[brand] || BRAND_LOGOS.byrdnart;
+  viewerLogo.alt = `Logo ${brand}`;
+  viewerTitle.textContent = brand === "raudsistemas" ? "RaudSistemas" : "byrdnart";
+  viewerCaption.textContent = caption || "";
+
+  // Exibe modal
+  viewerModal.classList.add('open');
+  viewerBack.classList.add('open');
+  setBodyLock(true);
+}
+
+function closeViewer() {
+  viewerModal.classList.remove('open');
+  viewerBack.classList.remove('open');
+  // libera scroll se nada mais estiver aberto
+  const sobreOpen = document.getElementById('modal-sobre')?.classList.contains('open');
+  if (!drawerL.classList.contains('open') && !drawerR.classList.contains('open') && !sobreOpen) {
+    setBodyLock(false);
+  }
+}
+
+// Eventos de fechamento
+viewerClose?.addEventListener('click', closeViewer);
+viewerBack?.addEventListener('click', closeViewer);
+window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeViewer(); });
+
+// Delegação de clique nas galerias
+function attachViewer(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.addEventListener('click', (ev) => {
+    const img = ev.target.closest('img');
+    if (!img) return;
+    const fig = img.closest('figure');
+    const caption = fig?.querySelector('figcaption')?.textContent?.trim() || img.alt || "";
+    openViewer(img.getAttribute('src'), caption);
+  });
+}
+attachViewer('grid-artes');
+attachViewer('grid-sistemas');
 
 
   </script>
 </body>
 </html>
-
-
-
