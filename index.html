@@ -45,7 +45,15 @@
 
     .card-logo { border: 1px solid var(--border); background: var(--glass); backdrop-filter: blur(8px); border-radius: 18px; padding: 18px; box-shadow: 0 10px 30px -10px rgba(34,211,238,0.35), 0 0 0 1px rgba(255,255,255,0.04) inset; display: grid; place-items: center; }
     .card-logo img { width: clamp(72px, 10vw, 96px); height: clamp(72px, 10vw, 96px); object-fit: contain; }
-
+    #raudsistemas{
+      height: 150px;
+      width: 150px;
+    }
+    #byrdnart{
+      
+      height: 150px;
+      width: 150px;
+    }
     .photo-wrap { position: relative; display: grid; place-items: center; gap: 12px; text-align: center; }
     .ring { position: absolute; inset: -10px; border-radius: 999px; filter: blur(20px); background: conic-gradient(from 180deg at 50% 50%, color-mix(in oklab, var(--accent) 80%, transparent), transparent 40%, color-mix(in oklab, var(--accent) 50%, transparent)); opacity: .7; }
     .photo { position: relative; width: clamp(176px, 28vw, 256px); height: clamp(176px, 28vw, 256px); border-radius: 999px; padding: 3px; background: linear-gradient(135deg, var(--accent), transparent 60%); box-shadow: 0 20px 60px -20px rgba(34,211,238,0.55), 0 0 0 1px rgba(255,255,255,0.06) inset; }
@@ -303,7 +311,7 @@
       <!-- Logo esquerda -->
       <div class="card-logo" aria-label="Logo lateral esquerda">
         <!-- TODO: troque o src pelo seu arquivo de logo -->
-        <img src="Logo versão 2.png" alt="Logo 1" />
+        <img src="Logo versão 2.png" id="byrdnart" alt="Logo 1" />
       </div>
 
       <!-- Foto central com moldura -->
@@ -320,7 +328,7 @@
       <!-- Logo direita -->
       <div class="card-logo" aria-label="Logo lateral direita">
         <!-- TODO: troque o src pelo seu arquivo de logo -->
-        <img src="logo_nova.png" alt="Logo 2" />
+        <img src="logo_nova.png" id="raudsistemas" alt="Logo 2" />
       </div>
     </section>
 
@@ -1234,6 +1242,7 @@ btnLike?.addEventListener('click', () => {
   </script>
 </body>
 </html>
+
 
 
 
