@@ -3,1230 +3,2243 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Raudiney Farias — Portfólio</title>
-  <meta name="description" content="Portfólio de Raudiney Farias: Artes e Logos, RaudSistemas." />
+  <title>Raudiney Farias — Financeiro • Compras • Dados</title>
+  <meta name="description" content="Portfólio minimalista com foco em Compras, Financeiro, Processos e Análise de Dados. Tecnologia como diferencial." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Raudiney Farias — Financeiro • Compras • Dados" />
+  <meta property="og:description" content="Compras e rotina financeira com visão de processo e indicadores — automação como diferencial." />
+  <meta property="og:type" content="website" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
   <style>
-    :root {
-      /* Cor de destaque — troque aqui */
-      --accent: #22d3ee; /* cyan */
-      --bg-1: #000000;
-      --bg-2: #0b0b0e;
-      --glass: rgba(255,255,255,0.06);
-      --glass-2: rgba(255,255,255,0.08);
-      --border: rgba(255,255,255,0.10);
-      --text-1: #ffffff;
-      --text-2: #c9c9cf;
-    }
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      color: var(--text-1);
-      background: var(--bg-1);
-      overflow-x: hidden;
-    }
-    /* Canvas de partículas por trás */
-    #bg-canvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-    /* Gradiente escuro estiloso */
-    .bg-grad { position: fixed; inset: 0; z-index: 0; background: radial-gradient(1200px 600px at 70% 20%, #23232399, transparent 60%),
-                                              radial-gradient(800px 400px at 10% 80%, #0ea5bacc, transparent 60%),
-                                              linear-gradient(135deg, var(--bg-1), var(--bg-2)); }
-
-    /* Nome no topo */
-    .hero-title { position: fixed; left: 50%; top: 16px; transform: translateX(-50%); z-index: 10; text-align: center; font-weight: 900; letter-spacing: 0.4px; text-shadow: 0 0 20px rgba(34,211,238,0.35); }
-    .hero-title span { display: block; font-size: clamp(28px, 4vw, 56px); }
-
-    main { position: relative; z-index: 5; min-height: 100svh; display: flex; align-items: center; justify-content: center; padding: 96px 16px 64px; }
-
-    /* Grid principal */
-    .hero-grid { width: min(1120px, 96vw); display: grid; grid-template-columns: 1fr; gap: 24px; align-items: center; }
-    @media (min-width: 860px) { .hero-grid { grid-template-columns: 1fr 1.25fr 1fr; gap: 32px; } }
-
-    .card-logo { border: 1px solid var(--border); background: var(--glass); backdrop-filter: blur(8px); border-radius: 18px; padding: 18px; box-shadow: 0 10px 30px -10px rgba(34,211,238,0.35), 0 0 0 1px rgba(255,255,255,0.04) inset; display: grid; place-items: center; }
-    .card-logo img { width: clamp(72px, 10vw, 96px); height: clamp(72px, 10vw, 96px); object-fit: contain; }
-    #raudsistemas{
-      height: 150px;
-      width: 150px;
-    }
-    #byrdnart{
-      
-      height: 150px;
-      width: 150px;
-    }
-    .photo-wrap { position: relative; display: grid; place-items: center; gap: 12px; text-align: center; }
-    .ring { position: absolute; inset: -10px; border-radius: 999px; filter: blur(20px); background: conic-gradient(from 180deg at 50% 50%, color-mix(in oklab, var(--accent) 80%, transparent), transparent 40%, color-mix(in oklab, var(--accent) 50%, transparent)); opacity: .7; }
-    .photo { position: relative; width: clamp(176px, 28vw, 256px); height: clamp(176px, 28vw, 256px); border-radius: 999px; padding: 3px; background: linear-gradient(135deg, var(--accent), transparent 60%); box-shadow: 0 20px 60px -20px rgba(34,211,238,0.55), 0 0 0 1px rgba(255,255,255,0.06) inset; }
-    .photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 999px; display: block; }
-    .tagline { max-width: 60ch; color: var(--text-2); margin-top: 10px; }
-
-    .helper { margin-top: 16px; color: var(--text-2); font-size: 14px; text-align: center; }
-
-    /* Botões laterais */
-    .side-btn { position: fixed; top: 50%; transform: translateY(-50%); z-index: 20; display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--border); background: var(--glass); border-radius: 16px; padding: 10px 14px; box-shadow: 0 10px 30px -10px rgba(34,211,238,0.35), 0 0 0 1px rgba(255,255,255,0.04) inset; cursor: pointer; backdrop-filter: blur(8px); transition: background .2s ease, transform .2s ease; }
-    .side-btn:hover { background: var(--glass-2); }
-    .side-btn.left { left: 8px; }
-    .side-btn.right { right: 8px; }
-    .side-btn .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); }
-    /* Cores do texto dentro dos botões laterais */
-    .side-btn span:not(.dot) {
-      color: #ffffff;            /* texto padrão */
+    :root{
+      --green-900:#0E3B2E;
+      --green-800:#0B2E24;
+      --green-100:#E7F0EC;
+      --bg:#F7F8F6;
+      --card:#FFFFFF;
+      --text:#1F2933;
+      --muted:#54616E;
+      --line:#D1D5DB;
+      --gold:#B8A46A; /* sutil */
+      --shadow: 0 10px 30px rgba(17,24,39,.08);
+      --radius: 16px;
+      --radius-sm: 12px;
+      --container: 1120px;
+      --pad: 22px;
+      --focus: 0 0 0 4px rgba(14,59,46,.15);
     }
 
-    .side-btn:hover span:not(.dot) {
-      color: #a7f3d0;            /* texto no hover (opcional) */
+    [data-theme="dark"]{
+      --bg:#0B1210;
+      --card:#0F1A16;
+      --text:#E6EEE9;
+      --muted:#A9B7B0;
+      --line:#22352F;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --green-100:#0F211B;
     }
 
-    /* Personalizações por botão (opcional) */
-    #btn-left span:not(.dot)  { color: #90cdf4; }
-    #btn-right span:not(.dot) { color: #90cdf4; }
-    /* Drawer/Compartimento */
-    .backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(2px); z-index: 30; opacity: 0; pointer-events: none; transition: opacity .25s ease; }
-    .backdrop.open { opacity: 1; pointer-events: auto; }
+    *{ box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height:1.55;
+    }
+    a{ color:inherit; text-decoration:none; }
+    .container{ max-width:var(--container); margin:0 auto; padding: 0 18px; }
 
-    .drawer { position: fixed; top: 0; height: 100%; width: min(92vw, 760px); background: rgba(10,10,12,0.95); border-left: 1px solid var(--border); border-right: 1px solid var(--border); z-index: 40; transform: translateX(var(--tx)); transition: transform .5s cubic-bezier(.2,.8,.2,1); display: flex; flex-direction: column; }
-    .drawer.left { left: 0; --tx: -100%; }
-    .drawer.right { right: 0; --tx: 100%; }
-    .drawer.open { --tx: 0; }
+    header{
+      position:sticky; top:0; z-index:100;
+      backdrop-filter: blur(10px);
+      background: color-mix(in srgb, var(--bg) 72%, transparent);
+      border-bottom: 1px solid color-mix(in srgb, var(--line) 50%, transparent);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 14px 0; gap: 14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px; min-width: 260px;
+    }
+    .mark{
+      width:38px; height:38px; border-radius: 12px;
+      background: radial-gradient(120% 120% at 30% 25%, color-mix(in srgb, var(--green-900) 70%, #ffffff 30%) 0%, var(--green-900) 60%, var(--green-800) 100%);
+      box-shadow: 0 10px 18px rgba(14,59,46,.18);
+      position:relative; overflow:hidden; flex: 0 0 auto;
+    }
+    .mark::after{
+      content:""; position:absolute; inset:-40% -40%;
+      background: linear-gradient(135deg, rgba(184,164,106,.22), transparent 55%);
+      transform: rotate(10deg);
+    }
+    .brand strong{
+      font-weight: 650; letter-spacing: -0.02em;
+      display:block; font-size: 14px; line-height: 1.2;
+    }
+    .brand span{ display:block; color: var(--muted); font-size: 12px; margin-top: 2px; }
 
-    .drawer header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--border); }
-    .drawer h3 { margin: 0; font-size: 16px; color: var(--accent); letter-spacing: .3px; }
-    .icon-btn { border: 1px solid var(--border); background: var(--glass); color: var(--text-1); border-radius: 999px; padding: 8px; cursor: pointer; }
-    .drawer .content { padding: 16px; overflow: auto; min-height: 0; flex: 1; }
+    .menu{
+      display:flex; align-items:center; gap: 10px;
+      flex-wrap: wrap; justify-content:flex-end;
+    }
+    .menu a{
+      font-size: 13px; color: var(--muted);
+      padding: 8px 10px; border-radius: 10px;
+      transition: background .18s ease, color .18s ease;
+    }
+    .menu a:hover{
+      background: color-mix(in srgb, var(--green-100) 70%, transparent);
+      color: var(--text);
+    }
+    .actions{ display:flex; align-items:center; gap: 10px; }
 
-    /* Galeria simples e responsiva */
-    .grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
-    @media (min-width: 520px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (min-width: 920px) { .grid { grid-template-columns: repeat(3, 1fr); } }
-    figure { margin: 0; position: relative; overflow: hidden; border-radius: 16px; border: 1px solid var(--border); background: var(--glass); box-shadow: 0 10px 30px -16px rgba(34,211,238,.25); }
-    figure img { width: 100%; height: 190px; object-fit: cover; display: block; transition: transform .5s ease; }
-    figure:hover img { transform: scale(1.04); }
-    figcaption { position: absolute; inset-inline: 0; bottom: 0; padding: 8px 10px; font-size: 12px; color: #ddd; background: linear-gradient(to top, rgba(0,0,0,.55), transparent); }
+    .btn{
+      border: 1px solid var(--line);
+      background: transparent;
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 13px;
+      color: var(--text);
+      transition: transform .12s ease, background .18s ease, border-color .18s ease;
+      display:inline-flex; align-items:center; gap: 10px;
+      cursor:pointer; user-select:none;
+    }
+    .btn:focus{ outline:none; box-shadow: var(--focus); }
+    .btn:hover{
+      background: color-mix(in srgb, var(--green-100) 65%, transparent);
+      border-color: color-mix(in srgb, var(--green-900) 20%, var(--line));
+    }
+    .btn.primary{
+      background: var(--green-900);
+      border-color: var(--green-900);
+      color: #fff;
+    }
+    .btn.primary:hover{
+      background: color-mix(in srgb, var(--green-900) 88%, #000 12%);
+      transform: translateY(-1px);
+    }
+    .btn.ghost{
+      border-color: transparent;
+      background: transparent;
+      color: var(--muted);
+    }
+    .btn.ghost:hover{
+      border-color: var(--line);
+      background: color-mix(in srgb, var(--green-100) 55%, transparent);
+      color: var(--text);
+    }
+    .icon{ width:16px;height:16px;display:inline-block;flex:0 0 auto; }
 
-    /* Rodapé */
-    footer { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); z-index: 5; color: #8a8a92; font-size: 12px; text-align: center; pointer-events: none; }
-    .backdrop.center { z-index: 50; }
-    .modal { position: fixed; inset: 50% auto auto 50%; transform: translate(-50%, -46%) scale(.96); width: min(92vw, 840px); max-height: min(78vh, 720px); background: rgba(10,10,12,.96); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 30px 120px -20px rgba(0,0,0,.8); z-index: 60; display: grid; grid-template-rows: auto 1fr; opacity: 0; pointer-events: none; transition: opacity .25s ease, transform .25s ease; }
-    .modal.open { opacity: 1; pointer-events: auto; transform: translate(-50%, -50%) scale(1); }
-    .modal header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px; border-bottom: 1px solid var(--border); }
-    .tabs { display: inline-flex; background: var(--glass); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
-    .tabs button { padding: 8px 14px; color: var(--text-2); background: transparent; border: 0; cursor: pointer; font-weight: 600; }
-    .tabs button.active { color: var(--text-1); background: color-mix(in oklab, var(--accent) 18%, transparent); }
-    .modal .close { border: 1px solid var(--border); background: var(--glass); border-radius: 999px; padding: 8px; color: var(--text-1); cursor: pointer; }
-    .modal .content { padding: 14px; overflow: auto; }
-    .panel { display: none; }
-    .panel.active { display: block; }
-        
-     /* Botão central “Sobre”  */
-    .center-btn{
-      position: fixed;
-      top: 16px;
-      right: 2px;                /* logo abaixo do seu nome */
-      transform: translateX(-50%);
-      z-index: 25;
-      border: 1px solid var(--border);
-      background: var(--glass);
-      color: #90cdf4;
-      backdrop-filter: blur(8px);
-      padding: 10px 22px;
+    .hero{ padding: 48px 0 30px; }
+    .hero-grid{
+      display:grid; grid-template-columns: 1.25fr .75fr; gap: 22px; align-items:stretch;
+    }
+    .hero-card{
+      background: var(--card);
+      border: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(18px, 2.5vw, 28px);
+      position:relative; overflow:hidden;
+    }
+    .hero-card::before{
+      content:""; position:absolute; inset:-60% -60%;
+      background:
+        radial-gradient(40% 40% at 30% 30%, rgba(14,59,46,.16), transparent 60%),
+        radial-gradient(40% 40% at 70% 40%, rgba(184,164,106,.12), transparent 60%),
+        radial-gradient(60% 60% at 50% 70%, rgba(14,59,46,.10), transparent 65%);
+      transform: rotate(-7deg);
+      pointer-events:none;
+    }
+    .hero-content{ position:relative; }
+    .kicker{
+      display:inline-flex; align-items:center; gap: 10px;
+      padding: 8px 12px; border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+      background: color-mix(in srgb, var(--green-100) 55%, transparent);
+      color: var(--muted); font-size: 12px;
+    }
+    .dot{
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 4px rgba(184,164,106,.12);
+    }
+    h1{
+      font-size: clamp(26px, 3.2vw, 44px);
+      line-height: 1.06;
+      margin: 14px 0 10px;
+      letter-spacing: -0.04em;
+    }
+    .sub{
+      color: var(--muted);
+      margin: 0 0 16px;
+      font-size: 15px;
+      max-width: 70ch;
+    }
+    .hero-cta{
+      display:flex; gap: 12px; align-items:center; flex-wrap:wrap; margin-top: 18px;
+    }
+    .meta{
+      display:flex; gap: 14px; margin-top: 18px; flex-wrap:wrap;
+      color: var(--muted); font-size: 12px;
+    }
+    .meta .pill{
+      display:inline-flex; align-items:center; gap: 8px;
+      padding: 8px 10px; border-radius: 999px;
+      border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+      background: color-mix(in srgb, var(--bg) 70%, transparent);
+    }
+    .mono{ font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+    .metrics{ display:flex; flex-direction:column; gap: 14px; height:100%; }
+    .metric-card{
+      background: var(--card);
+      border: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      position:relative; overflow:hidden;
+    }
+    .metric-card .title{
+      display:flex; align-items:center; justify-content:space-between;
+      gap: 10px; margin-bottom: 12px;
+    }
+    .metric-card .title strong{
+      font-size: 13px; color: var(--muted); font-weight: 600;
+      letter-spacing: .02em; text-transform: uppercase;
+    }
+    .metric{
+      display:grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    .metric .box{
+      border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+      border-radius: 14px;
+      padding: 12px;
+      background: color-mix(in srgb, var(--green-100) 40%, transparent);
+    }
+    .metric .num{
+      font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 18px; font-weight: 700; letter-spacing: -0.02em;
+      color: var(--green-900);
+    }
+    [data-theme="dark"] .metric .num { color: #BFE3D2; }
+    .metric .label{ margin-top: 6px; font-size: 12px; color: var(--muted); }
+
+    section{ padding: 26px 0; }
+    .section-head{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap: 16px; margin-bottom: 14px;
+    }
+    .section-head h2{ margin:0; font-size: 18px; letter-spacing: -0.02em; }
+    .section-head p{ margin:0; color: var(--muted); font-size: 13px; max-width: 72ch; }
+
+    .grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
+    .card{
+      background: var(--card);
+      border: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: var(--pad);
+    }
+    .card.slim{ padding: 18px; }
+
+    .col-12{ grid-column: span 12; }
+    .col-8{ grid-column: span 8; }
+    .col-7{ grid-column: span 7; }
+    .col-6{ grid-column: span 6; }
+    .col-5{ grid-column: span 5; }
+    .col-4{ grid-column: span 4; }
+
+    .list{ display:flex; flex-direction:column; gap: 10px; }
+    .item{
+      display:flex; gap: 12px; align-items:flex-start;
+      padding: 12px; border-radius: 14px;
+      border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+      background: color-mix(in srgb, var(--bg) 70%, transparent);
+    }
+
+    .badge{
+      display:inline-flex; align-items:center; gap: 8px;
+      font-size: 12px; color: var(--muted);
+      border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+      padding: 7px 10px; border-radius: 999px;
+      background: color-mix(in srgb, var(--green-100) 45%, transparent);
+      white-space:nowrap;
+    }
+    .item strong{
+      display:block; font-size: 14px; margin-bottom: 2px; letter-spacing:-0.01em;
+    }
+    .item p{ margin:0; color: var(--muted); font-size: 13px; }
+
+    .tags{ display:flex; flex-wrap:wrap; gap: 8px; margin-top: 6px; }
+    .tag{
+      font-size: 11px; color: var(--muted);
+      border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+      padding: 6px 9px; border-radius: 999px;
+      background: color-mix(in srgb, var(--card) 60%, transparent);
+    }
+
+    .project{
+      display:flex; flex-direction:column; gap: 10px;
+      padding: 16px; border-radius: var(--radius);
+      border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+      background: linear-gradient(180deg, color-mix(in srgb, var(--green-100) 45%, transparent), transparent 70%);
+    }
+    .project .top{
+      display:flex; align-items:flex-start; justify-content:space-between; gap: 12px;
+    }
+    .project h3{ margin:0; font-size: 15px; letter-spacing:-0.02em; }
+    .project .desc{ margin:0; color: var(--muted); font-size: 13px; }
+
+    .kv{
+      display:grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px;
+    }
+    .kv .k{
+      border: 1px dashed color-mix(in srgb, var(--line) 80%, transparent);
+      border-radius: 14px; padding: 10px;
+      background: color-mix(in srgb, var(--bg) 70%, transparent);
+    }
+    .kv .k .t{ font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+    .kv .k .v{ margin-top: 6px; font-size: 13px; color: var(--text); font-weight: 600; }
+
+    /* Certificates */
+    .cert-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .cert{
+      border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+      border-radius: 14px;
+      padding: 12px;
+      background: color-mix(in srgb, var(--bg) 70%, transparent);
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+    }
+    .cert .name{ font-size: 13px; font-weight: 600; letter-spacing: -0.01em; }
+    .cert .org{ font-size: 12px; color: var(--muted); margin-top: 3px; }
+    .cert .meta{
+      margin:0;
+      display:flex;
+      align-items:flex-start;
+      justify-content:flex-end;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      flex-wrap:wrap;
+    }
+
+    /* Filters */
+    .toolbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap:wrap;
+      margin-bottom: 12px;
+    }
+    .search{
+      flex: 1 1 320px;
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      border: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+      border-radius: 14px;
+      padding: 10px 12px;
+      background: color-mix(in srgb, var(--card) 80%, transparent);
+    }
+    .search input{
+      border:0; outline:none; width:100%;
+      background:transparent; color:var(--text);
+      font-size: 13px;
+    }
+    .chiprow{
+      display:flex; gap: 8px; flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .chip{
+      border:1px solid color-mix(in srgb, var(--line) 75%, transparent);
+      padding: 8px 10px;
       border-radius: 999px;
-      font-weight: 700;
-      letter-spacing: .3px;
-      box-shadow: 0 10px 30px -10px rgba(34,211,238,.35),
-                  0 0 0 1px rgba(255,255,255,.04) inset;
-      cursor: pointer;
-      transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+      font-size: 12px;
+      color: var(--muted);
+      background: transparent;
+      cursor:pointer;
+      transition: background .18s ease, border-color .18s ease, color .18s ease;
+      user-select:none;
     }
-    .center-btn:hover{
-      background: var(--glass-2);
-      box-shadow: 0 12px 34px -10px rgba(34,211,238,.55),
-                  0 0 0 1px rgba(255,255,255,.06) inset;
+    .chip:hover{
+      background: color-mix(in srgb, var(--green-100) 60%, transparent);
+      border-color: color-mix(in srgb, var(--green-900) 20%, var(--line));
+      color: var(--text);
     }
-    /* ajuste responsivo: em telas muito pequenas, desce um pouco */
-    @media (max-width: 420px){
-      .center-btn{ top: 88px; }
+    .chip[aria-pressed="true"]{
+      background: color-mix(in srgb, var(--green-900) 12%, var(--green-100) 88%);
+      border-color: color-mix(in srgb, var(--green-900) 28%, var(--line));
+      color: var(--text);
     }
 
-      /* ================= CONTATOS ================= */
-  .fab-contact{
-    position: fixed;
-    bottom: 18px;
-    right: 18px;
-    z-index: 26;
-    border: 1px solid var(--border);
-    background: var(--glass);
-    color: #90cdf4;
-    backdrop-filter: blur(8px);
-    padding: 12px 16px;
-    border-radius: 999px;
-    font-weight: 700;
-    letter-spacing: .3px;
-    box-shadow: 0 10px 30px -10px rgba(34,211,238,.35),
-                0 0 0 1px rgba(255,255,255,.04) inset;
-    cursor: pointer;
-    transition: background .2s ease, box-shadow .2s ease, transform .2s ease;
+    footer{
+      padding: 26px 0 34px;
+      border-top: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .footer-row{
+      display:flex; align-items:center; justify-content:space-between;
+      gap: 12px; flex-wrap:wrap;
+    }
+
+    @media (max-width: 980px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .brand{ min-width: unset; }
+    }
+    @media (max-width: 860px){
+      .col-6, .col-5, .col-7, .col-4, .col-8{ grid-column: span 12; }
+      .menu{ display:none; }
+      .metric{ grid-template-columns: 1fr 1fr; }
+      .cert-grid{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px){
+      .metric{ grid-template-columns: 1fr; }
+      .hero-cta{ flex-direction:column; align-items:stretch; }
+      .btn{ justify-content:center; }
+      .chiprow{ justify-content:flex-start; }
+    }
+    .hero-id{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom: 14px;
+}
+
+.avatar{
+  width: 120px;
+  height: 120px;
+  border-radius: 18px; /* mais executivo que círculo */
+  object-fit: cover;
+  border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  box-shadow: 0 10px 24px rgba(17,24,39,.10);
+  background: color-mix(in srgb, var(--green-100) 50%, transparent);
+}
+
+.hero-name{
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: 14px;
+}
+
+.hero-role{
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+/* Mobile: reduz */
+@media (max-width: 480px){
+  .avatar{
+    width: 84px;
+    height: 84px;
+    border-radius: 16px;
   }
-  .fab-contact:hover{ background: var(--glass-2); transform: translateY(-1px); }
+}
+.rf-calc{
+  /* NÃO re-declare as mesmas variáveis aqui (evita var(--x) referenciar a si mesma) */
+  padding: 26px 0;
+  background: transparent;
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
 
-  .backdrop.contact { z-index: 35; }
+  .rf-calc__wrap{
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 18px;
+  }
 
-  /* Drawer de contatos reaproveita .drawer.left */
-  .drawer.contact { width: min(92vw, 520px); }
+  .rf-calc__head{
+    margin-bottom: 14px;
+  }
 
-  /* Grid dos botões sociais */
-  .social-grid{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  .rf-calc__kicker{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+    background: color-mix(in srgb, var(--green-100) 55%, transparent);
+    color: var(--muted);
+    font-size: 12px;
+  }
+  .rf-calc__dot{
+    width:8px;height:8px;border-radius:50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 4px rgba(184,164,106,.12);
+  }
+
+  .rf-calc__title{
+    margin: 10px 0 6px;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+  }
+  .rf-calc__sub{
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    max-width: 72ch;
+  }
+
+  .rf-calc__grid{
+    display:grid;
+    grid-template-columns: 1.05fr .95fr;
     gap: 14px;
-    padding: 8px 2px 2px;
+    align-items: stretch;
   }
-  @media (min-width: 680px){ .social-grid{ grid-template-columns: repeat(4, 1fr); } }
 
-  .social-btn{
-    display: grid;
-    place-items: center;
-    gap: 8px;
-    padding: 18px 12px;
-    border-radius: 14px;
-    border: 1px solid var(--border);
-    background: var(--glass);
-    color: var(--text-1);
-    text-decoration: none;
-    font-weight: 700;
-    letter-spacing: .2px;
-    transition: transform .15s ease, background .2s ease, box-shadow .2s ease;
-    box-shadow: 0 10px 30px -16px rgba(34,211,238,.25);
+  .rf-calc__card{
+    background: var(--card);
+    border: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 18px;
   }
-  .social-btn:hover{
-    background: var(--glass-2);
-    transform: translateY(-2px);
+  .rf-calc__card--result{
+    background: linear-gradient(180deg, color-mix(in srgb, var(--green-100) 45%, transparent), transparent 75%);
   }
-  .social-btn svg{ width: 28px; height: 28px; }
 
-  /* Cores sutis por marca (borda brilho) */
-  .social-btn.whatsapp{ box-shadow: 0 10px 28px -18px rgba(37,211,102,.55); }
-  .social-btn.instagram{ box-shadow: 0 10px 28px -18px rgba(228,64,95,.55); }
-  .social-btn.github{ box-shadow: 0 10px 28px -18px rgba(255,255,255,.18); }
-  .social-btn.linkedin{ box-shadow: 0 10px 28px -18px rgba(14,118,168,.55); }
-
-  .social-btn span{ font-size: 12px; color: var(--text-2); font-weight: 600; }
-  /* === Modal de imagem (viewer) === */
-  .modal.image-viewer { grid-template-rows: auto 1fr auto; }
-  .modal.image-viewer header { gap: 10px; }
-  #viewer-logo { height: 28px; object-fit: contain; filter: drop-shadow(0 0 12px rgba(34,211,238,.28)); }
-  .viewer-wrap { display: grid; place-items: center; padding: 10px; }
-  .viewer-wrap img { max-width: 100%; max-height: 62vh; border-radius: 12px; border: 1px solid var(--border); background: var(--glass); box-shadow: 0 10px 40px -18px rgba(34,211,238,.25); }
-  .viewer-caption { color: var(--text-2); font-size: 13px; padding: 8px 14px 14px; border-top: 1px solid var(--border); }
-  .backdrop.viewer { z-index: 55; } /* acima do drawer, abaixo do modal */
-  /* Nav do viewer */
-  .viewer-nav{
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 70;
-    border: 1px solid var(--border);
-    background: var(--glass);
-    padding: 8px 10px;
-    border-radius: 12px;
-    cursor: pointer;
-    backdrop-filter: blur(8px);
-  }
-  .viewer-nav:hover{ background: var(--glass-2); }
-  .viewer-nav.prev{ left: 10px; }
-  .viewer-nav.next{ right: 10px; }
-
-  .viewer-counter{
-    position: absolute;
-    bottom: 12px; left: 50%;
-    transform: translateX(-50%);
-    z-index: 70;
-    border: 1px solid var(--border);
-    background: var(--glass);
-    padding: 6px 10px;
-    border-radius: 999px;
+  .rf-calc__row{ margin-bottom: 12px; }
+  .rf-calc__label{
+    display:block;
     font-size: 12px;
-    color: var(--text-2);
-    backdrop-filter: blur(8px);
-  }
-
-  .viewer-hint{
-    position: absolute;
-    bottom: 12px; right: 12px;
-    z-index: 70;
-    border: 1px solid var(--border);
-    background: var(--glass);
-    padding: 6px 10px;
-    border-radius: 999px;
-    font-size: 12px;
-    color: var(--text-2);
-    backdrop-filter: blur(8px);
-  }
-
-  /* === Toast de feedback (like sutil) === */
-  .toast {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    background: var(--glass-2);
-    border: 1px solid var(--border);
-    padding: 10px 18px;
-    border-radius: 999px;
-    color: var(--text-1);
     font-weight: 600;
-    font-size: 14px;
-    letter-spacing: .3px;
-    opacity: 0;
-    box-shadow: 0 10px 30px -12px rgba(34,211,238,.25);
-    backdrop-filter: blur(8px);
-    transition: opacity .3s, transform .3s;
-    z-index: 80;
+    color: var(--text);
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
   }
-  .toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
+  .rf-calc__input{
+    width:100%;
+    border: 1px solid color-mix(in srgb, var(--line) 85%, transparent);
+    border-radius: 14px;
+    padding: 11px 12px;
+    font-size: 13px;
+    background: color-mix(in srgb, var(--bg) 75%, transparent);
+    color: var(--text);
+    outline: none;
+    transition: box-shadow .18s ease, border-color .18s ease, background .18s ease;
   }
-  
+  .rf-calc__input:focus{
+    box-shadow: var(--focus);
+    border-color: color-mix(in srgb, var(--green-900) 25%, var(--line));
+    background: color-mix(in srgb, var(--card) 85%, transparent);
+  }
+  .rf-calc__hint{
+    display:block;
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 12px;
+  }
 
+  .rf-calc__split{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+
+  .rf-calc__toggle{
+    border: 1px dashed color-mix(in srgb, var(--line) 80%, transparent);
+    border-radius: 14px;
+    padding: 10px;
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+  }
+
+  .rf-calc__switch{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 10px;
+    border: 1px solid color-mix(in srgb, var(--line) 85%, transparent);
+    border-radius: 999px;
+    padding: 10px 12px;
+    background: transparent;
+    color: var(--text);
+    cursor:pointer;
+    margin-top: 8px;
+    transition: background .18s ease, border-color .18s ease;
+  }
+  .rf-calc__switch:hover{
+    background: color-mix(in srgb, var(--green-100) 55%, transparent);
+    border-color: color-mix(in srgb, var(--green-900) 20%, var(--line));
+  }
+  .rf-calc__switchDot{
+    width: 22px; height: 22px;
+    border-radius: 999px;
+    background: var(--green-900);
+    box-shadow: 0 6px 16px rgba(14,59,46,.18);
+    transform: translateX(0);
+    transition: transform .18s ease, background .18s ease;
+  }
+  .rf-calc__switch[aria-pressed="false"] .rf-calc__switchDot{
+    background: color-mix(in srgb, var(--line) 70%, var(--muted));
+    transform: translateX(22px);
+  }
+  .rf-calc__switchText{
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .rf-calc__actions{
+    display:flex;
+    gap: 10px;
+    flex-wrap:wrap;
+    margin-top: 4px;
+  }
+  .rf-calc__btn{
+    border: 1px solid var(--line);
+    background: transparent;
+    padding: 10px 12px;
+    border-radius: 12px;
+    font-size: 13px;
+    color: var(--text);
+    cursor:pointer;
+    user-select:none;
+    transition: transform .12s ease, background .18s ease, border-color .18s ease;
+  }
+  .rf-calc__btn:focus{ outline:none; box-shadow: var(--focus); }
+  .rf-calc__btn:hover{
+    background: color-mix(in srgb, var(--green-100) 65%, transparent);
+    border-color: color-mix(in srgb, var(--green-900) 20%, var(--line));
+  }
+  .rf-calc__btn--primary{
+    background: var(--green-900);
+    border-color: var(--green-900);
+    color:#fff;
+  }
+  .rf-calc__btn--primary:hover{
+    background: color-mix(in srgb, var(--green-900) 88%, #000 12%);
+    transform: translateY(-1px);
+  }
+  .rf-calc__btnIcon{ margin-left: 10px; }
+
+  .rf-calc__note{
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+    color: var(--muted);
+    font-size: 12px;
+  }
+  .rf-calc__note strong{ color: var(--text); }
+
+  /* Results */
+  .rf-calc__resultTop{
+    display:flex;
+    justify-content:space-between;
+    gap: 10px;
+    align-items:center;
+    margin-bottom: 10px;
+  }
+  .rf-calc__badge{
+    display:inline-flex;
+    align-items:center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+    padding: 7px 10px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--card) 65%, transparent);
+    white-space:nowrap;
+  }
+  .rf-calc__badge--gold{
+    border-color: color-mix(in srgb, var(--gold) 45%, var(--line));
+    background: color-mix(in srgb, rgba(184,164,106,.12) 100%, transparent);
+  }
+
+  .rf-calc__big{
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--green-900);
+  }
+  .rf-calc__small{
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .rf-calc__divider{
+    height:1px;
+    background: color-mix(in srgb, var(--line) 70%, transparent);
+    margin: 14px 0;
+  }
+  .rf-calc__kvs{
+    display:grid;
+    gap: 10px;
+  }
+  .rf-calc__kv{
+    display:flex;
+    justify-content:space-between;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+  }
+  .rf-calc__kvK{
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .rf-calc__kvV{
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  .rf-calc__insight{
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+    background: color-mix(in srgb, var(--card) 70%, transparent);
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.45;
+  }
+  .rf-calc__insight strong{ color: var(--text); }
+
+  .rf-calc__resultActions{
+    display:flex;
+    gap: 10px;
+    flex-wrap:wrap;
+    margin-top: 12px;
+  }
+  .rf-calc__btn--ghost{
+    background: transparent;
+  }
+
+  @media (max-width: 980px){
+    .rf-calc__grid{ grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px){
+    .rf-calc__split{ grid-template-columns: 1fr; }
+  }
+
+   .rf-calc__helpBtn{
+    margin-left: auto;
+    border: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+    background: color-mix(in srgb, var(--card) 70%, transparent);
+    color: var(--muted);
+    font-size: 12px;
+    padding: 8px 10px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background .18s ease, border-color .18s ease, color .18s ease, transform .12s ease;
+    white-space: nowrap;
+  }
+  .rf-calc__helpBtn:hover{
+    background: color-mix(in srgb, var(--green-100) 60%, transparent);
+    border-color: color-mix(in srgb, var(--green-900) 20%, var(--line));
+    color: var(--text);
+    transform: translateY(-1px);
+  }
+  .rf-calc__helpBtn:focus{ outline:none; box-shadow: var(--focus); }
+
+  .rf-modal{
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+  }
+  .rf-modal.is-open{ display: block; }
+
+  .rf-modal__backdrop{
+    position:absolute;
+    inset:0;
+    background: rgba(0,0,0,.38);
+    backdrop-filter: blur(6px);
+  }
+
+  .rf-modal__panel{
+    position: relative;
+    max-width: 860px;
+    margin: 6vh auto;
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+    border-radius: 18px;
+    box-shadow: 0 28px 70px rgba(0,0,0,.25);
+    overflow: hidden;
+  }
+
+  .rf-modal__head{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap: 14px;
+    padding: 16px 16px 12px;
+    border-bottom: 1px solid color-mix(in srgb, var(--line) 65%, transparent);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--green-100) 55%, transparent), transparent 70%);
+  }
+
+  .rf-modal__kicker{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding: 7px 10px;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+    background: color-mix(in srgb, var(--card) 65%, transparent);
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+  .rf-modal__dot{
+    width:8px;height:8px;border-radius:50%;
+    background: var(--gold);
+    box-shadow: 0 0 0 4px rgba(184,164,106,.12);
+  }
+
+  .rf-modal__title{
+    margin: 0;
+    font-size: 15px;
+    letter-spacing: -0.02em;
+  }
+
+  .rf-modal__close{
+    border: 1px solid color-mix(in srgb, var(--line) 75%, transparent);
+    background: color-mix(in srgb, var(--card) 75%, transparent);
+    color: var(--muted);
+    border-radius: 12px;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: background .18s ease, border-color .18s ease, color .18s ease;
+    line-height: 1;
+  }
+  .rf-modal__close:hover{
+    background: color-mix(in srgb, var(--green-100) 60%, transparent);
+    border-color: color-mix(in srgb, var(--green-900) 20%, var(--line));
+    color: var(--text);
+  }
+  .rf-modal__close:focus{ outline:none; box-shadow: var(--focus); }
+
+  .rf-modal__body{
+    padding: 16px;
+  }
+
+  .rf-modal__grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .rf-modal__card{
+    border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+    background: color-mix(in srgb, var(--bg) 72%, transparent);
+    border-radius: 16px;
+    padding: 14px;
+  }
+
+  .rf-modal__h{
+    display:block;
+    font-size: 13px;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .rf-modal__list{
+    margin: 0;
+    padding-left: 18px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+  .rf-modal__list strong{ color: var(--text); }
+
+  .rf-modal__bullets{
+    display:grid;
+    gap: 10px;
+  }
+  .rf-modal__bullet{
+    display:flex;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+    background: color-mix(in srgb, var(--card) 70%, transparent);
+  }
+  .rf-modal__bTag{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    height: 26px;
+    padding: 0 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    color: var(--muted);
+    border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+    background: color-mix(in srgb, var(--green-100) 55%, transparent);
+    white-space: nowrap;
+  }
+  .rf-modal__muted{
+    margin-top: 2px;
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .rf-modal__tip{
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px dashed color-mix(in srgb, var(--line) 80%, transparent);
+    background: color-mix(in srgb, var(--card) 75%, transparent);
+    color: var(--muted);
+    font-size: 12px;
+  }
+  .rf-modal__tip strong{ color: var(--text); }
+
+  .rf-modal__footer{
+    display:flex;
+    justify-content:flex-end;
+    gap: 10px;
+    flex-wrap:wrap;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid color-mix(in srgb, var(--line) 65%, transparent);
+  }
+
+  @media (max-width: 860px){
+    .rf-modal__panel{ margin: 4vh 12px; }
+    .rf-modal__grid{ grid-template-columns: 1fr; }
+  }
+.menu .menu-highlight{
+  border: 1px solid color-mix(in srgb, var(--green-900) 20%, var(--line));
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: var(--text);
+  background: color-mix(in srgb, var(--green-100) 45%, transparent);
+}
+
+.menu .menu-highlight:hover{
+  background: color-mix(in srgb, var(--green-100) 65%, transparent);
+}
   </style>
 </head>
+
 <body>
-  <canvas id="bg-canvas" aria-hidden="true"></canvas>
-  <div class="bg-grad" aria-hidden="true"></div>
+  <!-- SVG icons -->
+  <svg width="0" height="0" style="position:absolute">
+    <symbol id="i-arrow" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M13 5l7 7-7 7v-4H4v-6h9V5z"></path>
+    </symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M21 15.5A8.5 8.5 0 0 1 8.5 3a7 7 0 1 0 12.5 12.5z"></path>
+    </symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Zm0-16h1v3h-1V2Zm0 17h1v3h-1v-3ZM2 11h3v1H2v-1Zm17 0h3v1h-3v-1ZM4.2 4.2l2.1 2.1-.7.7L3.5 4.9l.7-.7Zm13.9 13.9l2.1 2.1-.7.7-2.1-2.1.7-.7ZM19.8 4.2l.7.7-2.1 2.1-.7-.7 2.1-2.1ZM5.6 17.4l.7.7-2.1 2.1-.7-.7 2.1-2.1Z"></path>
+    </symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M4 6h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Zm0 2v.5l8 5 8-5V8H4Zm16 10V10.6l-8 5-8-5V18h16Z"></path>
+    </symbol>
+    <symbol id="i-link" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M10.6 13.4a1 1 0 0 1 0-1.4l3.6-3.6a3 3 0 1 1 4.2 4.2l-2 2a1 1 0 1 1-1.4-1.4l2-2a1 1 0 0 0-1.4-1.4l-3.6 3.6a1 1 0 0 1-1.4 0ZM13.4 10.6a1 1 0 0 1 0 1.4l-3.6 3.6a3 3 0 1 1-4.2-4.2l2-2A1 1 0 1 1 9 10.8l-2 2a1 1 0 1 0 1.4 1.4l3.6-3.6a1 1 0 0 1 1.4 0Z"></path>
+    </symbol>
+    <symbol id="i-search" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M10 2a8 8 0 1 1 5.3 14l4.7 4.7-1.4 1.4-4.7-4.7A8 8 0 0 1 10 2Zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12Z"></path>
+    </symbol>
+  </svg>
 
-  <h1 class="hero-title" aria-label="Nome do proprietário do portfólio">
-    <span>Raudiney Farias</span>
-  </h1>
+  <header>
+    <div class="container">
+      <div class="nav">
+        <a class="brand" href="#top" aria-label="Ir ao topo">
+          <div class="mark" aria-hidden="true"></div>
+          <div>
+            <strong>Raudiney Farias</strong>
+            <span>Compras • Financeiro • Processos • Dados</span>
+          </div>
+        </a>
 
-<button class="center-btn" id="btn-center"
-        aria-controls="modal-sobre" aria-expanded="false">
-  Sobre
-</button>
-  <button class="fab-contact" id="btn-contact"
-        aria-controls="drawer-contact" aria-expanded="false" aria-label="Abrir contatos">
-  Contato
-</button>
+        <nav class="menu" aria-label="Menu">
+          <a href="#sobre">Sobre</a>
+          <a href="#experiencia">Experiência</a>
+          <a href="#competencias">Competências</a>
+          <a href="#projetos">Projeto</a>
+          <a href="#certificados">Certificados</a>
+          <a href="#calc-desperdicio" class="menu-highlight">Ferramenta</a>
+          <a href="#contato">Contato</a>
+        </nav>
 
-  <main>
-    <section class="hero-grid" aria-label="Apresentação com foto e logos">
-      <!-- Logo esquerda -->
-      <div   aria-label="Logo lateral esquerda">
-        <!-- TODO: troque o src pelo seu arquivo de logo -->
-        <!-- <img src="Logo versão 2.png" id="byrdnart" alt="Logo 1" /> -->
-      </div>
-
-      <!-- Foto central com moldura -->
-      <div class="photo-wrap">
-        <div class="ring" aria-hidden="true"></div>
-        <div class="photo">
-          <!-- TODO: troque o src pela sua foto -->
-          <img src="Portifolio.png" alt="Foto de Raudiney Farias" />
+        <div class="actions">
+          <button class="btn ghost" id="themeBtn" type="button" aria-label="Alternar tema">
+            <svg class="icon" aria-hidden="true"><use href="#i-moon"></use></svg>
+            <span id="themeLabel">Tema</span>
+          </button>
+          <a class="btn primary" href="#contato">
+            <span>Falar comigo</span>
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg>
+          </a>
         </div>
-          <p class="tagline" style="margin-bottom:6px;">
-            <strong>Supervisor de Operações</strong> · Sistemas de Negócio · Dados & Automação
-          </p>
-          <p class="tagline" style="margin-top:0;">
-            Projetos de sistemas e dashboards com foco em operação, controle e tomada de decisão.
-          </p>
-
       </div>
+    </div>
+  </header>
 
+  <main id="top">
+    <!-- HERO -->
+    <div class="container hero">
+      <div class="hero-grid">
+        <div class="hero-card">
+          <div class="hero-content">
+            <div class="hero-id">
+            <img src="raudiney2.png" alt="Raudiney Farias" class="avatar">
+            <strong> </strong>
+            <strong>Raudiney Farias</strong>
+            </div>
+            <div>
+            </div>
+            <div class="kicker">
+              <span class="dot" aria-hidden="true"></span>
+              <span>Foco atual em <strong>Compras</strong> e <strong>rotina financeira</strong> • tecnologia como diferencial</span>
+            </div>
 
-      <!-- Logo direita -->
-      <div aria-label="Logo lateral direita">
-        <!-- TODO: troque o src pelo seu arquivo de logo -->
-        <!-- <img src="logo_nova.png" id="raudsistemas" alt="Logo 2" /> -->
+            <h1>Compras e Financeiro com visão de processo, dados e controle.</h1>
+
+            <p class="sub">
+              Sou <strong>Raudiney Farias</strong>. Atuo com processos, indicadores e automação — criando soluções que organizam a operação
+              e fortalecem a tomada de decisão. Hoje, minha atuação profissional é como <strong>Comprador na Sim Engenharia</strong>.
+            </p>
+
+            <div class="hero-cta">
+              <a class="btn primary" href="#projetos">
+                <span>Ver projeto em destaque</span>
+                <svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg>
+              </a>
+              <a class="btn" href="#certificados">
+                <span>Ver certificados</span>
+              </a>
+              <button class="btn" type="button" id="copyEmailBtn" data-email="raudiney-@hotmail.com">
+                <svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg>
+                <span>Copiar e-mail</span>
+              </button>
+            </div>
+
+            <div class="meta">
+              <span class="pill"><span class="mono">Atuação:</span> Compras (Sim Engenharia)</span>
+              <span class="pill"><span class="mono">Base:</span> Financeiro & Administrativo</span>
+              <span class="pill"><span class="mono">Diferencial:</span> Excel/BI + Automação</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="metrics">
+          <div class="metric-card">
+            <div class="title">
+              <strong>O que eu entrego</strong>
+              <span class="badge">executivo</span>
+            </div>
+
+            <div class="metric">
+              <div class="box">
+                <div class="num mono">Controle</div>
+                <div class="label">rotinas, pagamentos, prazos, rastreabilidade</div>
+              </div>
+              <div class="box">
+                <div class="num mono">Compras</div>
+                <div class="label">cotações, negociação, organização do fluxo</div>
+              </div>
+              <div class="box">
+                <div class="num mono">Análise</div>
+                <div class="label">indicadores, leitura de dados e relatórios</div>
+              </div>
+              <div class="box">
+                <div class="num mono">Automação</div>
+                <div class="label">menos retrabalho, mais consistência</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="title">
+              <strong>Resumo técnico (sutil)</strong>
+              <span class="badge" style="border-color: color-mix(in srgb, var(--gold) 40%, var(--line));">diferencial</span>
+            </div>
+            <div class="list">
+              <div class="item">
+                <span class="badge">Excel</span>
+                <div>
+                  <strong>Avançado + estruturação</strong>
+                  <p>Controles, validação, análise e relatórios.</p>
+                </div>
+              </div>
+              <div class="item">
+                <span class="badge">Power BI</span>
+                <div>
+                  <strong>Indicadores e visão gerencial</strong>
+                  <p>Dashboards limpos para decisão.</p>
+                </div>
+              </div>
+              <div class="item">
+                <span class="badge">Dev</span>
+                <div>
+                  <strong>Django, MySQL e web</strong>
+                  <p>Construção de sistemas de apoio à gestão.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /metrics -->
+      </div>
+    </div>
+
+    <!-- SOBRE -->
+    <section id="sobre">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Sobre</h2>
+            <p>Posicionamento direto para vagas em compras/financeiro: organização, controle e dados.</p>
+          </div>
+          <span class="badge">perfil</span>
+        </div>
+
+        <div class="grid">
+          <div class="card col-7">
+            <p style="margin:0;color:var(--muted);font-size:14px;max-width:80ch;">
+              Fui supervisor em provedor de internet, com experiência em <strong>gestão operacional</strong>, rotinas administrativas e tecnologia aplicada ao negócio.
+              Tenho base sólida em <strong>Administração</strong> (contas a pagar/receber, tesouraria e cotações), domínio avançado de Excel e experiência com Power BI.
+              Também atuo com desenvolvimento (Django, MySQL e tecnologias web) para criar soluções que organizam processos e apoiam decisões.
+              <br><br>
+              Atualmente, atuo como <strong>Comprador na Sim Engenharia</strong>, buscando oportunidades que unam <strong>gestão</strong>, <strong>liderança</strong> e <strong>visão analítica</strong>,
+              entregando eficiência, organização e evolução contínua para operações.
+            </p>
+
+            <div class="tags" style="margin-top:14px;">
+              <span class="tag">Compras e cotações</span>
+              <span class="tag">Contas a pagar/receber</span>
+              <span class="tag">Tesouraria (rotina)</span>
+              <span class="tag">Excel avançado</span>
+              <span class="tag">Power BI</span>
+              <span class="tag">Processos e indicadores</span>
+            </div>
+          </div>
+
+          <div class="card col-5">
+            <div class="list">
+              <div class="item">
+                <span class="badge">Objetivo</span>
+                <div>
+                  <strong>Oportunidades na área financeira</strong>
+                  <p>Financeiro, compras, administrativo e apoio à controladoria.</p>
+                </div>
+              </div>
+              <div class="item">
+                <span class="badge">Entrega</span>
+                <div>
+                  <strong>Clareza e previsibilidade</strong>
+                  <p>Dados consistentes, rotina organizada e decisão mais segura.</p>
+                </div>
+              </div>
+              <div class="item">
+                <span class="badge">Estilo</span>
+                <div>
+                  <strong>Minimalista e objetivo</strong>
+                  <p>Sem ruído: foco em controle, processo e resultado.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /grid -->
       </div>
     </section>
-      <!-- Adicionar o novo parágrafo aqui -->
 
-    <!-- <br><br><p class="helper">Portfólio dark com gradiente, partículas dinâmicas e compartimentos laterais para visualizar meus trabalhos.</p> -->
+    <!-- EXPERIÊNCIA -->
+    <section id="experiencia">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Experiência</h2>
+            <p>Duas etapas bem claras: atuação atual (Compras) e experiência anterior (Gestão operacional).</p>
+          </div>
+          <span class="badge">carreira</span>
+        </div>
+
+        <div class="grid">
+          <div class="card col-6">
+            <div class="project">
+              <div class="top">
+                <div>
+                  <h3>Comprador — Sim Engenharia</h3>
+                  <div class="tags">
+                    <span class="tag">Cotações</span>
+                    <span class="tag">Negociação</span>
+                    <span class="tag">Fluxo de compras</span>
+                    <span class="tag">Controle</span>
+                  </div>
+                </div>
+                <span class="badge">atual</span>
+              </div>
+              <p class="desc">
+                Atuação com compras e rotinas de apoio administrativo, garantindo organização de solicitações, cotações e acompanhamento de processos com foco em prazo, controle e rastreabilidade.
+              </p>
+              <div class="kv">
+                <div class="k">
+                  <div class="t">Foco</div>
+                  <div class="v">Compras + processo</div>
+                </div>
+                <div class="k">
+                  <div class="t">Valor</div>
+                  <div class="v">Organização e controle</div>
+                </div>
+                <div class="k">
+                  <div class="t">Ferramenta</div>
+                  <div class="v">Excel + padrão</div>
+                </div>
+                <div class="k">
+                  <div class="t">Resultado</div>
+                  <div class="v">Previsibilidade</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card col-6">
+  <div class="project">
+    <div class="top">
+      <div>
+        <h3>Analista Administrativo — Pau Brasil Paraíba Comércio de Motos (Honda)</h3>
+        <div class="tags">
+          <span class="tag">Financeiro</span>
+          <span class="tag">Tesouraria</span>
+          <span class="tag">Caixa</span>
+          <span class="tag">Compras</span>
+          <span class="tag">Processos</span>
+        </div>
+      </div>
+      <span class="badge">histórico</span>
+    </div>
+
+    <p class="desc">
+      Atuação com liderança e suporte à gestão administrativa, integrando rotinas financeiras e operacionais com foco em controle,
+      rastreabilidade e agilidade de execução.
+    </p>
+
+    <div class="kv">
+      <div class="k">
+        <div class="t">Principais rotinas</div>
+        <div class="v">Caixa • Tesouraria • Depósitos • A/P • A/R</div>
+      </div>
+      <div class="k">
+        <div class="t">Compras</div>
+        <div class="v">Insumos • Controle de compras</div>
+      </div>
+      <div class="k">
+        <div class="t">Análise</div>
+        <div class="v">Planilhas complexas • Identificação de gastos</div>
+      </div>
+      <div class="k">
+        <div class="t">Processos</div>
+        <div class="v">Padronização • Rotinas mais rápidas</div>
+      </div>
+    </div>
+
+    <div class="item" style="margin-top:12px;">
+      <span class="badge">Capacitar</span>
+      <div>
+        <strong>Formação de liderança e resolução de problemas</strong>
+        <p>
+          Módulos: Controle Emocional, Perfis de Comportamento e Resolução de Problemas.
+          Ferramentas: SWOT, PDCA, 5W2H e 5 Porquês.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+          <div class="card col-6">
+            <div class="project">
+              <div class="top">
+                <div>
+                  <h3>Supervisor — Provedor de Internet</h3>
+                  <div class="tags">
+                    <span class="tag">Gestão operacional</span>
+                    <span class="tag">Rotinas administrativas</span>
+                    <span class="tag">Indicadores</span>
+                    <span class="tag">Melhoria contínua</span>
+                  </div>
+                </div>
+                <span class="badge">histórico</span>
+              </div>
+              <p class="desc">
+                Gestão de operação e organização de rotinas, com foco em padronização, acompanhamento por indicadores e tecnologia aplicada ao negócio para reduzir retrabalho e aumentar consistência.
+              </p>
+              <div class="kv">
+                <div class="k">
+                  <div class="t">Foco</div>
+                  <div class="v">Operação + gestão</div>
+                </div>
+                <div class="k">
+                  <div class="t">Método</div>
+                  <div class="v">Processo + indicadores</div>
+                </div>
+                <div class="k">
+                  <div class="t">Apoio</div>
+                  <div class="v">Automação</div>
+                </div>
+                <div class="k">
+                  <div class="t">Entrega</div>
+                  <div class="v">Decisão clara</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /grid -->
+      </div>
+    </section>
+
+    <!-- COMPETÊNCIAS -->
+    <section id="competencias">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Competências-chave</h2>
+            <p>Financeiro e compras primeiro. Tecnologia entra como suporte de eficiência.</p>
+          </div>
+          <span class="badge">foco</span>
+        </div>
+
+        <div class="grid">
+          <div class="card col-4 slim">
+            <strong style="font-size:14px;">Compras & Cotações</strong>
+            <p style="margin:8px 0 0;color:var(--muted);font-size:13px;">
+              Organização do fluxo, cotação, comparação e acompanhamento.
+            </p>
+          </div>
+          <div class="card col-4 slim">
+            <strong style="font-size:14px;">Financeiro (rotina)</strong>
+            <p style="margin:8px 0 0;color:var(--muted);font-size:13px;">
+              Contas a pagar/receber, tesouraria e controle por período.
+            </p>
+          </div>
+          <div class="card col-4 slim">
+            <strong style="font-size:14px;">Processos & Indicadores</strong>
+            <p style="margin:8px 0 0;color:var(--muted);font-size:13px;">
+              Padronização, redução de falhas e métricas de acompanhamento.
+            </p>
+          </div>
+
+          <div class="card col-6">
+            <div class="section-head" style="margin-bottom:10px;">
+              <h2 style="font-size:15px;">Ferramentas</h2>
+              <span class="badge">prático</span>
+            </div>
+            <div class="list">
+              <div class="item">
+                <span class="badge">Excel</span>
+                <div>
+                  <strong>Avançado</strong>
+                  <p>Controles, análises, relatórios e estruturação de base.</p>
+                </div>
+              </div>
+              <div class="item">
+                <span class="badge">Power BI</span>
+                <div>
+                  <strong>Dashboards</strong>
+                  <p>Métricas e visão gerencial com leitura rápida.</p>
+                </div>
+              </div>
+              <div class="item">
+                <span class="badge">Sistemas</span>
+                <div>
+                  <strong>Django + MySQL</strong>
+                  <p>Soluções para organizar operação e dar rastreabilidade.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card col-6">
+            <div class="section-head" style="margin-bottom:10px;">
+              <h2 style="font-size:15px;">Diferencial (sem exagero)</h2>
+              <span class="badge">sutil</span>
+            </div>
+            <p style="margin:0;color:var(--muted);font-size:13px;">
+              Eu não uso tecnologia para “aparecer”. Eu uso para <strong>reduzir erro manual</strong>, <strong>padronizar rotina</strong> e
+              <strong>aumentar a confiança dos dados</strong>. Isso fortalece compras, financeiro e operação.
+            </p>
+
+            <div class="kv" style="margin-top:12px;">
+              <div class="k">
+                <div class="t">Prioridade</div>
+                <div class="v">Compras / Financeiro</div>
+              </div>
+              <div class="k">
+                <div class="t">Método</div>
+                <div class="v">Processo + dados</div>
+              </div>
+              <div class="k">
+                <div class="t">Apoio</div>
+                <div class="v">Excel/BI + automação</div>
+              </div>
+              <div class="k">
+                <div class="t">Entrega</div>
+                <div class="v">Controle e decisão</div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /grid -->
+      </div>
+    </section>
+
+    <!-- PROJETO EM DESTAQUE -->
+    <section id="projetos">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Projeto em destaque</h2>
+            <p>ERP Fiscal e Gestão Integrada — com visão financeira, permissões, relatórios e dashboards.</p>
+          </div>
+          <span class="badge">case</span>
+        </div>
+
+        <div class="grid">
+          <div class="card col-7">
+            <div class="project">
+              <div class="top">
+                <div>
+                  <h3>RaudSistemas — ERP Fiscal e Gestão Integrada</h3>
+                  <div class="tags">
+                    <span class="tag">Financeiro</span>
+                    <span class="tag">Estoque</span>
+                    <span class="tag">Relatórios</span>
+                    <span class="tag">Permissões</span>
+                    <span class="tag">Dashboards</span>
+                  </div>
+                </div>
+                <span class="badge">Django</span>
+              </div>
+
+              <p class="desc">
+                Sistema desenvolvido com <strong>Django</strong> e <strong>MySQL</strong> para integrar rotinas essenciais do negócio,
+                com foco em segurança (LGPD), usabilidade e escalabilidade. Inclui modo offline, exportação Excel/PDF e dashboards para suporte à gestão.
+              </p>
+
+              <div class="kv">
+                <div class="k">
+                  <div class="t">Backend</div>
+                  <div class="v">Django + MySQL</div>
+                </div>
+                <div class="k">
+                  <div class="t">Frontend</div>
+                  <div class="v">HTML/CSS + Templates</div>
+                </div>
+                <div class="k">
+                  <div class="t">Dados</div>
+                  <div class="v">Excel / Power BI</div>
+                </div>
+                <div class="k">
+                  <div class="t">Foco</div>
+                  <div class="v">Gestão e rastreabilidade</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card col-5">
+            <div class="section-head" style="margin-bottom:10px;">
+              <h2 style="font-size:15px;">O que resolve</h2>
+              <span class="badge">benefícios</span>
+            </div>
+
+            <div class="list">
+              <div class="item">
+                <span class="badge">Vendas</span>
+                <div>
+                  <strong>Recibos e histórico</strong>
+                  <p>Relatórios exportáveis e visão por período.</p>
+                </div>
+              </div>
+
+              <div class="item">
+                <span class="badge">Estoque</span>
+                <div>
+                  <strong>Controle e movimentações</strong>
+                  <p>Filtros por categoria, fornecedor e datas.</p>
+                </div>
+              </div>
+
+              <div class="item">
+                <span class="badge">Financeiro</span>
+                <div>
+                  <strong>Contas a pagar + caixa geral</strong>
+                  <p>Rastreabilidade e organização por fluxo.</p>
+                </div>
+              </div>
+
+              <div class="item">
+                <span class="badge">Permissões</span>
+                <div>
+                  <strong>Níveis e auditoria</strong>
+                  <p>Controle por usuário e segurança.</p>
+                </div>
+              </div>
+
+              <div class="item">
+                <span class="badge">Relatórios</span>
+                <div>
+                  <strong>Dashboards e métricas</strong>
+                  <p>Visão gerencial com leitura rápida.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /grid -->
+      </div>
+    </section>
+
+    <!-- CERTIFICADOS -->
+    <section id="certificados">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Certificados</h2>
+            <p>Filtre por área e pesquise rapidamente. (Excel e gestão ficam em evidência sem esconder tecnologia.)</p>
+          </div>
+          <span class="badge">formação</span>
+        </div>
+
+        <div class="toolbar">
+          <div class="search" role="search">
+            <svg class="icon" aria-hidden="true"><use href="#i-search"></use></svg>
+            <input id="certSearch" type="search" placeholder="Pesquisar certificado (ex.: Excel, Java, segurança, rede...)" aria-label="Pesquisar certificado" />
+          </div>
+
+          <div class="chiprow" aria-label="Filtros de certificados">
+            <button class="chip" type="button" data-filter="todos" aria-pressed="true">Todos</button>
+            <button class="chip" type="button" data-filter="gestao">Gestão/Financeiro</button>
+            <button class="chip" type="button" data-filter="excel">Excel</button>
+            <button class="chip" type="button" data-filter="dev">Dev</button>
+            <button class="chip" type="button" data-filter="infra">Infra/Redes</button>
+            <button class="chip" type="button" data-filter="seg">Segurança</button>
+          </div>
+        </div>
+
+        <div class="grid">
+          <div class="card col-12">
+            <div id="certWrap" class="cert-grid">
+              <!-- Certificados (preenchidos via JS) -->
+            </div>
+
+            <div class="item" style="margin-top:12px; align-items:center;">
+              <span class="badge">Nota</span>
+              <div>
+                <strong>Como isso ajuda no financeiro?</strong>
+                <p>
+                  Excel avançado, processos e dados sustentam rotinas financeiras, compras e controle. A parte técnica reforça sua capacidade de estruturar, automatizar e manter consistência.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div><!-- /grid -->
+      </div>
+    </section>
+
+
+<!-- Calculadora -->
+<section class="rf-calc" id="calc-desperdicio">
+  <div class="rf-calc__wrap">
+    <div class="rf-calc__head">
+      <span class="rf-calc__kicker">
+        <span class="rf-calc__dot" aria-hidden="true"></span>
+        Ferramenta analítica
+      </span>
+      <button class="rf-calc__helpBtn" type="button" id="rfOpenHelp" aria-haspopup="dialog" aria-controls="rfHelpModal">
+         Como funciona
+        </button>
+      <h2 class="rf-calc__title">Calculadora de Desperdício Invisível</h2>
+      <p class="rf-calc__sub">
+        Simule o impacto financeiro de retrabalho, desperdício e tarefas manuais no mês — com leitura executiva.
+      </p>
+    </div>
+
+    <div class="rf-calc__grid">
+      <!-- Form -->
+      <form class="rf-calc__card" id="rfForm" autocomplete="off">
+        <div class="rf-calc__row">
+          <label class="rf-calc__label" for="gasto">Valor mensal de compras (R$)</label>
+          <input class="rf-calc__input" id="gasto" name="gasto" inputmode="decimal" placeholder="Ex.: 50.000" required>
+          <small class="rf-calc__hint">Valor total aproximado gasto com compras no mês.</small>
+        </div>
+
+        <div class="rf-calc__row">
+          <label class="rf-calc__label" for="perc">Desperdício / retrabalho estimado (%)</label>
+          <input class="rf-calc__input" id="perc" name="perc" inputmode="decimal" placeholder="Ex.: 3" required>
+          <small class="rf-calc__hint">Ex.: perdas, compras erradas, correções, refações e falhas de processo.</small>
+        </div>
+
+        <div class="rf-calc__row">
+          <label class="rf-calc__label" for="horas">Horas mensais em tarefas manuais (h)</label>
+          <input class="rf-calc__input" id="horas" name="horas" inputmode="decimal" placeholder="Ex.: 40" required>
+          <small class="rf-calc__hint">Tempo gasto em planilhas repetitivas, conferências e retrabalho.</small>
+        </div>
+
+        <div class="rf-calc__row">
+          <label class="rf-calc__label" for="custoHora">Custo médio por hora (R$)</label>
+          <input class="rf-calc__input" id="custoHora" name="custoHora" inputmode="decimal" placeholder="Ex.: 25" required>
+          <small class="rf-calc__hint">Pode ser salário + encargos aproximados, ou custo interno estimado.</small>
+        </div>
+
+        <div class="rf-calc__row rf-calc__split">
+          <div>
+            <label class="rf-calc__label" for="taxaRecuperavel">Parte recuperável das horas (%)</label>
+            <input class="rf-calc__input" id="taxaRecuperavel" name="taxaRecuperavel" inputmode="decimal" placeholder="Ex.: 35" value="35" required>
+            <small class="rf-calc__hint">Quanto do tempo manual pode ser reduzido com processo/automação.</small>
+          </div>
+
+          <div class="rf-calc__toggle">
+            <span class="rf-calc__label">Modo conservador</span>
+            <button class="rf-calc__switch" type="button" id="conservador" aria-pressed="true">
+              <span class="rf-calc__switchDot" aria-hidden="true"></span>
+              <span class="rf-calc__switchText">Ativo</span>
+            </button>
+            <small class="rf-calc__hint">Reduz o impacto estimado para evitar exageros.</small>
+          </div>
+        </div>
+
+        <div class="rf-calc__actions">
+          <button class="rf-calc__btn rf-calc__btn--primary" type="submit">
+            Analisar impacto
+            <span class="rf-calc__btnIcon" aria-hidden="true">→</span>
+          </button>
+          <button class="rf-calc__btn" type="button" id="limpar">Limpar</button>
+        </div>
+
+        <div class="rf-calc__note">
+          <strong>Nota:</strong> esta simulação é um modelo simples para demonstrar leitura financeira e tomada de decisão. Ajuste conforme a realidade.
+        </div>
+      </form>
+
+      <!-- Results -->
+      <aside class="rf-calc__card rf-calc__card--result" aria-live="polite">
+        <div class="rf-calc__resultTop">
+          <span class="rf-calc__badge">Resumo</span>
+          <span class="rf-calc__badge rf-calc__badge--gold">Executivo</span>
+        </div>
+
+        <div class="rf-calc__big" id="perdaMes">R$ 0</div>
+        <div class="rf-calc__small" id="perdaAno">R$ 0 / ano</div>
+
+        <div class="rf-calc__divider"></div>
+
+        <div class="rf-calc__kvs">
+          <div class="rf-calc__kv">
+            <div class="rf-calc__kvK">Perda por desperdício</div>
+            <div class="rf-calc__kvV" id="kDesperdicio">R$ 0</div>
+          </div>
+          <div class="rf-calc__kv">
+            <div class="rf-calc__kvK">Custo do tempo manual (recuperável)</div>
+            <div class="rf-calc__kvV" id="kTempo">R$ 0</div>
+          </div>
+          <div class="rf-calc__kv">
+            <div class="rf-calc__kvK">Horas recuperáveis (estimado)</div>
+            <div class="rf-calc__kvV" id="kHoras">0 h</div>
+          </div>
+        </div>
+
+        <div class="rf-calc__divider"></div>
+
+        <div class="rf-calc__insight" id="insight">
+          Preencha os campos e clique em <strong>“Analisar impacto”</strong>.
+        </div>
+
+        <div class="rf-calc__resultActions">
+          <button class="rf-calc__btn rf-calc__btn--ghost" type="button" id="copiarResumo">Copiar resumo</button>
+          <button class="rf-calc__btn rf-calc__btn--ghost" type="button" id="usarExemplo">Usar exemplo</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ====== 2) MODAL (cole uma vez, de preferência logo após a seção da calculadora) ====== -->
+<div class="rf-modal" id="rfHelpModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="rfHelpTitle">
+  <div class="rf-modal__backdrop" data-close="true"></div>
+
+  <div class="rf-modal__panel" role="document">
+    <div class="rf-modal__head">
+      <div>
+        <div class="rf-modal__kicker">
+          <span class="rf-modal__dot" aria-hidden="true"></span>
+          Manual rápido
+        </div>
+        <h3 class="rf-modal__title" id="rfHelpTitle">Como usar a Calculadora de Desperdício Invisível</h3>
+      </div>
+
+      <button class="rf-modal__close" type="button" id="rfCloseHelp" aria-label="Fechar">
+        ✕
+      </button>
+    </div>
+
+    <div class="rf-modal__body">
+      <div class="rf-modal__grid">
+        <div class="rf-modal__card">
+          <strong class="rf-modal__h">O que preencher</strong>
+
+          <ul class="rf-modal__list">
+            <li><strong>Compras/mês (R$):</strong> total aproximado de compras no mês.</li>
+            <li><strong>Desperdício (%):</strong> perdas por falhas, urgências, compras erradas e retrabalho.</li>
+            <li><strong>Horas manuais (h):</strong> tempo gasto em conferências, planilhas repetitivas e correções.</li>
+            <li><strong>Custo/hora (R$):</strong> custo médio do tempo (salário + encargos aproximados).</li>
+            <li><strong>Horas recuperáveis (%):</strong> quanto do tempo manual pode ser reduzido com processo/organização.</li>
+          </ul>
+
+          <div class="rf-modal__tip">
+            <strong>Dica:</strong> comece com <em>modo conservador</em> ativo para uma estimativa defensável.
+          </div>
+        </div>
+
+        <div class="rf-modal__card">
+          <strong class="rf-modal__h">Como interpretar</strong>
+
+          <div class="rf-modal__bullets">
+            <div class="rf-modal__bullet">
+              <span class="rf-modal__bTag">Mensal</span>
+              <div>
+                <strong>Perda estimada/mês</strong>
+                <div class="rf-modal__muted">Custo oculto somando desperdício + tempo recuperável.</div>
+              </div>
+            </div>
+
+            <div class="rf-modal__bullet">
+              <span class="rf-modal__bTag">Anual</span>
+              <div>
+                <strong>Perda estimada/ano</strong>
+                <div class="rf-modal__muted">Ajuda a priorizar ações e justificar melhorias.</div>
+              </div>
+            </div>
+
+            <div class="rf-modal__bullet">
+              <span class="rf-modal__bTag">Direção</span>
+              <div>
+                <strong>Leitura executiva</strong>
+                <div class="rf-modal__muted">Sugere onde atuar primeiro: processo, conferência e rastreabilidade.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="rf-modal__tip">
+            <strong>Uso prático:</strong> teste cenários (ex.: 3% → 2%) e veja o impacto do ganho de processo.
+          </div>
+        </div>
+      </div>
+
+      <div class="rf-modal__footer">
+        <button class="rf-calc__btn rf-calc__btn--primary" type="button" id="rfTryExample">
+          Usar exemplo agora <span class="rf-calc__btnIcon" aria-hidden="true">→</span>
+        </button>
+        <button class="rf-calc__btn" type="button" id="rfCloseHelp2">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <!-- CONTATO -->
+    <section id="contato">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Contato</h2>
+            <p>Curto, profissional e direto.</p>
+          </div>
+          <span class="badge">CTA</span>
+        </div>
+
+        <div class="grid">
+          <div class="card col-8">
+            <div class="list">
+              <div class="item" style="align-items:center;">
+                <span class="badge">E-mail</span>
+                <div style="flex:1;">
+                  <strong class="mono" id="emailText">raudiney-@hotmail.com</strong>
+                  <p>Envie vaga, desafio ou convite para conversa. Respondo rápido.</p>
+                </div>
+                <button class="btn" type="button" id="copyEmailBtn2" data-email="raudiney-@hotmail.com">Copiar</button>
+              </div>
+
+              <div class="item" style="align-items:center;">
+                <span class="badge">LinkedIn</span>
+                <div style="flex:1;">
+                  <strong>Raudiney Farias</strong>
+                  <p>Substitua pelo link real do seu perfil.</p>
+                </div>
+                <a class="btn" href="https://www.linkedin.com/in/raudiney-farias-337247237/" target="_blank" rel="noreferrer">
+                  <svg class="icon" aria-hidden="true"><use href="#i-link"></use></svg>
+                  Abrir
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="card col-4">
+            <strong style="font-size:14px;">Mensagem final</strong>
+            <p style="margin:8px 0 0;color:var(--muted);font-size:13px;">
+              Busco oportunidades no <strong>financeiro</strong> e em <strong>compras</strong> com foco em controle, análise e processos — entregando organização e previsibilidade.
+            </p>
+
+            <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;">
+              <a class="btn primary" href="mailto:SEUEMAIL@DOMINIO.COM?subject=Oportunidade%20-%20Compras%20/%20Financeiro&body=Ol%C3%A1%20Raudiney,%0D%0A%0D%0AQuero%20conversar%20sobre%20uma%20oportunidade.%0D%0A%0D%0A">
+                <svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg>
+                Enviar e-mail
+              </a>
+              <a class="btn" href="#top">Voltar ao topo</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <div class="footer-row">
+          <div>© <span id="year"></span> • Raudiney Farias</div>
+          <div class="mono">compras • financeiro • dados</div>
+        </div>
+      </div>
+    </footer>
   </main>
 
-  <!-- Botões laterais -->
-  <button class="side-btn left" id="btn-left" aria-expanded="false" aria-controls="drawer-left">
-    <span class="dot" aria-hidden="true"></span>
-    <span>Projetos Visuais</span>
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  </button>
-
-  <button class="side-btn right" id="btn-right" aria-expanded="false" aria-controls="drawer-right">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M15 18L9 12l6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <span>Ver Projetos</span>
-    <span class="dot" aria-hidden="true"></span>
-  </button>
-
-  <!-- Backdrops -->
-  <div class="backdrop" id="backdrop-left"></div>
-  <div class="backdrop" id="backdrop-right"></div>
-  <div class="backdrop contact" id="backdrop-contact"></div>
-
-
-  <!-- Drawers -->
-  <aside class="drawer left" id="drawer-left" aria-hidden="true" aria-label="Artes e logos">
-    <header>
-      <h3>Projetos Visuais</h3>
-      <button class="icon-btn" data-close="left" aria-label="Fechar artes e logos">✕</button>
-    </header>
-    <div class="content">
-      <div class="grid" id="grid-artes">
-        <!-- JS preenche a galeria a partir do array imagesArtes -->
-      </div>
-    </div>
-  </aside>
-
-  <aside class="drawer right" id="drawer-right" aria-hidden="true" aria-label="RaudSistemas">
-    <header>
-      <h3>Projetos</h3>
-      <button class="icon-btn" data-close="right" aria-label="Fechar RaudSistemas">✕</button>
-    </header>
-    <div class="content">
-      <div class="grid" id="grid-sistemas">
-        <!-- JS preenche a galeria a partir do array imagesSistemas -->
-      </div>
-    </div>
-  </aside>
-
-  <aside class="drawer left contact" id="drawer-contact" aria-hidden="true" aria-label="Contatos">
-  <header>
-    <h3>Entrar em contato</h3>
-    <button class="icon-btn" data-close="contact" aria-label="Fechar contatos">✕</button>
-  </header>
-  <div class="content">
-    <p style="color:var(--text-2); margin:0 0 10px;">
-      Me encontre nas redes.
-      <!-- ou fale direto pelo WhatsApp -->
-    </p>
-    <div class="social-grid">
-      
-      <!-- WhatsApp para adicionar depois target="_blank" rel="noopener" href="#"-->
-      <a class="social-btn whatsapp" id="link-whatsapp" >
-       
-        <!-- <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M20.52 3.48A11.9 11.9 0 0 0 12.05 0C5.45 0 .15 5.29.15 11.88c0 2.1.55 4.15 1.6 5.97L0 24l6.33-1.66a11.84 11.84 0 0 0 5.72 1.46h.01c6.6 0 11.9-5.29 11.9-11.88a11.8 11.8 0 0 0-3.44-8.44ZM12.06 21.3h-.01a9.5 9.5 0 0 1-4.85-1.3l-.35-.2-3.76.98 1-3.66-.23-.38a9.4 9.4 0 0 1-1.45-5.02C2.31 6.58 6.5 2.4 12.06 2.4a9.66 9.66 0 0 1 9.66 9.48c0 5.23-4.43 9.42-9.66 9.42Zm5.52-7.08c-.3-.15-1.77-.87-2.05-.96-.28-.1-.48-.15-.68.15-.2.3-.77.96-.95 1.16-.17.2-.35.23-.65.08-.3-.15-1.27-.46-2.42-1.47-.9-.77-1.5-1.72-1.67-2.02-.17-.3-.02-.47.13-.62.14-.14.3-.35.46-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.68-1.63-.94-2.23-.25-.6-.5-.5-.68-.5-.18 0-.38-.02-.58-.02-.2 0-.53.08-.82.38-.28.3-1.08 1.05-1.08 2.55 0 1.5 1.1 2.96 1.26 3.16.15.2 2.2 3.36 5.32 4.61.74.32 1.32.5 1.76.64.74.23 1.42.2 1.96.12.6-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35Z"/>
-        </svg> -->
-        <div>
-          <!-- WhatsApp -->
-          <span>Sem Contato</span>
-        </div>
-      </a>
-
-      <!-- Instagram -->
-      <a class="social-btn instagram" id="link-instagram" target="_blank" rel="noopener" href="#">
-        <!-- Ícone Instagram -->
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7Zm0 2h10c1.66 0 3 1.34 3 3v10c0 1.66-1.34 3-3 3H7c-1.66 0-3-1.34-3-3V7c0-1.66 1.34-3 3-3Zm11 1.75a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5ZM12 7a5 5 0 1 0 .001 10.001A5 5 0 0 0 12 7Zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6Z"/>
-        </svg>
-        <div>
-          Instagram
-          <span>@raudineyfarias</span>
-        </div>
-      </a>
-
-      <!-- GitHub -->
-      <a class="social-btn github" id="link-github" target="_blank" rel="noopener" href="#">
-        <!-- Ícone GitHub -->
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.11.79-.25.79-.56v-2.06c-3.22.7-3.9-1.4-3.9-1.4-.53-1.34-1.3-1.7-1.3-1.7-1.06-.73.08-.72.08-.72 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.72 1.26 3.39.96.11-.76.41-1.26.75-1.55-2.57-.29-5.28-1.28-5.28-5.69 0-1.26.45-2.28 1.2-3.09-.12-.29-.52-1.46.11-3.05 0 0 .98-.31 3.2 1.18a11.1 11.1 0 0 1 5.83 0c2.22-1.49 3.19-1.18 3.19-1.18.63 1.59.23 2.76.11 3.05.75.81 1.2 1.83 1.2 3.09 0 4.42-2.71 5.39-5.29 5.67.42.36.8 1.07.8 2.16v3.2c0 .31.2.68.8.56A11.5 11.5 0 0 0 12 .5Z"/>
-        </svg>
-        <div>
-          GitHub
-          <span>/RaudineyFarias</span>
-        </div>
-      </a>
-
-      <!-- LinkedIn -->
-      <a class="social-btn linkedin" id="link-linkedin" target="_blank" rel="noopener" href="#">
-        <!-- Ícone LinkedIn -->
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M4.98 3.5a2.5 2.5 0 1 0 0 5.001A2.5 2.5 0 0 0 4.98 3.5ZM3 9h4v12H3V9Zm7 0h3.85v1.64h.05c.54-1.02 1.85-2.1 3.8-2.1 4.06 0 4.8 2.67 4.8 6.13V21h-4v-5.33c0-1.27-.02-2.9-1.77-2.9-1.78 0-2.05 1.38-2.05 2.8V21h-3.88V9Z"/>
-        </svg>
-        <div>
-          Linkedin
-          <span>/in/raudineyfarias</span>
-        </div>
-      </a>
-    </div>
-  </div>
-</aside>
-
-  <!-- Backdrop do modal central -->
-<div class="backdrop center" id="backdrop-center"></div>
-
-<!-- Backdrop do viewer -->
-<div class="backdrop viewer" id="backdrop-viewer"></div>
-
-<!-- Modal de Visualização de Imagem -->
-<section class="modal image-viewer" id="modal-viewer" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="viewer-title">
-  <header>
-    <div style="display:flex; align-items:center; gap:10px;">
-      <img id="viewer-logo" alt="Logo da marca" />
-      <h3 id="viewer-title" style="margin:0; font-size:16px; color:var(--accent);">Visualização</h3>
-    </div>
-    <button class="close" id="viewer-close" aria-label="Fechar visualização">✕</button>
-  </header>
-
-  <div class="content viewer-wrap">
-        <!-- Controles do viewer -->
-    <button class="viewer-nav prev" id="viewer-prev" aria-label="Imagem anterior">◀</button>
-    <button class="viewer-nav next" id="viewer-next" aria-label="Próxima imagem">▶</button>
-    <div class="viewer-counter" id="viewer-counter">1/1</div>
-    <div class="viewer-hint" id="viewer-hint">Duplo clique: zoom</div>
-
-    <img id="viewer-img" alt="Imagem selecionada" />
-  </div>
-
-  <div class="viewer-caption">
-    <span id="viewer-caption-text">—</span>
-  </div>
-  <!-- Botão sutil de curtir -->
-<div style="text-align:center; padding:10px;">
-<!-- Botão sutil de curtir (fixo no canto esquerdo) -->
-<button id="btn-like" aria-label="Gostei desta imagem"
-  style="position:absolute;
-         bottom:16px;
-         left:116px;
-         border:1px solid var(--border);
-         background:var(--glass);
-         color:var(--text-1);
-         font-weight:600;
-         border-radius:999px;
-         padding:8px 18px;
-         cursor:pointer;
-         backdrop-filter:blur(6px);
-         transition:background .2s, transform .2s, box-shadow .2s;
-         z-index:75;">
-  🤍 Gostei
-</button>
-
-</div>
-
-</section>
-
-
-
-<!-- Modal central: Sobre (com duas abas) -->
-<section class="modal" id="modal-sobre" role="dialog" aria-modal="true" aria-labelledby="sobre-title" aria-hidden="true">
-<header>
-<div class="tabs" role="tablist" aria-label="Sobre Tabs">
-<button id="tab-sobre" class="active" role="tab" aria-controls="panel-sobre" aria-selected="true">Sobre mim</button>
-<button id="tab-cert" role="tab" aria-controls="panel-cert" aria-selected="false">Certificados</button>
-</div>
-<button class="close" id="close-sobre" aria-label="Fechar Sobre">✕</button>
-</header>
-<div class="content">
-<article id="panel-sobre" class="panel active" role="tabpanel" aria-labelledby="tab-sobre">
-<h2 id="sobre-title" style="margin:0 0 8px 0;">Sobre mim</h2>
-
-<p style="color: var(--text-2); line-height: 1.6; margin-top: 0;">
-  Sou <strong>Raudiney Farias</strong>, <strong>Fui supervisor em um provedor de internet</strong>, com experiência em
-  <strong>gestão operacional</strong>, <strong>rotinas administrativas</strong> e <strong>tecnologia aplicada ao negócio</strong>.
-  Atuo com <strong>processos, indicadores e automação</strong>, criando soluções que organizam a operação e melhoram a tomada de decisão.
-</p>
-
-<p style="color: var(--text-2); line-height: 1.6;">
-  Tenho base sólida em <strong>Administração</strong> (contas a pagar/receber, tesouraria e cotações), domínio avançado de
-  <strong>Excel</strong> e experiência com <strong>Power BI</strong>, além de desenvolvimento com <strong>Django</strong>, <strong>MySQL</strong>
-  e tecnologias web. Meu foco é unir <strong>visão de gestão</strong> com <strong>capacidade técnica</strong>.
-</p>
-
-<h2 style="margin: 18px 0 8px;">Projeto em destaque</h2>
-<h3 style="margin: 0 0 6px;">RaudSistemas — ERP Fiscal e Gestão Integrada</h3>
-
-<p style="color: var(--text-2); line-height: 1.6;">
-  Sistema desenvolvido com <strong>Django</strong> e <strong>MySQL</strong> para integrar rotinas essenciais do negócio, com foco em
-  <strong>segurança (LGPD)</strong>, usabilidade e escalabilidade. Possui <strong>modo offline</strong>, <strong>exportação Excel/PDF</strong>
-  e <strong>dashboards</strong> para suporte à gestão.
-</p>
-
-<h3 style="margin: 14px 0 8px;">O que este sistema resolve</h3>
-<ul>
-  <li><strong>Vendas:</strong> emissão de recibos, histórico e relatórios exportáveis.</li>
-  <li><strong>Estoque:</strong> controle e movimentações com filtros por categoria/fornecedor/período.</li>
-  <li><strong>Financeiro:</strong> contas a pagar e caixa geral com rastreabilidade.</li>
-  <li><strong>Permissões:</strong> níveis de acesso e auditoria por usuário.</li>
-  <li><strong>Relatórios:</strong> visão gerencial com dashboards e métricas.</li>
-</ul>
-
-<h3 style="margin: 14px 0 8px;">Tecnologias</h3>
-<ul>
-  <li><strong>Backend:</strong> Django + MySQL</li>
-  <li><strong>Frontend:</strong> HTML/CSS + templates Django</li>
-  <li><strong>Dados:</strong> Excel / Power BI</li>
-</ul>
-
-<p style="color: var(--text-2); line-height: 1.6; margin-bottom: 0;">
-  Hoje busco oportunidades que unam <strong>gestão</strong>, <strong>liderança</strong> e <strong>tecnologia</strong>, entregando eficiência,
-  organização e evolução contínua para as operações.
-</p>
-
-</article>
-<article id="panel-cert" class="panel" role="tabpanel" aria-labelledby="tab-cert">
-<h2 style="margin:0 0 8px 0;">Certificados</h2>
-<ul style="margin:0; padding-left: 18px; line-height:1.7; color: var(--text-2);">
-            <li>Técnico em Manutenção e Suporte em Informática</li>
-            <li>Análise e Desenvolvimento de Sistemas - (Cursando)</li>
-            <li>Excel Básico - (Fundação Bradesco)</li>
-            <li>Excel Intermediário - (Fundação Bradesco)</li>
-            <li>Excel Avançado - (Fundação Bradesco)</li>
-            <li>Mikrotick básico - (Rede Brasil)</li>
-            <li>Criando um site simples com html, css e JavaScript - (Fundação Bradesco)</li>
-            <li>Algoritmos - (Curso Em Video)</li>
-            <li>Por dentro da segurança cibernética - (Senai SP)</li>
-            <li>Css - (Ada Tech)</li>
-            <li>Html - (Ada Tech)</li>
-            <li>Figma Para Dev’s - (Ada Tech)</li>
-            <li>Git e Versionamento - (Ada Tech)</li>
-            <li>Introdução a Infraestrutura Web - (Ada Tech)</li>
-            <li>Introdução a NodeJS - (Ada Tech)</li>
-            <li>Lógica de programação em JavaScript (Ada Tech)</li>
-            <li>Lógica de programação Intermediária em JavaScript (Ada Tech)</li>
-            <li>Introdução ao Java - (Ada Tech)</li>
-            <li>Programação Orientada a Objetos em Java - (Ada Tech)</li>
-            <li>Desing Pattens em Java - (Ada Tech)</li>
-            <li>Python - Noções básicas - (Ada Tech)</li>
-            <li>Rede e sistemas - (Ada Tech)</li>
-</ul>
-</article>
-</div>
-</section>
-
-  <footer>© <span id="year"></span> Raudiney Farias · Feito com carinho</footer>
-
   <script>
-    // =================== CONFIG RÁPIDA ===================
-    // Troque as URLs pelos seus trabalhos reais
-    const fotoPerfil = "Portifolio.png"; // sua foto
-    const logo1 = "Logo versão 2.png";
-    const logo2 = "logo_nova.png";
-    // Galerias
-    const imagesArtes = [
-      "Logo versão 2.png",
-      "logos_artes/camaro.png",
-      "logos_artes/porshe.png",
-      "logos_artes/ferrari.png",
-      "logos_artes/hayabusa.png",
-      "logos_artes/africa_twin.png",
-      "logos_artes/swat.png",
-      "logos_artes/bart_vibes.png",
-      "logos_artes/bart_rei.png",
-      "logos_artes/bart_graffiti.png",
-      "logos_artes/cadeado_ciber.png",
-      "logos_artes/hacker.png",
-      "logos_artes/scanner.png",
-      "logos_artes/raudsistemas.png",
-      "logos_artes/sueldo_barber.png",
-      "logos_artes/eder_otica.png",
-      "logos_artes/polliana.png",
-      "logos_artes/ery.png",
-      "logos_artes/gustavo_farias.png",
-      "logos_artes/italo_kalyel.png",
-      "logos_artes/paula.png",
-      "logos_artes/pequenos_adoradores.png",
-    ];
-    const imagesSistemas = [
-      "raudsistemas/r_s.png",
-      "raudsistemas/rds_login.png",
-      "raudsistemas/rds_tela_principal.png",
-      "raudsistemas/tela_principal_rds.png",
-      "raudsistemas/tela_inicial_modal.png",
-      "raudsistemas/rds_configuracoes_fiscais.png",
-      "raudsistemas/rds_estoque.png",
-      "raudsistemas/rds_dashboard.png",
-      "raudsistemas/dashboard_rds.png",
-      "raudsistemas/dashboard_rds2.png",
-      "raudsistemas/dashboard_rds3.png",
-      "raudsistemas/dashboard_rds4.png",
-      "raudsistemas/dashboard_rds5.png",
-      "raudsistemas/lista_espera_1.png",
-      "raudsistemas/l_e_login.png",
-      "raudsistemas/l_e_tela_principal.png",
-      "raudsistemas/l_e_tela_principal_menu.png",
-      "raudsistemas/l_e_tela_principal_modelos.png",
-      "raudsistemas/l_e_tela_principal_modelos_2.png",
-      "raudsistemas/l_e_tela_dashboard.png",
-      "raudsistemas/projeto_marketing.png",
-      "raudsistemas/gestao_mkt_login.png",
-      "raudsistemas/gestao_mkt_tela_principal.png",
-      "raudsistemas/projeto_academia.gif",
-      "raudsistemas/projeto_academia_login.png",
-      "raudsistemas/projeto_academia_tela_inicial_1.png",
-      "raudsistemas/projeto_academia_tela_inicial_2.png",
-      "raudsistemas/projeto_academia_tela_treino.png",
-      "raudsistemas/projeto_academia_tela_treino_2.png",
-      "raudsistemas/projeto_academia_tela_treino_3.png",
-      "raudsistemas/projeto_academia_tela_treino_4.png",
-      "raudsistemas/projeto_academia_tela_treino_5.png",
-      "raudsistemas/projeto_academia_tela_exercicio_1.png",
-      "raudsistemas/projeto_academia_tela_exercicio_2.png",
-      "raudsistemas/projeto_academia_tela_exercicio_3.png",
-      "raudsistemas/projeto_academia_agenda_1.png",
-      "raudsistemas/projeto_academia_agenda_2.png",
-      "raudsistemas/projeto_academia_agenda_3.png",
-      "raudsistemas/projeto_academia_avaliacao_1.png",
-      "raudsistemas/projeto_academia_avaliacao_2.png",
-      "raudsistemas/projeto_academia_avaliacao_3.png",
-      "raudsistemas/projeto_academia_aluno.png",
-      "raudsistemas/projeto_academia_aluno_2.png",
-      "raudsistemas/projeto_academia_aluno_3.png",
-      "raudsistemas/projeto_academia_timeline_1.png",
-      "raudsistemas/projeto_academia_timeline_2.png",
-      "raudsistemas/projeto_academia_dashboard_1.png",
-      "raudsistemas/projeto_academia_financeiro_1.png",
-      "raudsistemas/projeto_academia_financeiro_2.png",
-      "raudsistemas/projeto_academia_financeiro_3.png",
-      "raudsistemas/projeto_academia_financeiro_4.png",
-      "raudsistemas/projeto_academia_planos.png",
-      "raudsistemas/projeto_academia_funcionario_1.png",
-      "raudsistemas/projeto_academia_funcionario_2.png",
-    ];
-    // Preencher dinamicamente as imagens nas galerias
-    function fillGallery(containerId, images, prefix = 'Projeto') {
-      const el = document.getElementById(containerId);
-      el.innerHTML = images.map((src, i) => (
-        `<figure><img src="${src}" alt="${prefix} ${i+1}" loading="lazy" /><figcaption>${prefix} ${i+1}</figcaption></figure>`
-      )).join('');
-    }
-    fillGallery('grid-artes', imagesArtes, 'Arte/Logo');
-    fillGallery('grid-sistemas', imagesSistemas, 'Sistema');
+    // ===== Ano automático
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Substituir foto e logos, se desejar
-    document.querySelector('.photo img').src = fotoPerfil;
-
-
-    // Atualizar ano
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // =================== DRAWERS ===================
-    const drawerL = document.getElementById('drawer-left');
-    const drawerR = document.getElementById('drawer-right');
-    const backdropL = document.getElementById('backdrop-left');
-    const backdropR = document.getElementById('backdrop-right');
-    const btnL = document.getElementById('btn-left');
-    const btnR = document.getElementById('btn-right');
-
-    function setBodyLock(lock) {
-      document.body.style.overflow = lock ? 'hidden' : 'auto';
-    }
-
-    function openDrawer(which) {
-      if (which === 'left') {
-        drawerL.classList.add('open');
-        backdropL.classList.add('open');
-        btnL.setAttribute('aria-expanded', 'true');
-      } else {
-        drawerR.classList.add('open');
-        backdropR.classList.add('open');
-        btnR.setAttribute('aria-expanded', 'true');
-      }
-      setBodyLock(true);
-    }
-    function closeDrawer(which) {
-      if (which === 'left') {
-        drawerL.classList.remove('open');
-        backdropL.classList.remove('open');
-        btnL.setAttribute('aria-expanded', 'false');
-      } else if (which === 'right') {
-        drawerR.classList.remove('open');
-        backdropR.classList.remove('open');
-        btnR.setAttribute('aria-expanded', 'false');
-      } else { // both
-        drawerL.classList.remove('open');
-        backdropL.classList.remove('open');
-        btnL.setAttribute('aria-expanded', 'false');
-        drawerR.classList.remove('open');
-        backdropR.classList.remove('open');
-        btnR.setAttribute('aria-expanded', 'false');
-      }
-      if (!drawerL.classList.contains('open') && !drawerR.classList.contains('open')) setBodyLock(false);
-    }
-
-    btnL.addEventListener('click', () => {
-      const isOpen = drawerL.classList.contains('open');
-      closeDrawer('right');
-      isOpen ? closeDrawer('left') : openDrawer('left');
-    });
-    btnR.addEventListener('click', () => {
-      const isOpen = drawerR.classList.contains('open');
-      closeDrawer('left');
-      isOpen ? closeDrawer('right') : openDrawer('right');
-    });
-    backdropL.addEventListener('click', () => closeDrawer('left'));
-    backdropR.addEventListener('click', () => closeDrawer('right'));
-    document.querySelector('[data-close="left"]').addEventListener('click', () => closeDrawer('left'));
-    document.querySelector('[data-close="right"]').addEventListener('click', () => closeDrawer('right'));
-
-    // Fechar com ESC
-    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer(); });
-
-    // =================== CANVAS DE PARTÍCULAS ===================
-    (function() {
-      const canvas = document.getElementById('bg-canvas');
-      const ctx = canvas.getContext('2d');
-      let DPR = Math.min(window.devicePixelRatio || 1, 2);
-      let particles = [];
-      let rafId;
-      let mouse = { x: null, y: null };
-
-      function resize() {
-        const w = window.innerWidth, h = window.innerHeight;
-        canvas.width = Math.floor(w * DPR);
-        canvas.height = Math.floor(h * DPR);
-        canvas.style.width = w + 'px';
-        canvas.style.height = h + 'px';
-      }
-
-      class Particle {
-        constructor() { this.reset(); }
-        reset() {
-          this.x = Math.random() * window.innerWidth;
-          this.y = Math.random() * window.innerHeight;
-          this.vx = (Math.random() - .5) * .5;
-          this.vy = (Math.random() - .5) * .5;
-          this.size = Math.random() * 2 + .6;
-          this.alpha = Math.random() * .5 + .3;
-        }
-        step() {
-          if (mouse.x != null && mouse.y != null) {
-            const dx = (mouse.x - this.x), dy = (mouse.y - this.y);
-            const dist = Math.hypot(dx, dy) || 1;
-            const force = Math.min(0.04 / dist, 0.02);
-            this.vx += dx * force; this.vy += dy * force;
-          }
-          this.x += this.vx; this.y += this.vy;
-          if (this.x < -40 || this.x > window.innerWidth + 40 || this.y < -40 || this.y > window.innerHeight + 40) this.reset();
-        }
-        draw() {
-          ctx.beginPath();
-          ctx.arc(this.x * DPR, this.y * DPR, this.size * DPR, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(34,211,238,${this.alpha})`;
-          ctx.fill();
-        }
-      }
-
-      function init() {
-        particles = Array.from({ length: Math.min(140, Math.floor(window.innerWidth/10)) }, () => new Particle());
-      }
-
-      function render() {
-        const w = canvas.width, h = canvas.height;
-        ctx.clearRect(0, 0, w, h);
-        // leve véu radial para reforçar o preto
-        const grad = ctx.createRadialGradient(w*0.7, h*0.2, 50, w*0.7, h*0.2, Math.max(w, h));
-        grad.addColorStop(0, 'rgba(34,34,34,0.6)');
-        grad.addColorStop(1, 'rgba(0,0,0,1)');
-        ctx.fillStyle = grad; ctx.fillRect(0,0,w,h);
-        particles.forEach(p => { p.step(); p.draw(); });
-        rafId = requestAnimationFrame(render);
-      }
-
-      function onMouseMove(e) { mouse.x = e.clientX; mouse.y = e.clientY; }
-
-      resize(); init(); render();
-      window.addEventListener('resize', () => { resize(); init(); });
-      window.addEventListener('mousemove', onMouseMove);
-      window.addEventListener('touchmove', (e) => { if (e.touches[0]) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; } }, { passive: true });
-
-      // limpar ao sair
-      window.addEventListener('beforeunload', () => cancelAnimationFrame(rafId));
+    // ===== Tema (claro/escuro)
+    (function initTheme(){
+      const saved = localStorage.getItem("rf_theme");
+      if(saved && saved !== "light") document.documentElement.setAttribute("data-theme", saved);
+      updateThemeIconLabel();
     })();
-        // ===== BOTÃO “Sobre” -> abre/fecha o modal central =====
-    const btnCenter = document.getElementById('btn-center');
-    const modalSobre = document.getElementById('modal-sobre');
-    const backdropCenter = document.getElementById('backdrop-center');
-    const closeSobre = document.getElementById('close-sobre'); // já existe no seu HTML
 
-    function openModalSobre(){
-      if(!modalSobre) return;
-      modalSobre.classList.add('open');
-      if(backdropCenter) backdropCenter.classList.add('open');
-      if(btnCenter) btnCenter.setAttribute('aria-expanded','true');
-      setBodyLock(true);
-    }
-    function closeModalSobre(){
-      if(!modalSobre) return;
-      modalSobre.classList.remove('open');
-      if(backdropCenter) backdropCenter.classList.remove('open');
-      if(btnCenter) btnCenter.setAttribute('aria-expanded','false');
-      // libera scroll só se os drawers também estiverem fechados
-      if (!drawerL.classList.contains('open') && !drawerR.classList.contains('open')){
-        setBodyLock(false);
+    function updateThemeIconLabel(){
+      const theme = document.documentElement.getAttribute("data-theme") || "light";
+      const btn = document.getElementById("themeBtn");
+      const label = document.getElementById("themeLabel");
+      const iconUse = btn.querySelector("use");
+      if(theme === "dark"){
+        label.textContent = "Claro";
+        iconUse.setAttribute("href", "#i-sun");
+      } else {
+        label.textContent = "Escuro";
+        iconUse.setAttribute("href", "#i-moon");
       }
     }
 
-    // eventos
-    if(btnCenter) btnCenter.addEventListener('click', openModalSobre);
-    if(backdropCenter) backdropCenter.addEventListener('click', closeModalSobre);
-    if(closeSobre) closeSobre.addEventListener('click', closeModalSobre);
-
-    // ESC fecha modal e drawers (sem erro se a função não existir)
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeDrawer();
-        closeModalSobre();
-      }
+    document.getElementById("themeBtn").addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme") || "light";
+      const next = current === "dark" ? "light" : "dark";
+      if(next === "light") document.documentElement.removeAttribute("data-theme");
+      else document.documentElement.setAttribute("data-theme", "dark");
+      localStorage.setItem("rf_theme", next);
+      updateThemeIconLabel();
     });
-    // ===== Abas do modal (Sobre / Certificados) =====
-    const tabSobre = document.getElementById('tab-sobre');
-    const tabCert  = document.getElementById('tab-cert');
-    const panelSobre = document.getElementById('panel-sobre');
-    const panelCert  = document.getElementById('panel-cert');
 
-    function activateTab(which){
-      const isSobre = which === 'sobre';
-      // botões
-      tabSobre.classList.toggle('active', isSobre);
-      tabCert.classList.toggle('active', !isSobre);
-      tabSobre.setAttribute('aria-selected', String(isSobre));
-      tabCert.setAttribute('aria-selected', String(!isSobre));
-      // painéis
-      panelSobre.classList.toggle('active', isSobre);
-      panelCert.classList.toggle('active', !isSobre);
+    // ===== Copiar e-mail
+    function wireCopy(btnId){
+      const btn = document.getElementById(btnId);
+      if(!btn) return;
+      btn.addEventListener("click", async () => {
+        const email = btn.getAttribute("data-email") || "SEUEMAIL@DOMINIO.COM";
+        try{
+          await navigator.clipboard.writeText(email);
+          const old = btn.textContent;
+          btn.textContent = "Copiado ✓";
+          setTimeout(() => btn.textContent = old, 1200);
+        }catch(e){
+          prompt("Copie o e-mail:", email);
+        }
+      });
+    }
+    wireCopy("copyEmailBtn");
+    wireCopy("copyEmailBtn2");
+
+    // ===== Highlight do menu (quando visível)
+    const links = Array.from(document.querySelectorAll('nav.menu a[href^="#"]'));
+    const sections = links.map(a => document.querySelector(a.getAttribute("href"))).filter(Boolean);
+
+    const setActive = () => {
+      if(!links.length) return;
+      const y = window.scrollY + 120;
+      let idx = 0;
+      for(let i=0;i<sections.length;i++){
+        if(sections[i].offsetTop <= y) idx = i;
+      }
+      links.forEach((a,i) => {
+        if(i === idx){
+          a.style.color = "var(--text)";
+          a.style.background = "color-mix(in srgb, var(--green-100) 70%, transparent)";
+        }else{
+          a.style.color = "var(--muted)";
+          a.style.background = "transparent";
+        }
+      });
+    };
+    window.addEventListener("scroll", setActive, { passive: true });
+    setActive();
+
+    // ===== Certificados (dados + filtros + busca)
+    const certs = [
+      // Gestão/Financeiro e Excel (prioridade visual)
+      { name: "Excel Básico", org: "Fundação Bradesco", tags: ["excel","gestao"] },
+      { name: "Excel Intermediário", org: "Fundação Bradesco", tags: ["excel","gestao"] },
+      { name: "Excel Avançado", org: "Fundação Bradesco", tags: ["excel","gestao"] },
+
+      // Formação / Técnico
+      { name: "Técnico em Manutenção e Suporte em Informática", org: "IFPB", tags: ["infra"] },
+      { name: "Gestão Financeira (Cursando)", org: "Uniasselvi", tags: ["gestao"] },
+
+      // Fundação Bradesco / Dev básico
+      { name: "Criando um site simples com HTML, CSS e JavaScript", org: "Fundação Bradesco", tags: ["dev"] },
+
+      // Curso em Vídeo
+      { name: "Algoritmos", org: "Curso em Vídeo", tags: ["dev"] },
+
+      // Senai
+      { name: "Por dentro da segurança cibernética", org: "SENAI SP", tags: ["seg","infra"] },
+
+      // Ada Tech
+      { name: "HTML", org: "Ada Tech", tags: ["dev"] },
+      { name: "CSS", org: "Ada Tech", tags: ["dev"] },
+      { name: "Figma para Dev’s", org: "Ada Tech", tags: ["dev"] },
+      { name: "Git e Versionamento", org: "Ada Tech", tags: ["dev"] },
+      { name: "Introdução a Infraestrutura Web", org: "Ada Tech", tags: ["infra"] },
+      { name: "Introdução a NodeJS", org: "Ada Tech", tags: ["dev"] },
+      { name: "Lógica de programação em JavaScript", org: "Ada Tech", tags: ["dev"] },
+      { name: "Lógica de programação Intermediária em JavaScript", org: "Ada Tech", tags: ["dev"] },
+      { name: "Introdução ao Java", org: "Ada Tech", tags: ["dev"] },
+      { name: "Programação Orientada a Objetos em Java", org: "Ada Tech", tags: ["dev"] },
+      { name: "Design Patterns em Java", org: "Ada Tech", tags: ["dev"] },
+      { name: "Python — Noções básicas", org: "Ada Tech", tags: ["dev"] },
+      { name: "Rede e sistemas", org: "Ada Tech", tags: ["infra"] },
+
+      // Mikrotik
+      { name: "Mikrotik básico", org: "Rede Brasil", tags: ["infra"] },
+    ];
+
+    const wrap = document.getElementById("certWrap");
+    const searchInput = document.getElementById("certSearch");
+    const chips = Array.from(document.querySelectorAll(".chip[data-filter]"));
+    let activeFilter = "todos";
+
+    function renderCerts(){
+      const q = (searchInput.value || "").trim().toLowerCase();
+
+      const filtered = certs.filter(c => {
+        const inFilter = activeFilter === "todos" ? true : c.tags.includes(activeFilter);
+        const inSearch = !q ? true : (c.name.toLowerCase().includes(q) || c.org.toLowerCase().includes(q));
+        return inFilter && inSearch;
+      });
+
+      wrap.innerHTML = filtered.map(c => {
+        const label = c.tags.includes("excel") ? "Excel" :
+                      c.tags.includes("gestao") ? "Gestão" :
+                      c.tags.includes("seg") ? "Segurança" :
+                      c.tags.includes("infra") ? "Infra" : "Dev";
+
+        return `
+          <div class="cert" data-tags="${c.tags.join(",")}">
+            <div>
+              <div class="name">${escapeHtml(c.name)}</div>
+              <div class="org">${escapeHtml(c.org)}</div>
+            </div>
+            <div class="meta">
+              <span class="badge">${label}</span>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      if(filtered.length === 0){
+        wrap.innerHTML = `
+          <div class="item" style="grid-column:1 / -1;">
+            <span class="badge">Ops</span>
+            <div>
+              <strong>Nenhum certificado encontrado</strong>
+              <p>Tente outra palavra-chave ou selecione “Todos”.</p>
+            </div>
+          </div>
+        `;
+      }
     }
 
-    if (tabSobre && tabCert) {
-      tabSobre.addEventListener('click', () => activateTab('sobre'));
-      tabCert.addEventListener('click',  () => activateTab('cert'));
+    chips.forEach(btn => {
+      btn.addEventListener("click", () => {
+        activeFilter = btn.getAttribute("data-filter");
+        chips.forEach(b => b.setAttribute("aria-pressed", String(b === btn)));
+        renderCerts();
+      });
+    });
+
+    searchInput.addEventListener("input", () => renderCerts());
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
     }
-    
-    // =================== CONTATOS ===================
-    // 3.1) Configuração dos seus perfis — PREENCHA AQUI
-    const SOCIAL = {
-      // whatsapp: "https://wa.me/5583XXXXXXXXX?text=Ol%C3%A1%20Raudiney%2C%20vim%20pelo%20portf%C3%B3lio%21",
-      instagram: "https://instagram.com/raudineyfarias",
-      github: "https://github.com/RaudineyFarias",
-      linkedin: "https://www.linkedin.com/in/raudiney-farias-337247237/"
+
+    renderCerts();
+
+     (function(){
+    const form = document.getElementById("rfForm");
+    const btnClear = document.getElementById("limpar");
+    const btnExample = document.getElementById("usarExemplo");
+    const btnCopy = document.getElementById("copiarResumo");
+    const toggle = document.getElementById("conservador");
+
+    const outPerdaMes = document.getElementById("perdaMes");
+    const outPerdaAno = document.getElementById("perdaAno");
+    const kDesperdicio = document.getElementById("kDesperdicio");
+    const kTempo = document.getElementById("kTempo");
+    const kHoras = document.getElementById("kHoras");
+    const insight = document.getElementById("insight");
+
+    const fields = {
+      gasto: document.getElementById("gasto"),
+      perc: document.getElementById("perc"),
+      horas: document.getElementById("horas"),
+      custoHora: document.getElementById("custoHora"),
+      taxaRecuperavel: document.getElementById("taxaRecuperavel"),
     };
 
-    // 3.2) Amarra os links nos botões
-    document.getElementById('link-whatsapp').href = SOCIAL.whatsapp;
-    document.getElementById('link-instagram').href = SOCIAL.instagram;
-    document.getElementById('link-github').href   = SOCIAL.github;
-    document.getElementById('link-linkedin').href = SOCIAL.linkedin;
+    // ---- helpers
+    const brl = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 });
+    const brl2 = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const num = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 1 });
 
-    // 3.3) Elementos do drawer de contatos
-    const drawerC = document.getElementById('drawer-contact');
-    const backdropC = document.getElementById('backdrop-contact');
-    const btnC = document.getElementById('btn-contact');
-
-    // Função auxiliar para saber se algum drawer está aberto
-    function anyDrawerOpen(){
-      return drawerL.classList.contains('open')
-          || drawerR.classList.contains('open')
-          || drawerC.classList.contains('open');
+    function parsePtNumber(value){
+      // aceita "50.000,50" ou "50000.50" ou "50 000"
+      const v = String(value || "").trim();
+      if(!v) return NaN;
+      const cleaned = v.replace(/\s/g,"").replace(/\./g,"").replace(",",".");
+      const n = Number(cleaned);
+      return Number.isFinite(n) ? n : NaN;
     }
 
-    // Abre/fecha contatos
-    function openContact(){
-      // fecha outros para não sobrepor
-      closeDrawer('left');
-      closeDrawer('right');
-      drawerC.classList.add('open');
-      backdropC.classList.add('open');
-      btnC?.setAttribute('aria-expanded','true');
-      setBodyLock(true);
-    }
-    function closeContact(){
-      drawerC.classList.remove('open');
-      backdropC.classList.remove('open');
-      btnC?.setAttribute('aria-expanded','false');
-      if (!anyDrawerOpen() && !document.getElementById('modal-sobre')?.classList.contains('open')){
-        setBodyLock(false);
-      }
+    function clamp(n, min, max){
+      return Math.max(min, Math.min(max, n));
     }
 
-    // Botões/backs
-    btnC?.addEventListener('click', () => {
-      const isOpen = drawerC.classList.contains('open');
-      isOpen ? closeContact() : openContact();
+    function setToggleText(){
+      const on = toggle.getAttribute("aria-pressed") === "true";
+      toggle.querySelector(".rf-calc__switchText").textContent = on ? "Ativo" : "Inativo";
+    }
+    setToggleText();
+
+    toggle.addEventListener("click", () => {
+      const current = toggle.getAttribute("aria-pressed") === "true";
+      toggle.setAttribute("aria-pressed", String(!current));
+      setToggleText();
     });
-    backdropC?.addEventListener('click', closeContact);
-    document.querySelector('[data-close="contact"]')?.addEventListener('click', closeContact);
 
-    // ESC fecha também contatos (aproveita seu handler global)
-    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeContact(); });
+    function compute(){
+      const gasto = parsePtNumber(fields.gasto.value);
+      const perc = parsePtNumber(fields.perc.value);
+      const horas = parsePtNumber(fields.horas.value);
+      const custoHora = parsePtNumber(fields.custoHora.value);
+      const taxaRec = parsePtNumber(fields.taxaRecuperavel.value);
 
-    // ============ VIEWER (modal de imagem) ============
-// ============ VIEWER (modal de imagem) com Navegação + Zoom ============
-const BRAND_LOGOS = {
-  raudsistemas: "logo_nova.png",
-  byrdnart:     "Logo versão 2.png"
-};
+      if([gasto, perc, horas, custoHora, taxaRec].some(n => !Number.isFinite(n))){
+        throw new Error("Preencha todos os campos com números válidos.");
+      }
 
-function detectBrand(src) {
-  const s = (src || "").toLowerCase();
-  return /raudsistemas|\/rds_|_rds|gestao_mkt|lista_espera/.test(s) ? "raudsistemas" : "byrdnart";
-}
+      const percClamped = clamp(perc, 0, 80);               // segurança
+      const taxaClamped = clamp(taxaRec, 0, 100);
+      const horasClamped = clamp(horas, 0, 600);            // teto razoável
+      const custoHoraClamped = clamp(custoHora, 0, 2000);   // teto razoável
 
-// Elementos
-const viewerModal   = document.getElementById('modal-viewer');
-const viewerImg     = document.getElementById('viewer-img');
-const viewerLogo    = document.getElementById('viewer-logo');
-const viewerTitle   = document.getElementById('viewer-title');
-const viewerCaption = document.getElementById('viewer-caption-text');
-const viewerClose   = document.getElementById('viewer-close');
-const viewerBack    = document.getElementById('backdrop-viewer');
-const viewerPrevBtn = document.getElementById('viewer-prev');
-const viewerNextBtn = document.getElementById('viewer-next');
-const viewerCounter = document.getElementById('viewer-counter');
-const viewerHint    = document.getElementById('viewer-hint');
+      // ---- impactos
+      const perdaDesperdicio = gasto * (percClamped / 100);
 
-// Estado da galeria
-let currentGalleryName = null;  // 'artes' | 'sistemas'
-let currentGallery = [];        // array de srcs
-let currentIndex = 0;
+      // horas recuperáveis * custo/hora
+      const horasRecuperaveis = horasClamped * (taxaClamped / 100);
+      let custoTempoRec = horasRecuperaveis * custoHoraClamped;
 
-// Estado de zoom/pan
-let scale = 1, minScale = 1, maxScale = 3;
-let tx = 0, ty = 0; // translate
-let dragging = false, lastX = 0, lastY = 0;
+      // modo conservador reduz estimativas (evita exagero)
+      const conservador = toggle.getAttribute("aria-pressed") === "true";
+      const fator = conservador ? 0.75 : 1.0; // reduz 25%
+      const perdaMes = (perdaDesperdicio + custoTempoRec) * fator;
 
-// Util
-function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
+      // outputs
+      outPerdaMes.textContent = brl.format(perdaMes);
+      outPerdaAno.textContent = brl.format(perdaMes * 12) + " / ano";
+      kDesperdicio.textContent = brl2.format(perdaDesperdicio * fator);
+      kTempo.textContent = brl2.format(custoTempoRec * fator);
+      kHoras.textContent = num.format(horasRecuperaveis) + " h";
 
-function applyTransform(){
-  viewerImg.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
-  viewerImg.style.transition = 'transform .06s linear';
-  viewerImg.style.cursor = scale > 1 ? 'grab' : 'auto';
-}
+      // insight executivo (curto, forte)
+      const faixa =
+        perdaMes >= 20000 ? "alto" :
+        perdaMes >= 7000  ? "médio" : "baixo";
 
-function resetTransform(){
-  scale = 1; tx = 0; ty = 0;
-  applyTransform();
-}
+      const acao = faixa === "alto"
+        ? "Priorize padronização do processo e rastreabilidade (compras → aprovação → recebimento → financeiro)."
+        : faixa === "médio"
+          ? "Uma rotina simples de conferência e indicadores já tende a reduzir perdas."
+          : "Há espaço para ganho leve com organização e pequenos ajustes de fluxo.";
 
-function updateCaptionAndBrand(src, caption){
-  const brand = detectBrand(src);
-  viewerLogo.src = BRAND_LOGOS[brand] || BRAND_LOGOS.byrdnart;
-  viewerLogo.alt = `Logo ${brand}`;
-  viewerTitle.textContent = brand === "raudsistemas" ? "RaudSistemas" : "byrdnart";
-  viewerCaption.textContent = caption || "";
-}
+      const comparativo =
+        perdaMes >= 15000 ? "Isso normalmente já justifica rever fornecedores, checklist e etapas de conferência."
+        : perdaMes >= 5000 ? "Um controle de compras e um fechamento financeiro mais estruturado costumam reduzir esse tipo de custo oculto."
+        : "Com consistência de dados e um processo leve, a tendência é manter esse impacto controlado.";
 
-function updateCounter(){
-  if (!currentGallery.length) { viewerCounter.textContent = "—"; return; }
-  viewerCounter.textContent = `${currentIndex+1}/${currentGallery.length}`;
-}
+      const modoTxt = conservador ? "conservador" : "realista";
+      insight.innerHTML = `
+        <strong>Leitura executiva:</strong> no cenário <strong>${modoTxt}</strong>, o custo oculto estimado é de
+        <strong>${brl.format(perdaMes)}</strong> por mês (${brl.format(perdaMes * 12)} ao ano).
+        <br><br>
+        <strong>Direção:</strong> ${acao}
+        <br>
+        <span style="color: var(--muted);">${comparativo}</span>
+      `;
 
-function updateArrowsVisibility(){
-  const show = currentGallery.length > 1;
-  viewerPrevBtn.style.display = show ? 'block' : 'none';
-  viewerNextBtn.style.display = show ? 'block' : 'none';
-  viewerCounter.style.display = show ? 'block' : 'none';
-}
-
-function openViewerByIndex(galleryName, index){
-  currentGalleryName = galleryName;
-  currentGallery = galleryName === 'sistemas' ? imagesSistemas : imagesArtes;
-  currentIndex = clamp(index, 0, currentGallery.length - 1);
-  const src = currentGallery[currentIndex];
-  const caption = (galleryName === 'sistemas' ? 'Sistema ' : 'Arte/Logo ') + (currentIndex + 1);
-
-  // carrega
-  viewerImg.src = src;
-  viewerImg.alt = caption;
-  updateCaptionAndBrand(src, caption);
-  updateCounter();
-  updateArrowsVisibility();
-  resetTransform();
-
-  viewerModal.classList.add('open');
-  viewerBack.classList.add('open');
-  setBodyLock(true);
-}
-
-function openViewerFromClick(src, caption){
-  // tenta identificar de qual galeria veio
-  let name = 'artes';
-  let idx = imagesArtes.indexOf(src);
-  if (idx === -1){
-    name = 'sistemas';
-    idx = imagesSistemas.indexOf(src);
-  }
-  if (idx === -1) idx = 0;
-  openViewerByIndex(name, idx);
-}
-
-function closeViewer() {
-  viewerModal.classList.remove('open');
-  viewerBack.classList.remove('open');
-  const sobreOpen = document.getElementById('modal-sobre')?.classList.contains('open');
-  if (!drawerL.classList.contains('open') && !drawerR.classList.contains('open') && !sobreOpen) {
-    setBodyLock(false);
-  }
-}
-
-// Navegação
-function go(delta){
-  if (!currentGallery.length) return;
-  currentIndex = (currentIndex + delta + currentGallery.length) % currentGallery.length;
-  const src = currentGallery[currentIndex];
-  const caption = (currentGalleryName === 'sistemas' ? 'Sistema ' : 'Arte/Logo ') + (currentIndex + 1);
-  viewerImg.src = src;
-  viewerImg.alt = caption;
-  updateCaptionAndBrand(src, caption);
-  updateCounter();
-  resetTransform();
-}
-
-// Eventos básicos
-viewerClose?.addEventListener('click', closeViewer);
-viewerBack?.addEventListener('click', closeViewer);
-viewerPrevBtn?.addEventListener('click', () => go(-1));
-viewerNextBtn?.addEventListener('click', () => go(+1));
-
-window.addEventListener('keydown', (e) => {
-  if (!viewerModal.classList.contains('open')) return;
-  if (e.key === 'Escape') closeViewer();
-  if (e.key === 'ArrowLeft') go(-1);
-  if (e.key === 'ArrowRight') go(+1);
-});
-
-// Delegação de clique nas galerias
-function attachViewer(containerId, galleryName) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-  container.addEventListener('click', (ev) => {
-    const img = ev.target.closest('img');
-    if (!img) return;
-    const src = img.getAttribute('src');
-    let idx = (galleryName === 'sistemas' ? imagesSistemas : imagesArtes).indexOf(src);
-    if (idx < 0) idx = 0;
-    openViewerByIndex(galleryName, idx);
-  });
-}
-attachViewer('grid-artes', 'artes');
-attachViewer('grid-sistemas', 'sistemas');
-
-// ==================== ZOOM + PAN ====================
-function toggleZoom(centerX, centerY){
-  const rect = viewerImg.getBoundingClientRect();
-  const cx = centerX ?? (rect.left + rect.width/2);
-  const cy = centerY ?? (rect.top + rect.height/2);
-
-  const prevScale = scale;
-  scale = (scale === 1) ? 2.2 : 1;
-
-  // ajustar translate para focar no ponto clicado
-  const dx = cx - (rect.left + rect.width/2);
-  const dy = cy - (rect.top + rect.height/2);
-
-  tx = (scale > 1) ? (-dx * (scale - 1)) : 0;
-  ty = (scale > 1) ? (-dy * (scale - 1)) : 0;
-
-  applyTransform();
-}
-
-viewerImg.addEventListener('dblclick', (e) => {
-  e.preventDefault();
-  toggleZoom(e.clientX, e.clientY);
-});
-
-viewerImg.addEventListener('mousedown', (e) => {
-  if (scale === 1) return;
-  dragging = true;
-  viewerImg.style.cursor = 'grabbing';
-  lastX = e.clientX;
-  lastY = e.clientY;
-});
-window.addEventListener('mousemove', (e) => {
-  if (!dragging) return;
-  const dx = e.clientX - lastX;
-  const dy = e.clientY - lastY;
-  lastX = e.clientX; lastY = e.clientY;
-  tx += dx; ty += dy;
-  applyTransform();
-});
-window.addEventListener('mouseup', () => {
-  dragging = false;
-  if (scale > 1) viewerImg.style.cursor = 'grab';
-});
-
-// Zoom com scroll (sem cores/styles)
-viewerImg.addEventListener('wheel', (e) => {
-  if (!viewerModal.classList.contains('open')) return;
-  e.preventDefault();
-  const rect = viewerImg.getBoundingClientRect();
-  const cx = e.clientX, cy = e.clientY;
-
-  let newScale = clamp(scale + (e.deltaY < 0 ? 0.2 : -0.2), minScale, maxScale);
-
-  // recalcular translate mantendo foco
-  const preX = (cx - rect.left - tx) / scale;
-  const preY = (cy - rect.top  - ty) / scale;
-  scale = newScale;
-  tx = cx - rect.left - preX * scale;
-  ty = cy - rect.top  - preY * scale;
-
-  applyTransform();
-}, { passive: false });
-
-// Swipe no mobile para navegar
-let touchStartX = 0, touchStartY = 0, touchMoved = false;
-viewerImg.addEventListener('touchstart', (e) => {
-  if (!e.touches[0]) return;
-  touchMoved = false;
-  touchStartX = e.touches[0].clientX;
-  touchStartY = e.touches[0].clientY;
-}, { passive: true });
-
-viewerImg.addEventListener('touchmove', (e) => {
-  if (!e.touches[0]) return;
-  const dx = e.touches[0].clientX - touchStartX;
-  const dy = e.touches[0].clientY - touchStartY;
-  if (Math.hypot(dx, dy) > 10) touchMoved = true;
-
-  // quando com zoom, transformar em pan
-  if (scale > 1){
-    tx += dx * 0.08;
-    ty += dy * 0.08;
-    applyTransform();
-    touchStartX = e.touches[0].clientX;
-    touchStartY = e.touches[0].clientY;
-  }
-}, { passive: true });
-
-viewerImg.addEventListener('touchend', (e) => {
-  // swipe para navegar só se NÃO estiver com zoom
-  if (scale === 1 && touchMoved){
-    // checa direção
-    const endX = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientX : touchStartX;
-    const dx = endX - touchStartX;
-    if (Math.abs(dx) > 40){
-      if (dx < 0) go(+1); else go(-1);
+      return {
+        perdaMes, perdaAno: perdaMes * 12,
+        perdaDesperdicio: perdaDesperdicio * fator,
+        custoTempoRec: custoTempoRec * fator,
+        horasRecuperaveis
+      };
     }
-  }
-}, { passive: true });
 
-// === CURTIR (reação sutil) ===
-const btnLike = document.getElementById('btn-like');
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      try{
+        compute();
+      }catch(err){
+        insight.innerHTML = `<strong>Atenção:</strong> ${String(err.message || err)}`;
+      }
+    });
 
-function showToast(msg){
-  const toast = document.createElement('div');
-  toast.className = 'toast';
-  toast.textContent = msg;
-  document.body.appendChild(toast);
-  // entrada suave
-  setTimeout(()=> toast.classList.add('show'), 30);
-  // saída e remoção
-  setTimeout(()=>{
-    toast.classList.remove('show');
-    setTimeout(()=> toast.remove(), 300);
-  }, 2000);
-}
+    btnClear.addEventListener("click", () => {
+      form.reset();
+      fields.taxaRecuperavel.value = "35";
+      toggle.setAttribute("aria-pressed", "true");
+      setToggleText();
 
-btnLike?.addEventListener('click', () => {
-  showToast("Você gostou desta imagem ✨");
-  // pequena animação do botão
-  btnLike.style.transform = "scale(0.95)";
-  btnLike.style.background = "var(--glass-2)";
-  setTimeout(()=>{
-    btnLike.style.transform = "scale(1)";
-    btnLike.style.background = "var(--glass)";
-  },200);
-});
+      outPerdaMes.textContent = "R$ 0";
+      outPerdaAno.textContent = "R$ 0 / ano";
+      kDesperdicio.textContent = "R$ 0";
+      kTempo.textContent = "R$ 0";
+      kHoras.textContent = "0 h";
+      insight.innerHTML = `Preencha os campos e clique em <strong>“Analisar impacto”</strong>.`;
+    });
 
+    btnExample.addEventListener("click", () => {
+      fields.gasto.value = "50.000";
+      fields.perc.value = "3";
+      fields.horas.value = "40";
+      fields.custoHora.value = "25";
+      fields.taxaRecuperavel.value = "35";
+      toggle.setAttribute("aria-pressed", "true");
+      setToggleText();
+      try{ compute(); }catch(_){}
+    });
+
+    btnCopy.addEventListener("click", async () => {
+      try{
+        const data = compute();
+        const resumo =
+          `Resumo (Desperdício Invisível)\n` +
+          `Perda estimada/mês: ${brl.format(data.perdaMes)}\n` +
+          `Perda estimada/ano: ${brl.format(data.perdaAno)}\n` +
+          `• Desperdício/retrabalho: ${brl2.format(data.perdaDesperdicio)}\n` +
+          `• Tempo manual recuperável: ${brl2.format(data.custoTempoRec)}\n` +
+          `• Horas recuperáveis: ${num.format(data.horasRecuperaveis)} h\n`;
+        await navigator.clipboard.writeText(resumo);
+        const old = btnCopy.textContent;
+        btnCopy.textContent = "Copiado ✓";
+        setTimeout(() => btnCopy.textContent = old, 1200);
+      }catch(e){
+        prompt("Copie o resumo:", (insight.textContent || "").trim());
+      }
+    });
+
+    // input sanitization (leve): permite números, ponto, vírgula e espaço
+    Object.values(fields).forEach(el => {
+      el.addEventListener("input", () => {
+        el.value = el.value.replace(/[^\d.,\s]/g, "");
+      });
+    });
+  })();
+
+    (function(){
+    const modal = document.getElementById("rfHelpModal");
+    const openBtn = document.getElementById("rfOpenHelp");
+    const closeBtns = [
+      document.getElementById("rfCloseHelp"),
+      document.getElementById("rfCloseHelp2")
+    ].filter(Boolean);
+
+    const backdrop = modal?.querySelector(".rf-modal__backdrop");
+    const tryExample = document.getElementById("rfTryExample");
+    const btnExample = document.getElementById("usarExemplo"); // botão já existente na calculadora
+
+    let lastFocus = null;
+
+    function openModal(){
+      if(!modal) return;
+      lastFocus = document.activeElement;
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      // foca no fechar para acessibilidade
+      (closeBtns[0] || modal).focus?.();
+    }
+
+    function closeModal(){
+      if(!modal) return;
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      lastFocus?.focus?.();
+    }
+
+    openBtn?.addEventListener("click", openModal);
+    closeBtns.forEach(b => b.addEventListener("click", closeModal));
+    backdrop?.addEventListener("click", closeModal);
+
+    document.addEventListener("keydown", (e) => {
+      if(modal?.classList.contains("is-open") && e.key === "Escape"){
+        e.preventDefault();
+        closeModal();
+      }
+    });
+
+    // "Usar exemplo agora" reaproveita o botão que você já tem na calculadora
+    tryExample?.addEventListener("click", () => {
+      if(btnExample) btnExample.click();
+      closeModal();
+      // rola até a calculadora (opcional)
+      document.getElementById("calc-desperdicio")?.scrollIntoView({ behavior:"smooth", block:"start" });
+    });
+  })();
   </script>
 </body>
 </html>
-
