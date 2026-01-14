@@ -495,6 +495,51 @@
     font-size: 18px;
     letter-spacing: -0.02em;
   }
+  .rf-title--withIcon{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+}
+
+.rf-btn--icon{
+  display:inline-flex;
+  align-items:center;
+  gap: 10px;
+}
+
+.rf-btn__ico{
+  width: 26px;
+  height: 26px;
+  border-radius: 10px;
+  display:grid;
+  place-items:center;
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.18);
+}
+
+.rf-ico--btn{
+  width: 16px;
+  height: 16px;
+  color: #fff;
+}
+
+.rf-title__icon{
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  display:grid;
+  place-items:center;
+  border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  background: color-mix(in srgb, var(--green-100) 55%, transparent);
+  color: color-mix(in srgb, var(--green-900) 88%, var(--text));
+  box-shadow: 0 10px 22px rgba(17,24,39,.06);
+}
+
+.rf-ico{
+  width: 18px;
+  height: 18px;
+  display:block;
+}
   .rf-calc__sub{
     margin: 0;
     color: var(--muted);
@@ -982,7 +1027,6 @@
           <a href="#competencias">Competências</a>
           <a href="#projetos">Projeto</a>
           <a href="#certificados">Certificados</a>
-          <a href="#calc-desperdicio" class="menu-highlight">Ferramenta</a>
           <a href="#contato">Contato</a>
         </nav>
 
@@ -1034,7 +1078,16 @@
                 <span>Ver certificados</span>
               </a>
               <a class="btn" href="#calc-desperdicio">
-                <span>Ferramenta Analítica</span>
+
+    <!-- cole aqui o SVG -->
+    <svg class="rf-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M7.5 9.5h2m-2 3h2m-2 3h2M13.5 9.5h3m-3 3h3m-3 3h3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M6.25 4.75h11.5A1.5 1.5 0 0 1 19.25 6.25v11.5a1.5 1.5 0 0 1-1.5 1.5H6.25a1.5 1.5 0 0 1-1.5-1.5V6.25a1.5 1.5 0 0 1 1.5-1.5Z" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M7 7h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M16.8 6.9l1.4-1.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+
+                <span>Ferramenta</span>
               </a>
               <button class="btn" type="button" id="copyEmailBtn" data-email="raudiney-@hotmail.com">
                 <svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg>
@@ -1147,8 +1200,8 @@
               <div class="item">
                 <span class="badge">Objetivo</span>
                 <div>
-                  <strong>Atuação voltada à área financeira </strong>
-                  <p>com interface em compras, administrativo e apoio à controladoria.</p>
+                  <strong>Oportunidades na área financeira</strong>
+                  <p>Financeiro, compras, administrativo e apoio à controladoria.</p>
                 </div>
               </div>
               <div class="item">
@@ -1574,7 +1627,18 @@
       <button class="rf-calc__helpBtn" type="button" id="rfOpenHelp" aria-haspopup="dialog" aria-controls="rfHelpModal">
          Como funciona
         </button>
-      <h2 class="rf-calc__title">Calculadora de Desperdício Invisível</h2>
+<h2 class="rf-calc__title rf-title--withIcon">
+  <span class="rf-title__icon" aria-hidden="true">
+    <!-- cole aqui o SVG -->
+    <svg class="rf-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M7.5 9.5h2m-2 3h2m-2 3h2M13.5 9.5h3m-3 3h3m-3 3h3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M6.25 4.75h11.5A1.5 1.5 0 0 1 19.25 6.25v11.5a1.5 1.5 0 0 1-1.5 1.5H6.25a1.5 1.5 0 0 1-1.5-1.5V6.25a1.5 1.5 0 0 1 1.5-1.5Z" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      <path d="M7 7h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M16.8 6.9l1.4-1.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  </span>
+  Calculadora de Desperdício Invisível
+</h2>
       <p class="rf-calc__sub">
         Simule o impacto financeiro de retrabalho, desperdício e tarefas manuais no mês — com leitura executiva.
       </p>
@@ -1625,10 +1689,15 @@
         </div>
 
         <div class="rf-calc__actions">
-          <button class="rf-calc__btn rf-calc__btn--primary" type="submit">
-            Analisar impacto
-            <span class="rf-calc__btnIcon" aria-hidden="true">→</span>
-          </button>
+        <button class="rf-calc__btn rf-calc__btn--primary rf-btn--icon" type="submit">
+          <span class="rf-btn__ico" aria-hidden="true">
+            <svg class="rf-ico rf-ico--btn" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M5 16.5V7.5M5 16.5l3-2.2m-3 2.2l3 1.8m4-1.1V9.5m0 7.7l3-2.3m-3 2.3l3 1.7M19 18.2V5.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          Analisar impacto
+          <span class="rf-calc__btnIcon" aria-hidden="true">→</span>
+        </button>
           <button class="rf-calc__btn" type="button" id="limpar">Limpar</button>
         </div>
 
@@ -1789,7 +1858,7 @@
                 <span class="badge">LinkedIn</span>
                 <div style="flex:1;">
                   <strong>Raudiney Farias</strong>
-                  <p>Acesse meu perfil.</p>
+                  <p>Substitua pelo link real do seu perfil.</p>
                 </div>
                 <a class="btn" href="https://www.linkedin.com/in/raudiney-farias-337247237/" target="_blank" rel="noreferrer">
                   <svg class="icon" aria-hidden="true"><use href="#i-link"></use></svg>
@@ -1802,7 +1871,7 @@
           <div class="card col-4">
             <strong style="font-size:14px;">Mensagem final</strong>
             <p style="margin:8px 0 0;color:var(--muted);font-size:13px;">
-              Tenho direcionado meu desenvolvimento profissional para <strong>financeiro</strong> e <strong>compras</strong> com foco em controle, análise e processos — entregando organização e previsibilidade.
+              Busco oportunidades no <strong>financeiro</strong> e em <strong>compras</strong> com foco em controle, análise e processos — entregando organização e previsibilidade.
             </p>
 
             <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;">
@@ -2246,7 +2315,3 @@
   </script>
 </body>
 </html>
-
-
-
-
