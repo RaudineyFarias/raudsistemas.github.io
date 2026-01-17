@@ -984,6 +984,133 @@
 .menu .menu-highlight:hover{
   background: color-mix(in srgb, var(--green-100) 65%, transparent);
 }
+/* ===== Demo Cotação Inteligente (card + modal iframe) ===== */
+.demo-card{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  padding: 16px;
+  border-radius: var(--radius);
+  border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--green-100) 45%, transparent), transparent 70%);
+}
+
+.demo-card .top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 12px;
+}
+.demo-card h3{
+  margin:0;
+  font-size: 15px;
+  letter-spacing: -0.02em;
+}
+.demo-card .desc{
+  margin:0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.demo-card .actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.rf-demoModal{
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: none;
+}
+.rf-demoModal.is-open{ display:block; }
+
+.rf-demoModal__backdrop{
+  position:absolute;
+  inset:0;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(8px);
+}
+
+.rf-demoModal__panel{
+  position: relative;
+  width: min(1100px, 96vw);
+  height: min(90vh, 900px);
+  margin: 5vh auto;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #0b1410;
+  border: 1px solid rgba(80,255,170,.14);
+  box-shadow: 0 24px 80px rgba(0,0,0,.55);
+  display:flex;
+  flex-direction:column;
+}
+
+.rf-demoModal__head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom:1px solid rgba(80,255,170,.12);
+  background: linear-gradient(180deg, rgba(80,255,170,.10), transparent);
+  color:#e9fff4;
+}
+
+.rf-demoModal__title{
+  margin:0;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.rf-demoModal__sub{
+  margin-top: 2px;
+  font-size: 12px;
+  opacity: .72;
+}
+
+.rf-demoModal__actions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+.rf-demoBtn{
+  border-radius: 12px;
+  padding: 10px 12px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.05);
+  color:#e9fff4;
+  font-weight: 750;
+  cursor:pointer;
+  text-decoration:none;
+}
+.rf-demoBtn:hover{
+  background: rgba(255,255,255,.09);
+}
+
+.rf-demoBtn.ghost{
+  background: rgba(0,0,0,.18);
+  border-color: rgba(255,255,255,.10);
+}
+
+.rf-demoModal__body{
+  flex:1;
+  background:#07140f;
+}
+.rf-demoModal__body iframe{
+  width:100%;
+  height:100%;
+  border:0;
+  background:transparent;
+}
+
+@media (max-width: 860px){
+  .rf-demoModal__panel{ margin: 3vh 12px; height: 92vh; }
+}
+
   </style>
 </head>
 
@@ -1220,6 +1347,40 @@
               </div>
             </div>
           </div>
+          <div class="card col-12">
+            <div class="demo-card">
+              <div class="top">
+                <div>
+                  <h3>Cotação Inteligente — Demo</h3>
+                  <div class="tags">
+                    <span class="tag">Compras</span>
+                    <span class="tag">Comparação</span>
+                    <span class="tag">Score</span>
+                    <span class="tag">PDF</span>
+                  </div>
+                </div>
+                <span class="badge">JS</span>
+              </div>
+
+              <p class="desc">
+                Ferramenta dinâmica para adicionar fornecedores e itens, comparar propostas e gerar apoio à decisão.
+                Abre em modal para manter o portfólio limpo.
+              </p>
+
+              <div class="actions">
+                <button class="btn primary" type="button" id="openCotacaoDemo">
+                  <span>Abrir demo</span>
+                  <svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg>
+                </button>
+
+                <a class="btn" href="demos/cotacao.html" target="_blank" rel="noopener">
+                  <span>Tela cheia</span>
+                  <svg class="icon" aria-hidden="true"><use href="#i-link"></use></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
         </div><!-- /grid -->
       </div>
     </section>
@@ -1829,6 +1990,31 @@
   </div>
 </div>
 
+  <!-- ===== DEMO MODAL: Cotação Inteligente ===== -->
+<div class="rf-demoModal" id="cotacaoModal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Demo Cotação Inteligente">
+  <div class="rf-demoModal__backdrop" data-close="true"></div>
+
+  <div class="rf-demoModal__panel" role="document">
+    <div class="rf-demoModal__head">
+      <div>
+        <h3 class="rf-demoModal__title">Cotação Inteligente</h3>
+        <div class="rf-demoModal__sub">Preencha e use “Comparar / PDF / Decisão” dentro da ferramenta.</div>
+      </div>
+
+      <div class="rf-demoModal__actions">
+        <a class="rf-demoBtn ghost" id="cotacaoFull" href="demos/cotacao.html" target="_blank" rel="noopener">Tela cheia</a>
+        <button class="rf-demoBtn" type="button" id="closeCotacaoDemo">Fechar</button>
+      </div>
+    </div>
+
+    <div class="rf-demoModal__body">
+      <iframe id="cotacaoFrame" title="Demo Cotação Inteligente" loading="lazy"></iframe>
+    </div>
+  </div>
+</div>
+
+
+
 
     <!-- CONTATO -->
     <section id="contato">
@@ -2311,8 +2497,58 @@
       document.getElementById("calc-desperdicio")?.scrollIntoView({ behavior:"smooth", block:"start" });
     });
   })();
+
+  // ===== Demo Cotação (Modal + iframe lazy load)
+(function(){
+  const openBtn = document.getElementById("openCotacaoDemo");
+  const modal = document.getElementById("cotacaoModal");
+  const closeBtn = document.getElementById("closeCotacaoDemo");
+  const frame = document.getElementById("cotacaoFrame");
+  const backdrop = modal?.querySelector("[data-close]");
+  const fullLink = document.getElementById("cotacaoFull");
+
+  // ajuste aqui o caminho do seu arquivo de cotação
+  const DEMO_URL = "demos/cotacao.html";
+
+  let lastFocus = null;
+
+  function openModal(){
+    if(!modal) return;
+    lastFocus = document.activeElement;
+
+    // carrega só quando abrir (não pesa a home e não dá conflito de CSS)
+    if(frame && !frame.src) frame.src = DEMO_URL;
+    if(fullLink) fullLink.href = DEMO_URL;
+
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+    closeBtn?.focus?.();
+  }
+
+  function closeModal(){
+    if(!modal) return;
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+    lastFocus?.focus?.();
+  }
+
+  openBtn?.addEventListener("click", openModal);
+  closeBtn?.addEventListener("click", closeModal);
+  backdrop?.addEventListener("click", closeModal);
+
+  document.addEventListener("keydown", (e) => {
+    if(modal?.classList.contains("is-open") && e.key === "Escape"){
+      e.preventDefault();
+      closeModal();
+    }
+  });
+})();
+
   </script>
 </body>
 </html>
+
 
 
