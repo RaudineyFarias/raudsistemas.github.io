@@ -1,0 +1,1282 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cotações — Painel de Decisão</title>
+
+  <style>
+    :root{
+      --bg0:#07140f;
+      --bg1:#0b1f16;
+      --card:#0f2a1e;
+      --card2:#0c2218;
+      --line:rgba(170,255,210,.14);
+      --text:#e9fff4;
+      --muted:rgba(233,255,244,.7);
+      --muted2:rgba(233,255,244,.55);
+      --green:#37f2a1;
+      --green2:#18c37b;
+      --amber:#ffd36b;
+      --red:#ff6b7a;
+      --shadow: 0 18px 50px rgba(0,0,0,.45);
+      --shadow2: 0 10px 22px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius2: 14px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(55,242,161,.20), transparent 60%),
+        radial-gradient(900px 500px at 90% 10%, rgba(24,195,123,.20), transparent 55%),
+        radial-gradient(1000px 700px at 50% 120%, rgba(255,211,107,.10), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      min-height:100vh;
+    }
+
+    .wrap{
+      max-width: 1280px;
+      margin: 28px auto 60px;
+      padding: 0 18px;
+    }
+
+    header{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:18px;
+    }
+
+    .title{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      width:max-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(55,242,161,.12);
+      border:1px solid rgba(55,242,161,.22);
+      box-shadow: var(--shadow2);
+      color: var(--text);
+      font-size: 13px;
+      letter-spacing:.2px;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:999px;
+      background: var(--green);
+      box-shadow: 0 0 0 6px rgba(55,242,161,.12), 0 0 18px rgba(55,242,161,.35);
+    }
+
+    h1{
+      margin:0;
+      font-size: 26px;
+      line-height:1.2;
+      letter-spacing:.2px;
+    }
+    .subtitle{
+      color: var(--muted);
+      font-size: 14px;
+      line-height:1.45;
+      max-width: 820px;
+    }
+
+    .top-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      align-items:center;
+    }
+
+    button{
+      cursor:pointer;
+      border:1px solid rgba(233,255,244,.16);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-weight: 650;
+      font-size: 13px;
+      transition: transform .08s ease, background .2s ease, border-color .2s ease;
+      box-shadow: 0 12px 26px rgba(0,0,0,.22);
+      user-select:none;
+      white-space: nowrap;
+    }
+    button:hover{
+      background: rgba(255,255,255,.06);
+      border-color: rgba(233,255,244,.24);
+      transform: translateY(-1px);
+    }
+    button:active{ transform: translateY(0px); }
+
+    .btn-primary{
+      border-color: rgba(55,242,161,.28);
+      background: linear-gradient(180deg, rgba(55,242,161,.16), rgba(24,195,123,.10));
+    }
+    .btn-danger{
+      border-color: rgba(255,107,122,.28);
+      background: linear-gradient(180deg, rgba(255,107,122,.14), rgba(255,107,122,.06));
+    }
+    .btn-ghost{
+      background: rgba(0,0,0,.14);
+      border-color: rgba(233,255,244,.12);
+      box-shadow: none;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap:14px;
+      align-items:start;
+    }
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: 1fr; }
+      header{ flex-direction:column; }
+      .top-actions{ justify-content:flex-start; }
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(15,42,30,.94), rgba(12,34,24,.94));
+      border: 1px solid rgba(170,255,210,.14);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card .hd{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding: 14px 14px 10px;
+      border-bottom: 1px solid rgba(170,255,210,.10);
+      background: linear-gradient(180deg, rgba(7,20,15,.35), transparent);
+    }
+    .card .hd h2{
+      margin:0;
+      font-size: 14px;
+      letter-spacing:.35px;
+      text-transform: uppercase;
+      color: rgba(233,255,244,.92);
+    }
+    .card .bd{
+      padding: 14px;
+    }
+
+    .row{
+      display:flex; gap:12px; flex-wrap:wrap;
+    }
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      min-width: 180px;
+      flex: 1;
+    }
+    label{
+      font-size: 12px;
+      color: var(--muted2);
+      letter-spacing:.2px;
+    }
+    input, select, textarea{
+      width:100%;
+      padding: 10px 11px;
+      border-radius: 12px;
+      border: 1px solid rgba(233,255,244,.14);
+      background: rgba(0,0,0,.18);
+      color: var(--text);
+      outline:none;
+      transition: border-color .2s ease, background .2s ease;
+      font-size: 13px;
+    }
+    input:focus, select:focus, textarea:focus{
+      border-color: rgba(55,242,161,.42);
+      background: rgba(0,0,0,.22);
+    }
+    textarea{ min-height: 40px; resize: vertical; }
+
+    .table-wrap{
+      overflow:auto;
+      border-radius: 14px;
+      border: 1px solid rgba(170,255,210,.12);
+      background: rgba(0,0,0,.12);
+    }
+    table{
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      min-width: 860px;
+    }
+    th, td{
+      padding: 10px 10px;
+      border-bottom: 1px solid rgba(170,255,210,.10);
+      vertical-align: top;
+    }
+    th{
+      position: sticky;
+      top:0;
+      z-index:2;
+      background: rgba(7,20,15,.95);
+      text-align:left;
+      font-size: 12px;
+      letter-spacing:.3px;
+      color: rgba(233,255,244,.82);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    td{
+      font-size: 13px;
+      color: rgba(233,255,244,.90);
+    }
+
+    .icon-btn{
+      padding:8px 10px;
+      border-radius: 12px;
+      font-weight:800;
+      font-family: var(--mono);
+      letter-spacing:.2px;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(233,255,244,.14);
+      background: rgba(0,0,0,.14);
+      color: rgba(233,255,244,.86);
+      font-size: 12px;
+      white-space: nowrap;
+      text-transform:none;
+    }
+    .pill strong{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing:.2px;
+    }
+
+    .kpis{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap:10px;
+    }
+    @media (max-width: 520px){
+      .kpis{ grid-template-columns: 1fr; }
+    }
+    .kpi{
+      background: linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.06));
+      border: 1px solid rgba(170,255,210,.12);
+      border-radius: var(--radius2);
+      padding: 12px;
+      box-shadow: 0 10px 22px rgba(0,0,0,.25);
+    }
+    .kpi .k{
+      font-size: 12px;
+      color: var(--muted2);
+      letter-spacing:.2px;
+      margin-bottom: 6px;
+    }
+    .kpi .v{
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing:.2px;
+    }
+    .kpi .sub{
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height:1.35;
+    }
+
+    .hr{
+      height:1px;
+      background: rgba(170,255,210,.12);
+      margin: 12px 0;
+      border:none;
+    }
+
+    .scorebox{
+      border-radius: var(--radius2);
+      border: 1px solid rgba(55,242,161,.18);
+      background: linear-gradient(180deg, rgba(55,242,161,.12), rgba(0,0,0,.10));
+      padding: 12px;
+      box-shadow: 0 14px 28px rgba(0,0,0,.26);
+    }
+    .scorebox .line{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom: 10px;
+    }
+    .bar{
+      width:100%;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(233,255,244,.12);
+      overflow:hidden;
+      border: 1px solid rgba(233,255,244,.10);
+    }
+    .bar > div{
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, rgba(55,242,161,.9), rgba(24,195,123,.9));
+      border-radius: 999px;
+      transition: width .25s ease;
+    }
+
+    .small{
+      font-size: 12px;
+      color: var(--muted);
+      line-height:1.4;
+      text-transform:none;
+    }
+
+    .winner{
+      border-color: rgba(55,242,161,.45) !important;
+      box-shadow: 0 0 0 4px rgba(55,242,161,.10), var(--shadow2);
+    }
+
+    .warn{ color: var(--amber); }
+    .bad{ color: var(--red); }
+    .mono{ font-family: var(--mono); }
+
+    .footer{
+      margin-top: 14px;
+      color: rgba(233,255,244,.55);
+      font-size: 12px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    /* Comparação */
+    .compare-wrap{
+      margin-top: 12px;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(170,255,210,.12);
+      background: rgba(0,0,0,.10);
+      overflow:hidden;
+      display:none;
+    }
+    .compare-wrap.show{ display:block; }
+    .compare-hd{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding: 12px;
+      border-bottom: 1px solid rgba(170,255,210,.10);
+      background: linear-gradient(180deg, rgba(7,20,15,.35), transparent);
+    }
+    .compare-hd b{ text-transform:uppercase; letter-spacing:.35px; font-size:12px; }
+    .compare-bd{ padding: 12px; }
+    .compare-table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      overflow:hidden;
+      border-radius: 12px;
+      border: 1px solid rgba(170,255,210,.10);
+      background: rgba(0,0,0,.10);
+    }
+    .compare-table th, .compare-table td{
+      padding: 10px;
+      border-bottom: 1px solid rgba(170,255,210,.10);
+      text-transform:none;
+    }
+    .compare-table th{
+      background: rgba(7,20,15,.95);
+      position: sticky;
+      top:0;
+      z-index:1;
+      font-size: 12px;
+      letter-spacing:.3px;
+      text-transform: uppercase;
+      color: rgba(233,255,244,.82);
+    }
+
+    /* Print/PDF */
+    @media print{
+      body{ background: #fff !important; color:#111 !important; }
+      .wrap{ margin: 0 !important; padding: 0 !important; max-width: none !important; }
+      header{ display:none !important; } /* esconde topo com botões */
+      .card{ box-shadow:none !important; border: 1px solid #d9d9d9 !important; }
+      .card .hd{ background:#f5f5f5 !important; color:#111 !important; }
+      .card .hd h2{ color:#111 !important; }
+      input, textarea{
+        background: #fff !important;
+        color:#111 !important;
+        border: 1px solid #d0d0d0 !important;
+      }
+      .table-wrap, .compare-wrap{
+        border: 1px solid #d9d9d9 !important;
+        background:#fff !important;
+      }
+      th{ background:#f5f5f5 !important; color:#111 !important; }
+      td{ color:#111 !important; }
+      .pill{ border: 1px solid #d0d0d0 !important; background:#fff !important; color:#111 !important; }
+      .btn-primary,.btn-danger,.btn-ghost,button{ display:none !important; }
+      .compare-wrap{ display:block !important; } /* força aparecer no print */
+      .grid{ grid-template-columns: 1fr !important; }
+      #decisionCard{ margin-top: 12px; }
+      .winner{ box-shadow:none !important; }
+      @page { size: A4; margin: 12mm; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="title">
+        <div class="badge"><span class="dot"></span> Cotação dinâmica • Decisão inteligente</div>
+        <h1>Painel de Cotações (Itens × Fornecedores)</h1>
+        <div class="subtitle">
+          Preencha preços, prazos, fretes e observações.
+          Depois clique em <b>Calcular decisão</b> e <b>Comparar fornecedores</b>.
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button class="btn-primary" id="btnAddSupplier">+ Fornecedor</button>
+        <button class="btn-primary" id="btnAddItem">+ Item</button>
+
+        <button class="btn-primary" id="btnDecision">Calcular decisão</button>
+        <button class="btn-primary" id="btnCompare">Comparar fornecedores</button>
+        <button class="btn-ghost" id="btnPrint">Gerar PDF (Print)</button>
+
+        <button class="btn-ghost" id="btnExport">Exportar JSON</button>
+        <button class="btn-ghost" id="btnImport">Importar JSON</button>
+        <button class="btn-danger" id="btnReset">Limpar</button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- ESQUERDA: TABELA -->
+      <section class="card">
+        <div class="hd">
+          <h2>Planilha de Cotação</h2>
+          <div class="row" style="justify-content:flex-end;">
+            <span class="pill">Itens: <strong id="countItems">0</strong></span>
+            <span class="pill">Fornecedores: <strong id="countSuppliers">0</strong></span>
+          </div>
+        </div>
+
+        <div class="bd">
+          <div class="row">
+            <div class="field">
+              <label>Nº da Cotação</label>
+              <input id="quoteNumber" placeholder="Ex: COT-2026-001" />
+            </div>
+            <div class="field">
+              <label>Data</label>
+              <input id="quoteDate" type="date" />
+            </div>
+            <div class="field">
+              <label>Comprador / Responsável</label>
+              <input id="buyer" placeholder="Ex: Raudiney" />
+            </div>
+            <div class="field">
+              <label>Centro de Custo / Projeto</label>
+              <input id="costCenter" placeholder="Ex: Manutenção / Frota" />
+            </div>
+          </div>
+
+          <hr class="hr" />
+
+          <div class="table-wrap">
+            <table id="quoteTable" aria-label="Tabela de cotações">
+              <thead id="thead"></thead>
+              <tbody id="tbody"></tbody>
+            </table>
+          </div>
+
+          <div class="footer">
+            <div>Dica: “Confiabilidade” é seu histórico do fornecedor (0 a 100).</div>
+            <div>Use “Gerar PDF” depois de comparar ✅</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DIREITA: PAINEL DECISÃO + COMPARAÇÃO -->
+      <aside class="card" id="decisionCard">
+        <div class="hd">
+          <h2>Decisão da Compra</h2>
+          <span class="pill">Score: <strong id="bestScore">—</strong></span>
+        </div>
+
+        <div class="bd">
+          <div class="kpis">
+            <div class="kpi">
+              <div class="k">Menor Total</div>
+              <div class="v" id="kpiMinTotal">—</div>
+              <div class="sub" id="kpiMinTotalSub">Clique em “Calcular decisão”.</div>
+            </div>
+
+            <div class="kpi">
+              <div class="k">Prazo Médio (melhor)</div>
+              <div class="v" id="kpiBestLead">—</div>
+              <div class="sub" id="kpiBestLeadSub">Clique em “Calcular decisão”.</div>
+            </div>
+
+            <div class="kpi">
+              <div class="k">Fornecedor Sugerido</div>
+              <div class="v" id="kpiWinner">—</div>
+              <div class="sub" id="kpiWinnerSub">Clique em “Calcular decisão”.</div>
+            </div>
+
+            <div class="kpi">
+              <div class="k">Risco (alertas)</div>
+              <div class="v" id="kpiRisk">—</div>
+              <div class="sub" id="kpiRiskSub">—</div>
+            </div>
+          </div>
+
+          <hr class="hr" />
+
+          <div class="scorebox">
+            <div class="line">
+              <div style="display:flex; flex-direction:column; gap:2px;">
+                <div style="font-weight:800; letter-spacing:.2px;">Score de Decisão</div>
+                <div class="small">Preencha tudo e clique em “Calcular decisão”.</div>
+              </div>
+              <span class="pill">Vencedor: <strong id="winnerName">—</strong></span>
+            </div>
+            <div class="bar"><div id="scoreBar"></div></div>
+
+            <hr class="hr" />
+
+            <div class="row">
+              <div class="field">
+                <label>Peso Preço (%)</label>
+                <input id="wPrice" type="number" min="0" max="100" value="55" />
+              </div>
+              <div class="field">
+                <label>Peso Prazo (%)</label>
+                <input id="wLead" type="number" min="0" max="100" value="25" />
+              </div>
+              <div class="field">
+                <label>Peso Confiabilidade (%)</label>
+                <input id="wReliability" type="number" min="0" max="100" value="20" />
+              </div>
+            </div>
+
+            <div class="small" style="margin-top:10px;">
+              Pesos são normalizados automaticamente.
+              Preço/prazo favorecem menor valor; confiabilidade favorece maior.
+            </div>
+          </div>
+
+          <hr class="hr" />
+
+          <div class="field">
+            <label>Observações gerais (decisão / negociação / condições)</label>
+            <textarea id="generalNotes" placeholder="Ex: negociar frete, pedir desconto por volume, prazo de pagamento, garantia..."></textarea>
+          </div>
+
+          <!-- COMPARAÇÃO -->
+          <div class="compare-wrap" id="compareWrap">
+            <div class="compare-hd">
+              <b>Ranking de Fornecedores</b>
+              <span class="pill">Modo: <strong id="compareMode">Score</strong></span>
+            </div>
+            <div class="compare-bd">
+              <div class="small" id="compareHint">Clique em “Comparar fornecedores” para gerar o ranking.</div>
+              <div style="overflow:auto; margin-top:10px;">
+                <table class="compare-table" id="compareTable" aria-label="Comparação de fornecedores">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Fornecedor</th>
+                      <th>Total (c/ frete)</th>
+                      <th>Prazo médio</th>
+                      <th>Confiab.</th>
+                      <th>Score</th>
+                      <th>Economia vs melhor preço</th>
+                      <th>Alertas</th>
+                    </tr>
+                  </thead>
+                  <tbody id="compareTbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <input id="fileInput" type="file" accept="application/json" style="display:none;" />
+
+  <script>
+    // =======================
+    // MODELO DE DADOS
+    // =======================
+    const state = {
+      meta: {
+        quoteNumber: "",
+        quoteDate: "",
+        buyer: "",
+        costCenter: "",
+        generalNotes: ""
+      },
+      suppliers: [
+        { id: uid(), name: "Fornecedor A", reliability: 80, freight: 0, payment: "30 dias", notes: "" },
+        { id: uid(), name: "Fornecedor B", reliability: 70, freight: 0, payment: "À vista", notes: "" }
+      ],
+      items: [
+        { id: uid(), desc: "Item 01", qty: 1, unit: "un", target: 0, spec: "" },
+        { id: uid(), desc: "Item 02", qty: 1, unit: "un", target: 0, spec: "" }
+      ],
+      quotes: {}
+    };
+
+    function uid(){ return Math.random().toString(16).slice(2) + Date.now().toString(16); }
+
+    function moneyBR(v){
+      if (v === null || v === undefined || v === "" || isNaN(Number(v))) return "—";
+      const n = Number(v);
+      return n.toLocaleString("pt-BR", { style:"currency", currency:"BRL" });
+    }
+
+    function num(v, fallback=null){
+      const x = Number(v);
+      return Number.isFinite(x) ? x : fallback;
+    }
+
+    function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+
+    function ensureCell(itemId, supplierId){
+      if(!state.quotes[itemId]) state.quotes[itemId] = {};
+      if(!state.quotes[itemId][supplierId]){
+        state.quotes[itemId][supplierId] = { price: "", leadDays: "", obs: "" };
+      }
+      return state.quotes[itemId][supplierId];
+    }
+
+    // =======================
+    // RENDER (só para estrutura)
+    // =======================
+    const thead = document.getElementById("thead");
+    const tbody = document.getElementById("tbody");
+    const countItems = document.getElementById("countItems");
+    const countSuppliers = document.getElementById("countSuppliers");
+
+    function renderStructure(){
+      // meta (mantém o que já tá digitado)
+      document.getElementById("quoteNumber").value = state.meta.quoteNumber;
+      document.getElementById("quoteDate").value = state.meta.quoteDate;
+      document.getElementById("buyer").value = state.meta.buyer;
+      document.getElementById("costCenter").value = state.meta.costCenter;
+      document.getElementById("generalNotes").value = state.meta.generalNotes;
+
+      countItems.textContent = state.items.length;
+      countSuppliers.textContent = state.suppliers.length;
+
+      renderHeader();
+      renderBody();
+      // não calcula automaticamente
+      highlightWinnerColumn(null);
+    }
+
+    function renderHeader(){
+      const cols = state.suppliers.map(s => `
+        <th>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div style="display:flex; justify-content:space-between; gap:10px; align-items:center;">
+              <!-- NOME EDITÁVEL -->
+              <input
+                style="font-weight:800; letter-spacing:.2px; text-transform:none; font-size:13px; padding:8px 10px;"
+                value="${escapeAttr(s.name || "")}"
+                placeholder="Nome do fornecedor"
+                oninput="updateSupplierLocal('${s.id}','name', this.value)"
+              />
+              <button class="icon-btn btn-danger" title="Remover fornecedor" onclick="removeSupplier('${s.id}')">×</button>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+              <div>
+                <label style="display:block; margin-bottom:6px;">Confiab. (0–100)</label>
+                <input type="number" min="0" max="100" value="${s.reliability ?? 0}"
+                  oninput="updateSupplierLocal('${s.id}','reliability', this.value)" />
+              </div>
+              <div>
+                <label style="display:block; margin-bottom:6px;">Frete (R$)</label>
+                <input type="number" min="0" step="0.01" value="${s.freight ?? 0}"
+                  oninput="updateSupplierLocal('${s.id}','freight', this.value)" />
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+              <div>
+                <label style="display:block; margin-bottom:6px;">Pagamento</label>
+                <input value="${escapeAttr(s.payment ?? '')}"
+                  oninput="updateSupplierLocal('${s.id}','payment', this.value)" placeholder="Ex: 30/60" />
+              </div>
+              <div>
+                <label style="display:block; margin-bottom:6px;">Obs. Fornec.</label>
+                <input value="${escapeAttr(s.notes ?? '')}"
+                  oninput="updateSupplierLocal('${s.id}','notes', this.value)" placeholder="Ex: garantia, NF..." />
+              </div>
+            </div>
+          </div>
+        </th>
+      `).join("");
+
+      thead.innerHTML = `
+        <tr>
+          <th style="min-width:420px;">
+            <div style="display:flex; flex-direction:column; gap:10px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+                <span>Itens / Especificação</span>
+                <span class="pill">Alvo: <strong>opcional</strong></span>
+              </div>
+              <div class="small">Informe quantidade, unidade e (se quiser) um preço-alvo para referência.</div>
+            </div>
+          </th>
+          ${cols}
+          <th style="min-width:220px;">Resumo por Item</th>
+        </tr>
+      `;
+    }
+
+    function renderBody(){
+      const rows = state.items.map((it) => {
+        const cells = state.suppliers.map(s => {
+          const cell = ensureCell(it.id, s.id);
+          return `
+            <td>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+                <div>
+                  <label style="display:block; margin-bottom:6px;">Preço unit (R$)</label>
+                  <input type="number" step="0.01" min="0" value="${escapeAttr(cell.price)}"
+                    oninput="updateQuoteLocal('${it.id}','${s.id}','price', this.value)" />
+                </div>
+                <div>
+                  <label style="display:block; margin-bottom:6px;">Prazo (dias)</label>
+                  <input type="number" step="1" min="0" value="${escapeAttr(cell.leadDays)}"
+                    oninput="updateQuoteLocal('${it.id}','${s.id}','leadDays', this.value)" />
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <label style="display:block; margin-bottom:6px;">Observação</label>
+                <input value="${escapeAttr(cell.obs)}" placeholder="Ex: marca, validade, condição..."
+                  oninput="updateQuoteLocal('${it.id}','${s.id}','obs', this.value)" />
+              </div>
+            </td>
+          `;
+        }).join("");
+
+        return `
+          <tr>
+            <td>
+              <div style="display:flex; gap:10px; justify-content:space-between; align-items:flex-start;">
+                <div style="flex:1; display:flex; flex-direction:column; gap:8px;">
+                  <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <div class="field" style="min-width:220px;">
+                      <label>Descrição do item</label>
+                      <input value="${escapeAttr(it.desc)}" placeholder="Ex: Pneu 275/80R22.5"
+                        oninput="updateItemLocal('${it.id}','desc', this.value)" />
+                    </div>
+                    <div class="field" style="min-width:90px; max-width:120px;">
+                      <label>Qtd</label>
+                      <input type="number" min="0" step="0.01" value="${escapeAttr(it.qty)}"
+                        oninput="updateItemLocal('${it.id}','qty', this.value)" />
+                    </div>
+                    <div class="field" style="min-width:90px; max-width:120px;">
+                      <label>Un</label>
+                      <input value="${escapeAttr(it.unit)}" placeholder="un/kg/m"
+                        oninput="updateItemLocal('${it.id}','unit', this.value)" />
+                    </div>
+                    <div class="field" style="min-width:120px; max-width:170px;">
+                      <label>Preço-alvo (R$)</label>
+                      <input type="number" min="0" step="0.01" value="${escapeAttr(it.target)}"
+                        oninput="updateItemLocal('${it.id}','target', this.value)" />
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label>Especificação / requisito</label>
+                    <input value="${escapeAttr(it.spec)}" placeholder="Ex: marca preferencial, norma, garantia..."
+                      oninput="updateItemLocal('${it.id}','spec', this.value)" />
+                  </div>
+                </div>
+
+                <button class="icon-btn btn-danger" title="Remover item" onclick="removeItem('${it.id}')">×</button>
+              </div>
+            </td>
+
+            ${cells}
+
+            <td id="sum_${it.id}">
+              <div class="small">Clique em “Comparar fornecedores” para ver os tops por item.</div>
+            </td>
+          </tr>
+        `;
+      }).join("");
+
+      tbody.innerHTML = rows;
+    }
+
+    // =======================
+    // UPDATES (sem re-render!)
+    // =======================
+    function updateMeta(){
+      state.meta.quoteNumber = document.getElementById("quoteNumber").value;
+      state.meta.quoteDate = document.getElementById("quoteDate").value;
+      state.meta.buyer = document.getElementById("buyer").value;
+      state.meta.costCenter = document.getElementById("costCenter").value;
+      state.meta.generalNotes = document.getElementById("generalNotes").value;
+    }
+
+    window.updateSupplierLocal = (id, key, value) => {
+      const s = state.suppliers.find(x=>x.id===id);
+      if(!s) return;
+      if(key === "reliability") s[key] = clamp(num(value,0), 0, 100);
+      else if(key === "freight") s[key] = Math.max(0, num(value,0));
+      else s[key] = value;
+    };
+
+    window.updateItemLocal = (id, key, value) => {
+      const it = state.items.find(x=>x.id===id);
+      if(!it) return;
+      if(key === "qty") it[key] = Math.max(0, num(value,0));
+      else if(key === "target") it[key] = Math.max(0, num(value,0));
+      else it[key] = value;
+    };
+
+    window.updateQuoteLocal = (itemId, supplierId, key, value) => {
+      const cell = ensureCell(itemId, supplierId);
+      cell[key] = value;
+    };
+
+    // =======================
+    // ADD / REMOVE (aqui re-render estrutura)
+    // =======================
+    document.getElementById("btnAddSupplier").addEventListener("click", () => {
+      updateMeta();
+      const next = state.suppliers.length + 1;
+      state.suppliers.push({ id: uid(), name: `Fornecedor ${next}`, reliability: 75, freight: 0, payment:"", notes:"" });
+      renderStructure();
+      clearDecisionAndCompare();
+    });
+
+    document.getElementById("btnAddItem").addEventListener("click", () => {
+      updateMeta();
+      const next = state.items.length + 1;
+      state.items.push({ id: uid(), desc: `Item ${String(next).padStart(2,'0')}`, qty: 1, unit:"un", target: 0, spec:"" });
+      renderStructure();
+      clearDecisionAndCompare();
+    });
+
+    window.removeSupplier = (id) => {
+      if(state.suppliers.length <= 1) return alert("Mantenha pelo menos 1 fornecedor.");
+      updateMeta();
+      state.suppliers = state.suppliers.filter(s=>s.id!==id);
+      Object.keys(state.quotes).forEach(itemId=>{
+        if(state.quotes[itemId]) delete state.quotes[itemId][id];
+      });
+      renderStructure();
+      clearDecisionAndCompare();
+    };
+
+    window.removeItem = (id) => {
+      if(state.items.length <= 1) return alert("Mantenha pelo menos 1 item.");
+      updateMeta();
+      state.items = state.items.filter(it=>it.id!==id);
+      if(state.quotes[id]) delete state.quotes[id];
+      renderStructure();
+      clearDecisionAndCompare();
+    };
+
+    document.getElementById("btnReset").addEventListener("click", () => {
+      if(!confirm("Limpar tudo?")) return;
+      state.meta = { quoteNumber:"", quoteDate:"", buyer:"", costCenter:"", generalNotes:"" };
+      state.suppliers = [{ id: uid(), name:"Fornecedor A", reliability:80, freight:0, payment:"", notes:"" }];
+      state.items = [{ id: uid(), desc:"Item 01", qty:1, unit:"un", target:0, spec:"" }];
+      state.quotes = {};
+      // data hoje
+      const today = new Date();
+      state.meta.quoteDate = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}-${String(today.getDate()).padStart(2,"0")}`;
+      renderStructure();
+      clearDecisionAndCompare();
+    });
+
+    // =======================
+    // BOTÕES: decisão / comparação / print
+    // =======================
+    document.getElementById("btnDecision").addEventListener("click", () => {
+      updateMeta();
+      computeDecisionAndUpdateUI();
+    });
+
+    document.getElementById("btnCompare").addEventListener("click", () => {
+      updateMeta();
+      computeDecisionAndUpdateUI();   // garante score atualizado
+      computeComparisonAndUpdateUI(); // gera ranking
+      buildItemTopSummary();          // atualiza "Resumo por Item"
+    });
+
+    document.getElementById("btnPrint").addEventListener("click", () => {
+      updateMeta();
+      // antes do PDF, gera tudo
+      computeDecisionAndUpdateUI();
+      computeComparisonAndUpdateUI();
+      buildItemTopSummary();
+      // força mostrar comparação no PDF
+      document.getElementById("compareWrap").classList.add("show");
+      window.print();
+    });
+
+    // =======================
+    // DECISION ENGINE (manual)
+    // =======================
+    function computeDecisionAndUpdateUI(){
+      let wP = clamp(num(document.getElementById("wPrice").value,55), 0, 100);
+      let wL = clamp(num(document.getElementById("wLead").value,25), 0, 100);
+      let wR = clamp(num(document.getElementById("wReliability").value,20), 0, 100);
+      const sumW = (wP + wL + wR) || 1;
+      wP /= sumW; wL /= sumW; wR /= sumW;
+
+      const totals = [];
+      const alerts = [];
+
+      let minTotal = Infinity, maxTotal = -Infinity;
+      let minLead = Infinity, maxLead = -Infinity;
+
+      state.suppliers.forEach(s=>{
+        let total = 0;
+        let leadSum = 0, leadCount = 0;
+        let missingPrices = 0;
+
+        state.items.forEach(it=>{
+          const cell = ensureCell(it.id, s.id);
+          const price = num(cell.price);
+          if(price === null){ missingPrices++; return; }
+          total += price * num(it.qty, 0);
+
+          const ld = num(cell.leadDays);
+          if(ld !== null){ leadSum += ld; leadCount++; }
+        });
+
+        total += num(s.freight, 0);
+        const avgLead = leadCount ? (leadSum / leadCount) : null;
+
+        if(total > 0){
+          minTotal = Math.min(minTotal, total);
+          maxTotal = Math.max(maxTotal, total);
+        }
+        if(avgLead !== null){
+          minLead = Math.min(minLead, avgLead);
+          maxLead = Math.max(maxLead, avgLead);
+        }
+
+        totals.push({
+          id: s.id,
+          name: s.name,
+          reliability: clamp(num(s.reliability, 0), 0, 100),
+          total,
+          avgLead,
+          missingPrices
+        });
+      });
+
+      const anyFilled = totals.some(t => t.total > 0);
+      if(!anyFilled){
+        setDecisionUIEmpty("Preencha pelo menos um preço para calcular.");
+        return;
+      }
+
+      totals.forEach(t=>{
+        if(t.missingPrices > 0) alerts.push(`"${t.name}": ${t.missingPrices} item(ns) sem preço.`);
+        if(t.avgLead !== null && t.avgLead > 15) alerts.push(`"${t.name}": prazo médio alto (${Math.round(t.avgLead)}d).`);
+        if(t.reliability < 50) alerts.push(`"${t.name}": confiabilidade baixa (${t.reliability}).`);
+      });
+
+      const scored = totals.map(t=>{
+        const totalScore = normalizeReverse(t.total, minTotal, maxTotal);
+        const leadScore  = (t.avgLead === null) ? 0.45 : normalizeReverse(t.avgLead, minLead, maxLead);
+        const relScore   = clamp(t.reliability / 100, 0, 1);
+        const penalty = clamp(t.missingPrices * 0.06, 0, 0.30);
+        const raw = (totalScore * wP) + (leadScore * wL) + (relScore * wR);
+        const final = clamp(raw * (1 - penalty), 0, 1);
+        return { ...t, final, totalScore, leadScore, relScore, penalty };
+      });
+
+      scored.sort((a,b)=>b.final-a.final);
+      const winner = scored[0];
+
+      const minByTotal = [...totals].sort((a,b)=>a.total-b.total)[0];
+      document.getElementById("kpiMinTotal").textContent = `${moneyBR(minByTotal.total)}`;
+      document.getElementById("kpiMinTotalSub").textContent = `Menor custo total: ${minByTotal.name} (inclui frete).`;
+
+      const bestLead = [...totals].filter(t=>t.avgLead!==null).sort((a,b)=>a.avgLead-b.avgLead)[0] || null;
+      document.getElementById("kpiBestLead").textContent = bestLead ? `${Math.round(bestLead.avgLead)}d` : "—";
+      document.getElementById("kpiBestLeadSub").textContent = bestLead ? `Menor prazo médio: ${bestLead.name}.` : "Sem prazos informados.";
+
+      document.getElementById("kpiWinner").textContent = winner ? (winner.name || "—") : "—";
+      document.getElementById("kpiWinnerSub").textContent = winner
+        ? `Score ${Math.round(winner.final*100)}/100 • Preço ${Math.round(winner.totalScore*100)}/100 • Prazo ${Math.round(winner.leadScore*100)}/100 • Conf. ${Math.round(winner.relScore*100)}/100`
+        : "—";
+
+      const riskLevel = computeRiskLevel(alerts, winner);
+      document.getElementById("kpiRisk").innerHTML = riskLevel.html;
+      document.getElementById("kpiRiskSub").textContent = alerts.length ? alerts.slice(0,4).join(" • ") : riskLevel.sub;
+
+      document.getElementById("winnerName").textContent = winner ? winner.name : "—";
+      document.getElementById("bestScore").textContent = winner ? `${Math.round(winner.final*100)}` : "—";
+      document.getElementById("scoreBar").style.width = winner ? `${Math.round(winner.final*100)}%` : "0%";
+
+      highlightWinnerColumn(winner?.id);
+
+      // guarda para comparação
+      state.__lastDecision = { totals, scored, winner, alerts };
+    }
+
+    function setDecisionUIEmpty(msg){
+      document.getElementById("kpiMinTotal").textContent = "—";
+      document.getElementById("kpiMinTotalSub").textContent = msg || "Clique em “Calcular decisão”.";
+      document.getElementById("kpiBestLead").textContent = "—";
+      document.getElementById("kpiBestLeadSub").textContent = "—";
+      document.getElementById("kpiWinner").textContent = "—";
+      document.getElementById("kpiWinnerSub").textContent = "—";
+      document.getElementById("kpiRisk").textContent = "—";
+      document.getElementById("kpiRiskSub").textContent = "—";
+      document.getElementById("winnerName").textContent = "—";
+      document.getElementById("bestScore").textContent = "—";
+      document.getElementById("scoreBar").style.width = "0%";
+      highlightWinnerColumn(null);
+      state.__lastDecision = null;
+    }
+
+    function normalizeReverse(v, min, max){
+      if(!Number.isFinite(v) || !Number.isFinite(min) || !Number.isFinite(max) || max === min) return 0.5;
+      const t = (v - min) / (max - min);
+      return clamp(1 - t, 0, 1);
+    }
+
+    function computeRiskLevel(alerts, winner){
+      if(!winner) return { html:"—", sub:"—" };
+      let lvl = 0;
+      if(winner.missingPrices > 0) lvl += 2;
+      if(winner.avgLead !== null && winner.avgLead > 15) lvl += 1;
+      if(winner.reliability < 50) lvl += 2;
+      if(alerts.length >= 4) lvl += 1;
+
+      if(lvl >= 4) return { html:`<span class="bad">Alto</span>`, sub:"Sugestão: complete preços/prazos e confirme condições antes de fechar." };
+      if(lvl >= 2) return { html:`<span class="warn">Médio</span>`, sub:"Sugestão: revisar itens sem preço e negociar prazo/frete." };
+      return { html:`Baixo`, sub:"Condições aparentam consistentes para decisão." };
+    }
+
+    function highlightWinnerColumn(supplierId){
+      document.querySelectorAll("#quoteTable th, #quoteTable td").forEach(el=>{
+        el.classList.remove("winner");
+      });
+      if(!supplierId) return;
+
+      const idx = state.suppliers.findIndex(s=>s.id===supplierId);
+      if(idx < 0) return;
+      const colIndex = 1 + idx;
+
+      const headRow = thead.querySelector("tr");
+      if(headRow && headRow.children[colIndex]) headRow.children[colIndex].classList.add("winner");
+      tbody.querySelectorAll("tr").forEach(tr=>{
+        if(tr.children[colIndex]) tr.children[colIndex].classList.add("winner");
+      });
+    }
+
+    // =======================
+    // COMPARAÇÃO (manual)
+    // =======================
+    function computeComparisonAndUpdateUI(){
+      const wrap = document.getElementById("compareWrap");
+      const tbodyC = document.getElementById("compareTbody");
+      const hint = document.getElementById("compareHint");
+      wrap.classList.add("show");
+
+      // garante decisão calculada
+      if(!state.__lastDecision){
+        hint.textContent = "Calcule a decisão primeiro para gerar o ranking.";
+        tbodyC.innerHTML = "";
+        return;
+      }
+
+      const { totals, scored, alerts } = state.__lastDecision;
+
+      // melhor preço (para economia)
+      const bestPrice = [...totals].sort((a,b)=>a.total-b.total)[0]?.total ?? null;
+
+      // usa score como ordem
+      const list = [...scored];
+      document.getElementById("compareMode").textContent = "Score";
+      hint.textContent = "Ranking por Score (considera preço, prazo e confiabilidade).";
+
+      tbodyC.innerHTML = list.map((s, i) => {
+        const econ = (bestPrice && s.total) ? (s.total - bestPrice) : null;
+        const econTxt = (econ === null) ? "—" : (econ <= 0 ? `${moneyBR(Math.abs(econ))}` : `-${moneyBR(econ)}`);
+        const leadTxt = (s.avgLead === null) ? "—" : `${Math.round(s.avgLead)}d`;
+        const warnList = [];
+        if(s.missingPrices > 0) warnList.push(`${s.missingPrices} sem preço`);
+        if(s.avgLead !== null && s.avgLead > 15) warnList.push(`prazo alto`);
+        if(s.reliability < 50) warnList.push(`conf. baixa`);
+        const warnTxt = warnList.length ? warnList.join(", ") : "—";
+
+        return `
+          <tr class="${i===0 ? 'winner' : ''}">
+            <td class="mono">${i+1}</td>
+            <td><b>${escapeHTML(s.name)}</b></td>
+            <td class="mono">${moneyBR(s.total)}</td>
+            <td class="mono">${leadTxt}</td>
+            <td class="mono">${s.reliability}</td>
+            <td class="mono">${Math.round(s.final*100)}</td>
+            <td class="mono">${econTxt}</td>
+            <td>${escapeHTML(warnTxt)}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    // “Resumo por Item”: top 3 por total do item (quando comparar)
+    function buildItemTopSummary(){
+      state.items.forEach(it => {
+        const el = document.getElementById(`sum_${it.id}`);
+        if(!el) return;
+
+        const comparisons = state.suppliers.map(s => {
+          const cell = ensureCell(it.id, s.id);
+          const price = num(cell.price);
+          if(price === null) return null;
+          const total = price * num(it.qty, 0);
+          const lead = num(cell.leadDays);
+          const t = num(it.target, 0);
+          const over = (t > 0) ? ((price - t) / t) : null;
+          return { sid:s.id, name:s.name, total, lead, over };
+        }).filter(Boolean);
+
+        if(!comparisons.length){
+          el.innerHTML = `<div class="small">Sem preços neste item.</div>`;
+          return;
+        }
+
+        comparisons.sort((a,b)=>a.total-b.total);
+        const best = comparisons[0];
+
+        const lines = comparisons.slice(0,3).map(c=>{
+          const leadTxt = (c.lead !== null) ? `${c.lead}d` : "—";
+          const overTxt = (c.over === null) ? "" : (c.over <= 0 ? ` <span class="small">(abaixo do alvo)</span>` : ` <span class="small warn">(+${Math.round(c.over*100)}% do alvo)</span>`);
+          return `
+            <div class="pill ${c.sid===best.sid?'winner':''}" style="display:flex; justify-content:space-between; gap:10px; width:fit-content;">
+              <span>${escapeHTML(c.name)} • <span class="mono">${leadTxt}</span></span>
+              <strong class="mono">${moneyBR(c.total)}</strong>
+            </div>
+            <div class="small" style="margin:6px 0 10px;">${overTxt}</div>
+          `;
+        }).join("");
+
+        el.innerHTML = `
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <div class="small">Top (por total do item)</div>
+            ${lines}
+          </div>
+        `;
+      });
+    }
+
+    function clearDecisionAndCompare(){
+      setDecisionUIEmpty("Dados alterados. Clique em “Calcular decisão”.");
+      const wrap = document.getElementById("compareWrap");
+      wrap.classList.remove("show");
+      document.getElementById("compareTbody").innerHTML = "";
+      document.getElementById("compareHint").textContent = "Clique em “Comparar fornecedores” para gerar o ranking.";
+      // resumos por item voltam ao padrão
+      state.items.forEach(it=>{
+        const el = document.getElementById(`sum_${it.id}`);
+        if(el) el.innerHTML = `<div class="small">Clique em “Comparar fornecedores” para ver os tops por item.</div>`;
+      });
+    }
+
+    // =======================
+    // EXPORT / IMPORT
+    // =======================
+    document.getElementById("btnExport").addEventListener("click", () => {
+      updateMeta();
+      const payload = JSON.stringify(state, null, 2);
+      const blob = new Blob([payload], {type:"application/json"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      const base = (state.meta.quoteNumber || "cotacao").replace(/[^\w\-]+/g,"_");
+      a.download = `${base}.json`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    const fileInput = document.getElementById("fileInput");
+    document.getElementById("btnImport").addEventListener("click", () => fileInput.click());
+    fileInput.addEventListener("change", async (e) => {
+      const file = e.target.files?.[0];
+      if(!file) return;
+      try{
+        const text = await file.text();
+        const data = JSON.parse(text);
+        if(!data || !Array.isArray(data.suppliers) || !Array.isArray(data.items) || typeof data.quotes !== "object"){
+          alert("JSON inválido para importação.");
+          return;
+        }
+        state.meta = data.meta || state.meta;
+        state.suppliers = data.suppliers;
+        state.items = data.items;
+        state.quotes = data.quotes || {};
+        renderStructure();
+        clearDecisionAndCompare();
+      } catch(err){
+        alert("Falha ao importar JSON.");
+      } finally {
+        fileInput.value = "";
+      }
+    });
+
+    // =======================
+    // META LISTENERS
+    // =======================
+    ["quoteNumber","quoteDate","buyer","costCenter","generalNotes"].forEach(id=>{
+      document.getElementById(id).addEventListener("input", ()=> updateMeta());
+    });
+
+    // =======================
+    // HELPERS: escape
+    // =======================
+    function escapeHTML(str){
+      return String(str ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+    function escapeAttr(str){ return escapeHTML(str).replaceAll("\n"," "); }
+
+    // =======================
+    // START
+    // =======================
+    const today = new Date();
+    state.meta.quoteDate = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,"0")}-${String(today.getDate()).padStart(2,"0")}`;
+    renderStructure();
+    clearDecisionAndCompare();
+  </script>
+</body>
+</html>
