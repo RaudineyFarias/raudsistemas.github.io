@@ -664,6 +664,7 @@
     cursor:pointer;
     user-select:none;
     transition: transform .12s ease, background .18s ease, border-color .18s ease;
+    justify-content: center;
   }
   .rf-calc__btn:focus{ outline:none; box-shadow: var(--focus); }
   .rf-calc__btn:hover{
@@ -1206,16 +1207,35 @@
               </a>
               <a class="btn" href="#calc-desperdicio">
 
-    <!-- cole aqui o SVG -->
-    <svg class="rf-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M7.5 9.5h2m-2 3h2m-2 3h2M13.5 9.5h3m-3 3h3m-3 3h3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-      <path d="M6.25 4.75h11.5A1.5 1.5 0 0 1 19.25 6.25v11.5a1.5 1.5 0 0 1-1.5 1.5H6.25a1.5 1.5 0 0 1-1.5-1.5V6.25a1.5 1.5 0 0 1 1.5-1.5Z" fill="none" stroke="currentColor" stroke-width="1.6"/>
-      <path d="M7 7h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-      <path d="M16.8 6.9l1.4-1.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-    </svg>
+              <!-- cole aqui o SVG -->
+              <svg class="rf-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M7.5 9.5h2m-2 3h2m-2 3h2M13.5 9.5h3m-3 3h3m-3 3h3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M6.25 4.75h11.5A1.5 1.5 0 0 1 19.25 6.25v11.5a1.5 1.5 0 0 1-1.5 1.5H6.25a1.5 1.5 0 0 1-1.5-1.5V6.25a1.5 1.5 0 0 1 1.5-1.5Z" fill="none" stroke="currentColor" stroke-width="1.6"/>
+                <path d="M7 7h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                <path d="M16.8 6.9l1.4-1.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
 
-                <span>Ferramenta</span>
+              <span>Calculadora</span>
               </a>
+              <button class="rf-calc__btn rf-btn--icon" id="openCotacaoDemo">
+                <span class="rf-btn__ico" aria-hidden="true">
+                  <svg class="rf-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M6 7v10M10 7v10M14 7v10"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.6"
+                          stroke-linecap="round"/>
+                    <path d="M18 9l3 3-3 3"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.6"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                Ferramenta de Cotação
+              </button>
+
               <button class="btn" type="button" id="copyEmailBtn" data-email="raudiney-@hotmail.com">
                 <svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg>
                 <span>Copiar e-mail</span>
@@ -1347,6 +1367,8 @@
               </div>
             </div>
           </div>
+
+          <!-- Cotação Inteligente -->
           <div class="card col-12">
             <div class="demo-card">
               <div class="top">
@@ -1364,6 +1386,7 @@
 
               <p class="desc">
                 Ferramenta dinâmica para adicionar fornecedores e itens, comparar propostas e gerar apoio à decisão.
+                Abre em modal para manter o portfólio limpo.
               </p>
 
               <div class="actions">
@@ -1434,58 +1457,58 @@
             </div>
           </div>
 
-          <div class="card col-6">
-  <div class="project">
-    <div class="top">
-      <div>
-        <h3>Analista Administrativo — Pau Brasil Paraíba Comércio de Motos (Honda)</h3>
-        <div class="tags">
-          <span class="tag">Financeiro</span>
-          <span class="tag">Tesouraria</span>
-          <span class="tag">Caixa</span>
-          <span class="tag">Compras</span>
-          <span class="tag">Processos</span>
-        </div>
-      </div>
-      <span class="badge">histórico</span>
-    </div>
+            <div class="card col-6">
+            <div class="project">
+              <div class="top">
+                <div>
+                  <h3>Analista Administrativo — Pau Brasil Paraíba Comércio de Motos (Honda)</h3>
+                  <div class="tags">
+                    <span class="tag">Financeiro</span>
+                    <span class="tag">Tesouraria</span>
+                    <span class="tag">Caixa</span>
+                    <span class="tag">Compras</span>
+                    <span class="tag">Processos</span>
+                  </div>
+                </div>
+                <span class="badge">histórico</span>
+              </div>
 
-    <p class="desc">
-      Atuação com liderança e suporte à gestão administrativa, integrando rotinas financeiras e operacionais com foco em controle,
-      rastreabilidade e agilidade de execução.
-    </p>
+              <p class="desc">
+                Atuação com liderança e suporte à gestão administrativa, integrando rotinas financeiras e operacionais com foco em controle,
+                rastreabilidade e agilidade de execução.
+              </p>
 
-    <div class="kv">
-      <div class="k">
-        <div class="t">Principais rotinas</div>
-        <div class="v">Caixa • Tesouraria • Depósitos • A/P • A/R</div>
-      </div>
-      <div class="k">
-        <div class="t">Compras</div>
-        <div class="v">Insumos • Controle de compras</div>
-      </div>
-      <div class="k">
-        <div class="t">Análise</div>
-        <div class="v">Planilhas complexas • Identificação de gastos</div>
-      </div>
-      <div class="k">
-        <div class="t">Processos</div>
-        <div class="v">Padronização • Rotinas mais rápidas</div>
-      </div>
-    </div>
+              <div class="kv">
+                <div class="k">
+                  <div class="t">Principais rotinas</div>
+                  <div class="v">Caixa • Tesouraria • Depósitos • A/P • A/R</div>
+                </div>
+                <div class="k">
+                  <div class="t">Compras</div>
+                  <div class="v">Insumos • Controle de compras</div>
+                </div>
+                <div class="k">
+                  <div class="t">Análise</div>
+                  <div class="v">Planilhas complexas • Identificação de gastos</div>
+                </div>
+                <div class="k">
+                  <div class="t">Processos</div>
+                  <div class="v">Padronização • Rotinas mais rápidas</div>
+                </div>
+              </div>
 
-    <div class="item" style="margin-top:12px;">
-      <span class="badge">Capacitar</span>
-      <div>
-        <strong>Formação de liderança e resolução de problemas</strong>
-        <p>
-          Módulos: Controle Emocional, Perfis de Comportamento e Resolução de Problemas.
-          Ferramentas: SWOT, PDCA, 5W2H e 5 Porquês.
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
+              <div class="item" style="margin-top:12px;">
+                <span class="badge">Capacitar</span>
+                <div>
+                  <strong>Formação de liderança e resolução de problemas</strong>
+                  <p>
+                    Módulos: Controle Emocional, Perfis de Comportamento e Resolução de Problemas.
+                    Ferramentas: SWOT, PDCA, 5W2H e 5 Porquês.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div class="card col-6">
             <div class="project">
@@ -1781,7 +1804,7 @@
     <div class="rf-calc__head">
       <span class="rf-calc__kicker">
         <span class="rf-calc__dot" aria-hidden="true"></span>
-        Ferramenta analítica
+        Calculadora analítica
       </span>
       <button class="rf-calc__helpBtn" type="button" id="rfOpenHelp" aria-haspopup="dialog" aria-controls="rfHelpModal">
          Como funciona
@@ -1990,30 +2013,27 @@
 </div>
 
   <!-- ===== DEMO MODAL: Cotação Inteligente ===== -->
-<div class="rf-demoModal" id="cotacaoModal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Demo Cotação Inteligente">
-  <div class="rf-demoModal__backdrop" data-close="true"></div>
+  <div class="rf-demoModal" id="cotacaoModal" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Demo Cotação Inteligente">
+    <div class="rf-demoModal__backdrop" data-close="true"></div>
 
-  <div class="rf-demoModal__panel" role="document">
-    <div class="rf-demoModal__head">
-      <div>
-        <h3 class="rf-demoModal__title">Cotação Inteligente</h3>
-        <div class="rf-demoModal__sub">Preencha e use “Comparar / PDF / Decisão” dentro da ferramenta.</div>
+    <div class="rf-demoModal__panel" role="document">
+      <div class="rf-demoModal__head">
+        <div>
+          <h3 class="rf-demoModal__title">Cotação Inteligente</h3>
+          <div class="rf-demoModal__sub">Preencha e use “Comparar / PDF / Decisão” dentro da ferramenta.</div>
+        </div>
+
+        <div class="rf-demoModal__actions">
+          <a class="rf-demoBtn ghost" id="cotacaoFull" href="demos/cotacao.html" target="_blank" rel="noopener">Tela cheia</a>
+          <button class="rf-demoBtn" type="button" id="closeCotacaoDemo">Fechar</button>
+        </div>
       </div>
 
-      <div class="rf-demoModal__actions">
-        <a class="rf-demoBtn ghost" id="cotacaoFull" href="demos/cotacao.html" target="_blank" rel="noopener">Tela cheia</a>
-        <button class="rf-demoBtn" type="button" id="closeCotacaoDemo">Fechar</button>
+      <div class="rf-demoModal__body">
+        <iframe id="cotacaoFrame" title="Demo Cotação Inteligente" loading="lazy"></iframe>
       </div>
-    </div>
-
-    <div class="rf-demoModal__body">
-      <iframe id="cotacaoFrame" title="Demo Cotação Inteligente" loading="lazy"></iframe>
     </div>
   </div>
-</div>
-
-
-
 
     <!-- CONTATO -->
     <section id="contato">
@@ -2548,7 +2568,6 @@
   </script>
 </body>
 </html>
-
 
 
 
