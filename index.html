@@ -769,6 +769,162 @@
     /* ===== Reveal ===== */
     .reveal{ opacity:0; transform: translateY(12px); transition: opacity .55s ease, transform .55s ease; will-change: opacity, transform; }
     .reveal.in{ opacity:1; transform: translateY(0); }
+@media (max-width: 768px){
+
+  .thumb .meta span{
+    display: none !important;
+  }
+
+  .thumb .meta b{
+    font-size: 12px;
+  }
+
+}
+/* ===== TELAS: Mobile-first (somente ícones) ===== */
+@media (max-width: 768px){
+
+  /* coloca a lista de miniaturas abaixo do viewer */
+  .shots{
+    grid-template-columns: 1fr !important;
+  }
+
+  /* some com textos da lista (somente ícones) */
+  .thumb .meta{
+    display: none !important;
+  }
+
+  /* grade de ícones */
+  .thumbs .list{
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    padding: 12px;
+  }
+
+  /* vira "tile" (quadradinho clicável) */
+  .thumb{
+    padding: 10px !important;
+    justify-content: center !important;
+  }
+
+  /* miniatura ocupa tudo do tile */
+  .thumb .mini{
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1;     /* ícone quadrado */
+    border-radius: 16px;
+  }
+
+  .thumb .mini img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+/* Destaque discreto para o Master */
+#plano-master{
+  outline: 2px solid rgba(34,211,238,.28);
+}
+#plano-master .ribbon{
+  background: linear-gradient(90deg, rgba(34,211,238,.92), rgba(167,139,250,.86));
+}
+
+/* ===== TABELA: mobile sem arrastar (vira cards) ===== */
+@media (max-width: 768px){
+
+  /* some com o texto "arraste..." */
+  .table-head span{ display:none !important; }
+
+  /* remove scroll horizontal no mobile */
+  .scroll-x{ overflow: visible !important; }
+
+  /* esconde cabeçalho da tabela */
+  table thead{ display:none; }
+
+  /* tabela vira lista */
+  table, tbody, tr, td{ display:block; width:100%; }
+  table{ min-width: 0 !important; }
+
+  /* cada linha vira um card */
+  tbody tr{
+    margin: 12px;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(191,219,254,.16);
+    background: rgba(0,0,0,.18);
+    box-shadow: 0 16px 36px rgba(0,0,0,.35);
+  }
+
+  /* primeira coluna (Função) vira título do card */
+  tbody tr td:first-child{
+    font-weight: 950;
+    letter-spacing: -.01em;
+    padding: 14px 14px 10px;
+    background: rgba(255,255,255,.03);
+    border-bottom: 1px solid rgba(191,219,254,.12);
+  }
+
+  /* colunas Essencial/Plus/Pró viram linhas com label + valor */
+  tbody tr td:not(:first-child){
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 10px;
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(191,219,254,.10);
+  }
+
+  /* label automático "Essencial / Plus / Pró" */
+  tbody tr td:not(:first-child)::before{
+    content: attr(data-label);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-weight: 950;
+    color: rgba(234,240,255,.70);
+    font-family: var(--mono);
+  }
+
+  /* remove a última borda */
+  tbody tr td:last-child{ border-bottom: none; }
+
+  /* deixa os chips (Sim/Não/Exclusivo) bem alinhados */
+  .yes,.no,.excl{ margin-left:auto; }
+}
+
+@media (max-width: 768px){
+  .yes, .no, .excl{
+    font-size: 0 !important;       /* esconde o texto */
+    padding: 10px 12px !important; /* mantém o “pill” */
+    min-width: 44px;
+    justify-content: center;
+  }
+
+  .yes::after{
+    content: "✓";
+    font-size: 16px;
+    font-weight: 950;
+    letter-spacing: 0;
+  }
+
+  .no::after{
+    content: "✕";
+    font-size: 16px;
+    font-weight: 950;
+    letter-spacing: 0;
+  }
+
+  .excl::after{
+    content: "★";
+    font-size: 16px;
+    font-weight: 950;
+    letter-spacing: 0;
+  }
+
+  /* o pontinho do exclusivo pode sumir no mobile */
+  .excl i{ display:none; }
+}
   </style>
 </head>
 
@@ -1024,7 +1180,7 @@
         <div class="sec-head reveal">
           <div class="sec-title">
             <h3>Planos</h3>
-            <p>Preços iniciais conforme sua tabela: <b>R$ 34,90</b> (Essencial), <b>R$ 54,90</b> (Plus) e <b>R$ 94,90</b> (Pró).</p>
+            
           </div>
         </div>
 
@@ -1115,6 +1271,35 @@
               </button>
             </div>
           </div>
+
+          <div class="plan reveal" id="plano-master">
+  <div class="ribbon">Academias</div>
+  <div class="plan-inner">
+    <div class="plan-top">
+      <div>
+        <span class="tag">Master</span>
+        <h4>Exclusivo para Academias</h4>
+      </div>
+      
+    </div>
+
+    <div>
+      <div class="bigprice">Sob consulta</div>
+      <div class="per">projeto personalizado</div>
+    </div>
+
+    <ul>
+      <li>Tudo do Pró</li>
+      <li>Gestão de rotinas de academia</li>
+      <li>Relatórios e indicadores sob necessidade do gestor</li>
+      <li>Integrações e automações conforme operação</li>
+    </ul>
+
+    <button class="pick" data-scroll="#contato">
+      Falar sobre o Master
+    </button>
+  </div>
+</div>
         </div>
       </div>
     </section>
@@ -1146,141 +1331,169 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Limite de alunos</td>
-                  <td>ilimitado</td>
-                  <td>ilimitado</td>
-                  <td>Ilimitado</td>
-                </tr>
-                <tr>
-                  <td>Tela do Aluno (evolução, treinos, frequência, avaliações etc.)</td>
-                  <td><span class="yes">Sim</span></td>
-                  <td><span class="yes">Sim</span></td>
-                  <td><span class="yes">Sim</span></td>
-                </tr>
-                <tr>
-                  <td>Gestão completa de Treinos</td>
-                  <td><span class="yes">Sim</span></td>
-                  <td><span class="yes">Sim</span></td>
-                  <td><span class="yes">Sim</span></td>
-                </tr>
-                <tr>
-                  <td>Gestão completa de Avaliações</td>
-                  <td><span class="yes">Sim</span></td>
-                  <td><span class="yes">Sim</span></td>
-                  <td><span class="yes">Sim</span></td>
-                </tr>
-                <tr>
-                  <td>Gestão de alunos (criar/editar/excluir)</td>
-                  <td><span class="yes">Sim</span></td>
-                  <td><span class="yes">Sim</span></td>
-                  <td><span class="yes">Sim</span></td>
-                </tr>
-                <tr>
-                  <td>Evolução básica do aluno</td>
-                  <td><span class="yes">Sim</span></td>
-                  <td><span class="yes">Sim</span></td>
-                  <td><span class="yes">Sim</span></td>
-                </tr>
-                <tr>
-                  <td>Banco de Exercícios</td>
-                  <td><span class="yes">Sim</span></td>
-                  <td><span class="yes">Sim</span></td>
-                  <td><span class="yes">Sim</span></td>
-                </tr>
-                <tr>
-                  <td>Modelos de treino</td>
-                  <td><span class="yes">Sim</span></td>
-                  <td><span class="yes">Sim</span></td>
-                  <td><span class="yes">Sim</span></td>
-                </tr>
-                <tr>
-                  <td>Clonagem de treinos</td>
-                  <td><span class="yes">Sim</span> <span style="opacity:.7;font-family:var(--mono);font-size:12px;">(simples)</span></td>
-                  <td><span class="yes">Sim</span> <span style="opacity:.7;font-family:var(--mono);font-size:12px;">(avançada)</span></td>
-                  <td><span class="yes">Sim</span> <span style="opacity:.7;font-family:var(--mono);font-size:12px;">(avançada)</span></td>
-                </tr>
-                <tr>
-                  <td>Comparações avançadas de avaliações</td>
-                  <td><span class="no">Não</span></td>
-                  <td><span class="yes">Sim</span></td>
-                  <td><span class="yes">Sim</span></td>
-                </tr>
-                <tr>
-                  <td>Dashboard básico</td>
-                  <td><span class="no">Não</span></td>
-                  <td><span class="yes">Sim</span></td>
-                  <td><span class="yes">Sim</span></td>
-                </tr>
-                <tr>
-                  <td>Agenda Inteligente</td>
-                  <td><span class="no">Não</span></td>
-                  <td><span class="yes">Sim</span></td>
-                  <td><span class="yes">Sim</span></td>
-                </tr>
+<tr>
+  <td>Limite de alunos</td>
+  <td data-label="Essencial">ilimitado</td>
+  <td data-label="Plus">ilimitado</td>
+  <td data-label="Pró">Ilimitado</td>
+</tr>
 
-                <tr>
-                  <td>Dashboard avançado</td>
-                  <td><span class="no">Não</span></td>
-                  <td><span class="yes">Sim</span></td>
-                  <td><span class="yes">Sim</span></td>
-                </tr>
-                <tr>
-                  <td>Feedbacks de Treinos (Aluno)</td>
-                  <td><span class="no">Não</span></td>
-                  <td><span class="yes">Sim</span></td>
-                  <td><span class="yes">Sim</span></td>
-                </tr>
-                <tr>
-                  <td>Timeline do Aluno</td>
-                  <td><span class="no">Não</span></td>
-                  <td><span class="yes">Sim</span></td>
-                  <td><span class="yes">Sim</span></td>
-                </tr>
+<tr>
+  <td>Tela do Aluno (evolução, treinos, frequência, avaliações etc.)</td>
+  <td data-label="Essencial"><span class="yes">Sim</span></td>
+  <td data-label="Plus"><span class="yes">Sim</span></td>
+  <td data-label="Pró"><span class="yes">Sim</span></td>
+</tr>
 
-                <tr>
-                  <td>Visão rápida do aluno</td>
-                  <td><span class="no">Não</span></td>
-                  <td><span class="no">Não</span></td>
-                  <td><span class="excl"><i></i>Exclusivo</span></td>
-                </tr>
-                <tr>
-                  <td>Assistente do Personal (IA)</td>
-                  <td><span class="no">Não</span></td>
-                  <td><span class="no">Não</span></td>
-                  <td><span class="excl"><i></i>Exclusivo</span></td>
-                </tr>
-                <tr>
-                  <td>Linha do tempo completa do aluno</td>
-                  <td><span class="no">Não</span></td>
-                  <td><span class="no">Não</span></td>
-                  <td><span class="excl"><i></i>Exclusivo</span></td>
-                </tr>
-                <tr>
-                  <td>Metas inteligentes</td>
-                  <td><span class="no">Não</span></td>
-                  <td><span class="no">Não</span></td>
-                  <td><span class="excl"><i></i>Exclusivo</span></td>
-                </tr>
-                <tr>
-                  <td>Alertas automáticos de desempenho</td>
-                  <td><span class="no">Não</span></td>
-                  <td><span class="no">Não</span></td>
-                  <td><span class="excl"><i></i>Exclusivo</span></td>
-                </tr>
-                <tr>
-                  <td>Relatórios premium gerados com a Assistente do Personal</td>
-                  <td><span class="no">Não</span></td>
-                  <td><span class="no">Não</span></td>
-                  <td><span class="excl"><i></i>Exclusivo</span></td>
-                </tr>
-                <tr>
-                  <td><b>Valores iniciais</b></td>
-                  <td><b>R$ 34,90</b></td>
-                  <td><b>R$ 54,90</b></td>
-                  <td><b>R$ 94,90</b></td>
-                </tr>
-              </tbody>
+<tr>
+  <td>Gestão completa de Treinos</td>
+  <td data-label="Essencial"><span class="yes">Sim</span></td>
+  <td data-label="Plus"><span class="yes">Sim</span></td>
+  <td data-label="Pró"><span class="yes">Sim</span></td>
+</tr>
+
+<tr>
+  <td>Gestão completa de Avaliações</td>
+  <td data-label="Essencial"><span class="yes">Sim</span></td>
+  <td data-label="Plus"><span class="yes">Sim</span></td>
+  <td data-label="Pró"><span class="yes">Sim</span></td>
+</tr>
+
+<tr>
+  <td>Gestão de alunos (criar/editar/excluir)</td>
+  <td data-label="Essencial"><span class="yes">Sim</span></td>
+  <td data-label="Plus"><span class="yes">Sim</span></td>
+  <td data-label="Pró"><span class="yes">Sim</span></td>
+</tr>
+
+<tr>
+  <td>Evolução básica do aluno</td>
+  <td data-label="Essencial"><span class="yes">Sim</span></td>
+  <td data-label="Plus"><span class="yes">Sim</span></td>
+  <td data-label="Pró"><span class="yes">Sim</span></td>
+</tr>
+
+<tr>
+  <td>Banco de Exercícios</td>
+  <td data-label="Essencial"><span class="yes">Sim</span></td>
+  <td data-label="Plus"><span class="yes">Sim</span></td>
+  <td data-label="Pró"><span class="yes">Sim</span></td>
+</tr>
+
+<tr>
+  <td>Modelos de treino</td>
+  <td data-label="Essencial"><span class="yes">Sim</span></td>
+  <td data-label="Plus"><span class="yes">Sim</span></td>
+  <td data-label="Pró"><span class="yes">Sim</span></td>
+</tr>
+
+<tr>
+  <td>Clonagem de treinos</td>
+  <td data-label="Essencial">
+    <span class="yes">Sim</span>
+    <span style="opacity:.7;font-family:var(--mono);font-size:12px;">(simples)</span>
+  </td>
+  <td data-label="Plus">
+    <span class="yes">Sim</span>
+    <span style="opacity:.7;font-family:var(--mono);font-size:12px;">(avançada)</span>
+  </td>
+  <td data-label="Pró">
+    <span class="yes">Sim</span>
+    <span style="opacity:.7;font-family:var(--mono);font-size:12px;">(avançada)</span>
+  </td>
+</tr>
+
+<tr>
+  <td>Comparações avançadas de avaliações</td>
+  <td data-label="Essencial"><span class="no">Não</span></td>
+  <td data-label="Plus"><span class="yes">Sim</span></td>
+  <td data-label="Pró"><span class="yes">Sim</span></td>
+</tr>
+
+<tr>
+  <td>Dashboard básico</td>
+  <td data-label="Essencial"><span class="no">Não</span></td>
+  <td data-label="Plus"><span class="yes">Sim</span></td>
+  <td data-label="Pró"><span class="yes">Sim</span></td>
+</tr>
+
+<tr>
+  <td>Agenda Inteligente</td>
+  <td data-label="Essencial"><span class="no">Não</span></td>
+  <td data-label="Plus"><span class="yes">Sim</span></td>
+  <td data-label="Pró"><span class="yes">Sim</span></td>
+</tr>
+
+<tr>
+  <td>Dashboard avançado</td>
+  <td data-label="Essencial"><span class="no">Não</span></td>
+  <td data-label="Plus"><span class="yes">Sim</span></td>
+  <td data-label="Pró"><span class="yes">Sim</span></td>
+</tr>
+
+<tr>
+  <td>Feedbacks de Treinos (Aluno)</td>
+  <td data-label="Essencial"><span class="no">Não</span></td>
+  <td data-label="Plus"><span class="yes">Sim</span></td>
+  <td data-label="Pró"><span class="yes">Sim</span></td>
+</tr>
+
+<tr>
+  <td>Timeline do Aluno</td>
+  <td data-label="Essencial"><span class="no">Não</span></td>
+  <td data-label="Plus"><span class="yes">Sim</span></td>
+  <td data-label="Pró"><span class="yes">Sim</span></td>
+</tr>
+
+<tr>
+  <td>Visão rápida do aluno</td>
+  <td data-label="Essencial"><span class="no">Não</span></td>
+  <td data-label="Plus"><span class="no">Não</span></td>
+  <td data-label="Pró"><span class="excl"><i></i>Exclusivo</span></td>
+</tr>
+
+<tr>
+  <td>Assistente do Personal (IA)</td>
+  <td data-label="Essencial"><span class="no">Não</span></td>
+  <td data-label="Plus"><span class="no">Não</span></td>
+  <td data-label="Pró"><span class="excl"><i></i>Exclusivo</span></td>
+</tr>
+
+<tr>
+  <td>Linha do tempo completa do aluno</td>
+  <td data-label="Essencial"><span class="no">Não</span></td>
+  <td data-label="Plus"><span class="no">Não</span></td>
+  <td data-label="Pró"><span class="excl"><i></i>Exclusivo</span></td>
+</tr>
+
+<tr>
+  <td>Metas inteligentes</td>
+  <td data-label="Essencial"><span class="no">Não</span></td>
+  <td data-label="Plus"><span class="no">Não</span></td>
+  <td data-label="Pró"><span class="excl"><i></i>Exclusivo</span></td>
+</tr>
+
+<tr>
+  <td>Alertas automáticos de desempenho</td>
+  <td data-label="Essencial"><span class="no">Não</span></td>
+  <td data-label="Plus"><span class="no">Não</span></td>
+  <td data-label="Pró"><span class="excl"><i></i>Exclusivo</span></td>
+</tr>
+
+<tr>
+  <td>Relatórios premium gerados com a Assistente do Personal</td>
+  <td data-label="Essencial"><span class="no">Não</span></td>
+  <td data-label="Plus"><span class="no">Não</span></td>
+  <td data-label="Pró"><span class="excl"><i></i>Exclusivo</span></td>
+</tr>
+
+<tr>
+  <td><b>Valores iniciais</b></td>
+  <td data-label="Essencial"><b>R$ 34,90</b></td>
+  <td data-label="Plus"><b>R$ 54,90</b></td>
+  <td data-label="Pró"><b>R$ 94,90</b></td>
+</tr>
+</tbody>
             </table>
           </div>
         </div>
