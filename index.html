@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>RaudTraining — Plataforma Premium para Personais e Academias</title>
-      <link rel="icon" href="logo_nova.ico" type="image/x-icon">
+    <link rel="icon" href="logo_nova.ico" type="image/x-icon">
   <meta name="description" content="RaudTraining: gestão de alunos, treinos, avaliações, evolução, Metas e relatórios. Planos Essencial, Plus e Pró." />
 
   <!-- Fonts -->
@@ -926,6 +926,27 @@
   /* o pontinho do exclusivo pode sumir no mobile */
   .excl i{ display:none; }
 }
+/* impede qualquer bloco de estourar a largura */
+.wrap, .topbar, .topbar-inner, section, main, header{
+  max-width: 100%;
+}
+
+img, svg{
+  max-width: 100%;
+}
+/* ===== orb 100% dentro da tela no mobile ===== */
+@media (max-width: 720px){
+  .orb{
+    right: 14px !important;
+    bottom: 16px !important;
+  }
+}
+/* ===== Mobile: esconder botões do topo (usar só o menu flutuante) ===== */
+@media (max-width: 720px){
+  .topbar .actions{
+    display: none !important;
+  }
+}
   </style>
 </head>
 
@@ -1827,4 +1848,3 @@ if (copyInstaBtn){
   </script>
 </body>
 </html>
-
