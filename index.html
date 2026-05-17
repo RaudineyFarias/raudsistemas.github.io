@@ -1,1934 +1,1169 @@
-<!doctype html>
-<html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>RaudTraining — Plataforma Premium para Personais e Academias</title>
-    <link rel="icon" href="logo_nova.ico" type="image/x-icon">
-  <meta name="description" content="RaudTraining: gestão de alunos, treinos, avaliações, evolução, Metas e relatórios. Planos Essencial, Plus e Pró." />
-
-  <!-- Fonts -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raud Labs | Softwares SaaS Personalizados</title>
+  <link rel="icon" type="image/png" href="logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   <style>
-    :root{
-      --bg0:#070A12;
-      --bg1:#0A1020;
-      --card: rgba(255,255,255,.06);
-      --card2: rgba(255,255,255,.085);
-      --stroke: rgba(191,219,254,.18);
-      --stroke2: rgba(59,130,246,.30);
-      --text:#EAF0FF;
-      --muted: rgba(234,240,255,.74);
-      --muted2: rgba(234,240,255,.56);
+:root {
+        --bg: #01040B;
+        --bg-2: #03122F;
 
-      --blue:#60a5fa;
-      --indigo:#818cf8;
-      --cyan:#22d3ee;
-      --violet:#a78bfa;
+        --velvet: #061A45;
+        --velvet-2: #0A2D73;
 
-      --r: 18px;
-      --shadow: 0 22px 70px rgba(0,0,0,.55);
-      --shadow2: 0 16px 44px rgba(0,0,0,.45);
-      --max: 1160px;
+        --blue: #2F7DFF;
+        --cyan: #52C7FF;
 
-      --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      --sans: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", "Noto Sans", "Liberation Sans", sans-serif;
+        --text: #F4F8FF;
+        --muted: #89A9D9;
+
+        --line: rgba(82, 199, 255, 0.18);
+
+        --card: rgba(4, 16, 42, 0.68);
+        --card-strong: rgba(8, 28, 68, 0.88);
+
+        --shadow: 0 24px 90px rgba(0, 0, 0, .55);
+        }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    *{ box-sizing: border-box; }
-    html{ scroll-behavior: smooth; }
-    body{
-      margin:0;
-      font-family: var(--sans);
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Inter", sans-serif;
       color: var(--text);
-      background:
-        radial-gradient(1200px 700px at 12% 10%, rgba(96,165,250,.18), transparent 60%),
-        radial-gradient(1200px 700px at 88% 30%, rgba(129,140,248,.16), transparent 55%),
-        radial-gradient(1100px 720px at 55% 95%, rgba(34,211,238,.10), transparent 55%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
-      overflow-x:hidden;
-    }
-    a{ color: inherit; text-decoration:none; }
-    button{ font-family: inherit; }
-    code{ font-family: var(--mono); }
-
-    .wrap{ width:min(var(--max), calc(100% - 40px)); margin: 0 auto; }
-
-    /* ===== Background grain ===== */
-    .grain{
-      pointer-events:none; position:fixed; inset:0;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
-      mix-blend-mode: overlay;
-      opacity:.26;
+        background:
+        radial-gradient(circle at 20% 10%, rgba(47, 125, 255, .42), transparent 28%),
+        radial-gradient(circle at 82% 18%, rgba(82, 199, 255, .22), transparent 26%),
+        radial-gradient(circle at 50% 90%, rgba(10, 45, 115, .42), transparent 34%),
+        linear-gradient(135deg, #01040B 0%, #03122F 45%, #020814 100%);
+      overflow-x: hidden;
     }
 
-    /* ===== Topbar ===== */
-    .topbar{
-      position: sticky; top: 0; z-index: 60;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      background: linear-gradient(180deg, rgba(7,10,18,.68), rgba(7,10,18,.40));
-      border-bottom: 1px solid rgba(191,219,254,.12);
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -2;
     }
-    .topbar-inner{
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 14px 0; gap: 14px;
-    }
-    .brand{ display:flex; align-items:center; gap: 12px; min-width: 240px; }
-    .brand-badge{
-      width: 44px; height: 44px; border-radius: 50%;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(248,250,252,.18), transparent 55%),
-        radial-gradient(circle at 70% 70%, rgba(34,211,238,.16), transparent 55%),
-        linear-gradient(135deg, rgba(51, 88, 133, 0.3), rgba(129,140,248,.22));
-      border: 1px solid rgba(191,219,254,.22);
-      box-shadow: 0 14px 30px rgba(0,0,0,.35);
-      display:grid; place-items:center;
-      overflow:hidden;
-    }
-    .brand-badge img{ width: 100%; height: 100%; object-fit: cover; }
-    .brand h1{ margin:0; font-size: 14px; letter-spacing:.16em; text-transform: uppercase; font-weight: 900; line-height:1.1; }
-    .brand p{ margin:2px 0 0; font-size: 12px; color: var(--muted2); letter-spacing:.06em; }
 
-    .actions{ display:flex; align-items:center; gap: 10px; }
-    .pill{
-      display:inline-flex; align-items:center; gap:10px;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(191,219,254,.18);
-      background: rgba(255,255,255,.05);
-      box-shadow: 0 12px 28px rgba(0,0,0,.24);
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing:.06em;
-      text-transform: uppercase;
+    body::before {
+      background-image:
+        radial-gradient(circle, rgba(255,255,255,.8) 1px, transparent 1px),
+        radial-gradient(circle, rgba(57,216,255,.45) 1px, transparent 1px);
+      background-size: 90px 90px, 140px 140px;
+      animation: starsMove 26s linear infinite;
+      opacity: .45;
+    }
+
+    body::after {
+      background: linear-gradient(115deg, transparent, rgba(47,125,255,.08), transparent);
+      animation: cosmicScan 10s ease-in-out infinite;
+    }
+
+    @keyframes starsMove {
+      from { background-position: 0 0, 0 0; }
+      to { background-position: 900px 420px, -600px 700px; }
+    }
+
+    @keyframes cosmicScan {
+      0%, 100% { transform: translateX(-40%); opacity: .25; }
+      50% { transform: translateX(40%); opacity: .8; }
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    .nav-shell {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%);
+      z-index: 50;
+      width: min(560px, calc(100% - 28px));
+      height: 76px;
+      border-radius: 24px;
+      background: rgba(246, 250, 255, .95);
+      box-shadow: 0 18px 60px rgba(0,0,0,.42), inset 0 0 0 1px rgba(255,255,255,.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(18px);
+    }
+
+    .nav-shell ul {
+      display: flex;
+      width: 440px;
+      justify-content: space-between;
+      list-style: none;
+      position: relative;
+    }
+
+    .nav-shell li {
+      position: relative;
+      width: 70px;
+      height: 70px;
+      z-index: 2;
+    }
+
+    .nav-shell a {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1d2942;
+      font-size: 25px;
+      transition: .45s ease;
+    }
+
+    .nav-shell li.active a {
+      transform: translateY(-35px);
+      color: var(--blue);
+    }
+
+    .indicator {
+      position: absolute;
+      top: -36px;
+      left: 0;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: #fff;
+      border: 8px solid #1d2136;
+      box-shadow: 0 0 28px rgba(47,125,255,.55);
+      transition: .5s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .indicator::before,
+    .indicator::after {
+      content: "";
+      position: absolute;
+      top: 28px;
+      width: 24px;
+      height: 24px;
+      background: transparent;
+    }
+
+    .indicator::before {
+      left: -30px;
+      border-top-right-radius: 25px;
+      box-shadow: 3px -9px 0 #1d2136;
+    }
+
+    .indicator::after {
+      right: -30px;
+      border-top-left-radius: 25px;
+      box-shadow: -3px -9px 0 #1d2136;
+    }
+
+    .nav-shell li:nth-child(1).active ~ .indicator { transform: translateX(0); }
+    .nav-shell li:nth-child(2).active ~ .indicator { transform: translateX(92px); }
+    .nav-shell li:nth-child(3).active ~ .indicator { transform: translateX(185px); }
+    .nav-shell li:nth-child(4).active ~ .indicator { transform: translateX(278px); }
+    .nav-shell li:nth-child(5).active ~ .indicator { transform: translateX(370px); }
+
+    header {
+      padding: 28px 0 16px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(to bottom, rgba(5,8,20,.88), rgba(5,8,20,.36), transparent);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(8, 16, 38, .58);
+      box-shadow: 0 16px 50px rgba(0,0,0,.22);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
       font-weight: 800;
-      cursor:pointer;
-      transition: transform .15s ease, border-color .15s ease, background .15s ease;
-      user-select:none;
-      white-space: nowrap;
+      letter-spacing: -.03em;
     }
-    .pill:hover{ transform: translateY(-1px); border-color: rgba(191,219,254,.32); background: rgba(255,255,255,.07); }
-    .pill:active{ transform: translateY(0px) scale(.99); }
-    .btn{
-      border:none; cursor:pointer;
-      border-radius: 14px;
-      padding: 10px 14px;
-      font-weight: 900;
-      letter-spacing:.10em;
-      text-transform: uppercase;
-      font-size: 12px;
-      color: #07101f;
-      background:
-        radial-gradient(circle at 0% 0%, rgba(248,250,252,.18), transparent 55%),
-        linear-gradient(135deg, #eff6ff, #dbeafe);
-      border: 1px solid rgba(191,219,254,.26);
-      box-shadow: 0 18px 34px rgba(0,0,0,.35);
-      transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
-      display:inline-flex; align-items:center; gap: 10px;
-      white-space: nowrap;
-    }
-    .btn:hover{ transform: translateY(-1px); filter: saturate(1.05); box-shadow: 0 22px 40px rgba(0,0,0,.42); }
-    .btn:active{ transform: translateY(0px) scale(.99); }
-    .btn svg{ width: 16px; height: 16px; }
 
-    /* ===== Hero ===== */
-    header.hero{ position:relative; padding: 52px 0 28px; }
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1.25fr .95fr;
-      gap: 26px;
-      align-items: stretch;
+    .logo-orbit {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      position: relative;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle, #0A2D73, #03122F 65%);
+      box-shadow: 0 0 35px rgba(47,125,255,.55);
+      animation: floatLogo 5s ease-in-out infinite;
     }
-    .kicker{
-      display:inline-flex; align-items:center; gap:10px;
-      border: 1px solid rgba(191,219,254,.18);
-      background: rgba(255,255,255,.04);
-      border-radius: 999px;
-      padding: 8px 10px;
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing:.10em;
-      text-transform: uppercase;
+
+    .logo-orbit::before {
+      content: "";
+      position: absolute;
+      inset: -7px;
+      border-radius: 50%;
+      border: 1px solid rgba(57,216,255,.55);
+      border-top-color: rgba(255,255,255,.95);
+      animation: rotate 4s linear infinite;
+    }
+
+    .logo-orbit img {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .logo-placeholder {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 13px;
       font-weight: 900;
+      background: linear-gradient(135deg, #fff, #8ac9ff);
+      color: #061329;
+    }
+
+    @keyframes rotate { to { transform: rotate(360deg); } }
+    @keyframes floatLogo {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    .top-links {
+      display: flex;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .top-links a:hover {
+      color: var(--cyan);
+    }
+
+    .hero {
+      min-height: 88vh;
+      display: grid;
+      grid-template-columns: 1.06fr .94fr;
+      align-items: center;
+      gap: 46px;
+      padding: 58px 0 92px;
+    }
+
+    .eyebrow {
       width: fit-content;
-      box-shadow: 0 16px 34px rgba(0,0,0,.22);
+      padding: 10px 14px;
+      border: 1px solid rgba(57,216,255,.24);
+      border-radius: 999px;
+      background: rgba(47,125,255,.09);
+      color: #b9dcff;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      box-shadow: 0 0 30px rgba(47,125,255,.12);
     }
-    .dot{
-      width:10px; height:10px; border-radius: 50%;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.9), rgba(255,255,255,.15));
-      box-shadow: 0 0 0 4px rgba(96,165,250,.20), 0 0 26px rgba(96,165,250,.35);
+
+    h1 {
+      font-size: clamp(42px, 7vw, 82px);
+      line-height: .95;
+      letter-spacing: -.075em;
+      margin-bottom: 22px;
     }
-    .hero h2{
-      margin: 14px 0 10px;
-      font-size: clamp(30px, 4vw, 52px);
-      line-height: 1.02;
-      letter-spacing: -0.02em;
-      font-weight: 950;
-    }
-    .hero h2 .shine{
-      background: linear-gradient(90deg, rgba(96,165,250,1), rgba(34,211,238,1), rgba(167,139,250,1));
+
+    .gradient-text {
+      background: linear-gradient(90deg, #fff, #6fc7ff, #2f7dff);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 0 40px rgba(96,165,250,.14);
     }
-    .hero p{ margin: 0; color: var(--muted); font-size: 15px; line-height: 1.65; max-width: 64ch; }
-    .hero-cta{ display:flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; align-items:center; }
-    .subnote{ margin-top: 10px; color: var(--muted2); font-size: 12px; letter-spacing:.02em; }
 
-    .hero-card{
-      border-radius: var(--r);
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
-      border: 1px solid rgba(191,219,254,.18);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-      min-height: 360px;
+    .hero p {
+      max-width: 650px;
+      color: #a8bbdc;
+      font-size: 18px;
+      line-height: 1.75;
+      margin-bottom: 28px;
     }
-    .hero-card::before{
-      content:"";
-      position:absolute; inset:-2px;
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .btn {
+      border: 0;
+      cursor: pointer;
+      min-height: 52px;
+      padding: 0 20px;
+      border-radius: 16px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: .35s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #2f7dff, #39d8ff);
+      color: #031027;
+      box-shadow: 0 18px 45px rgba(47,125,255,.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 26px 70px rgba(57,216,255,.35);
+    }
+
+    .btn-ghost {
+      color: #dceaff;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(57,216,255,.5);
+      background: rgba(47,125,255,.12);
+    }
+
+    .hero-panel {
+      position: relative;
+      min-height: 560px;
+      border: 1px solid var(--line);
+      border-radius: 38px;
       background:
-        radial-gradient(700px 300px at 20% 10%, rgba(96,165,250,.22), transparent 60%),
-        radial-gradient(650px 300px at 80% 40%, rgba(129,140,248,.18), transparent 55%),
-        radial-gradient(550px 260px at 50% 100%, rgba(34,211,238,.12), transparent 60%);
-      opacity: .95;
-      pointer-events:none;
+        linear-gradient(145deg, rgba(15, 36, 87, .82), rgba(5, 9, 23, .68)),
+        radial-gradient(circle at 50% 0%, rgba(57,216,255,.22), transparent 32%);
+      box-shadow: var(--shadow), inset 0 0 0 1px rgba(255,255,255,.03);
+      overflow: hidden;
     }
-    .hero-card-inner{
-      position:absolute; inset:0;
-      padding: 16px;
-      display:grid;
-      grid-template-rows: auto 1fr auto;
+
+    .hero-panel::before {
+      content: "";
+      position: absolute;
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: conic-gradient(from 0deg, transparent, rgba(57,216,255,.5), transparent, rgba(47,125,255,.7), transparent);
+      filter: blur(2px);
+      animation: rotate 14s linear infinite;
+      opacity: .36;
+    }
+
+    .dashboard-card {
+      position: absolute;
+      inset: 34px;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 30px;
+      background: rgba(5, 10, 26, .72);
+      backdrop-filter: blur(20px);
+      padding: 24px;
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 18px;
+    }
+
+    .window-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 0 16px currentColor;
+    }
+
+    .dot:nth-child(2) { background: var(--cyan); }
+    .dot:nth-child(3) { background: #a8f3ff; }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 12px;
     }
-    .chips{ display:flex; gap: 8px; flex-wrap:wrap; }
-    .chip{
-      font-family: var(--mono);
-      font-size: 11px;
-      padding: 7px 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(191,219,254,.16);
-      background: rgba(0,0,0,.20);
-      color: rgba(234,240,255,.80);
+
+    .metric {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255,255,255,.045);
     }
 
-    /* ===== Real screen image (hero right) ===== */
-    .hero-shot{
-      border-radius: 18px;
-      border: 1px solid rgba(191,219,254,.16);
-      background: rgba(0,0,0,.28);
-      box-shadow: 0 18px 46px rgba(0,0,0,.45);
-      overflow:hidden;
-      position:relative;
-      display:grid;
-      align-content: start;
+    .metric small {
+      color: var(--muted);
+      font-weight: 700;
     }
-    .hero-shot .head{
+
+    .metric strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 26px;
+      letter-spacing: -.04em;
+    }
+
+    .chart-area {
+      position: relative;
+      min-height: 280px;
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      background: linear-gradient(180deg, rgba(47,125,255,.12), rgba(255,255,255,.03));
+      overflow: hidden;
+      padding: 26px;
+    }
+
+    .bars {
+      height: 220px;
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .bar {
+      flex: 1;
+      min-width: 22px;
+      height: var(--h);
+      border-radius: 14px 14px 4px 4px;
+      background: linear-gradient(180deg, #39d8ff, #2f7dff 60%, #123a92);
+      box-shadow: 0 0 24px rgba(47,125,255,.38);
+      animation: growBar 1.4s ease both, pulseBar 3s ease-in-out infinite;
+      animation-delay: var(--d);
+      transform-origin: bottom;
+    }
+
+    @keyframes growBar {
+      from { transform: scaleY(.05); opacity: .2; }
+      to { transform: scaleY(1); opacity: 1; }
+    }
+
+    @keyframes pulseBar {
+      50% { filter: brightness(1.25); }
+    }
+
+    .orbit-chip {
+      position: absolute;
+      right: 22px;
+      top: 22px;
       padding: 10px 12px;
-      border-bottom: 1px solid rgba(191,219,254,.12);
-      background: rgba(255,255,255,.03);
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-    }
-    .hero-shot .head .left{
-      display:flex; gap: 8px; align-items:center;
-      font-family: var(--mono);
-      font-size: 12px;
-      color: rgba(234,240,255,.78);
-      min-width:0;
-    }
-    .badge{
-      padding: 6px 8px;
       border-radius: 999px;
-      border: 1px solid rgba(191,219,254,.16);
-      background: rgba(255,255,255,.04);
-      font-size: 11px;
-      letter-spacing:.10em;
-      text-transform: uppercase;
-      font-weight: 950;
-      white-space: nowrap;
-    }
-    .hero-shot img{
-      width: 100%;
-      height: 100%;
-      display:block;
-      object-fit: cover;
-      aspect-ratio: 16 / 10;
-      filter: saturate(1.02) contrast(1.02);
-    }
-    .hero-shot .note{
-      padding: 10px 12px;
-      border-top: 1px solid rgba(191,219,254,.12);
-      color: rgba(234,240,255,.70);
+      color: #dff5ff;
+      border: 1px solid rgba(57,216,255,.25);
+      background: rgba(7,26,61,.75);
       font-size: 12px;
+      font-weight: 800;
+      animation: floatLogo 4s ease-in-out infinite;
     }
 
-    /* ===== Sections ===== */
-    section{ padding: 42px 0; position:relative; }
-    .sec-head{
-      display:flex; align-items:flex-end; justify-content:space-between;
-      gap: 18px; margin-bottom: 18px;
-    }
-    .sec-title h3{ margin:0; font-size: 22px; font-weight: 950; letter-spacing: -0.01em; }
-    .sec-title p{ margin: 8px 0 0; color: var(--muted); font-size: 14px; line-height: 1.55; max-width: 78ch; }
-
-    .grid-3{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-    .grid-2{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-
-    @media (max-width: 980px){
-      .hero-grid{ grid-template-columns: 1fr; }
-      .brand{ min-width: auto; }
-      .grid-3{ grid-template-columns: 1fr; }
-      .grid-2{ grid-template-columns: 1fr; }
+    section {
+      padding: 80px 0;
     }
 
-    .card{
-      border-radius: var(--r);
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
-      border: 1px solid rgba(191,219,254,.16);
-      box-shadow: var(--shadow2);
-      overflow:hidden;
-      position:relative;
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+      margin-bottom: 28px;
     }
-    .card::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background:
-        radial-gradient(520px 220px at 20% 10%, rgba(96,165,250,.16), transparent 60%),
-        radial-gradient(520px 220px at 80% 60%, rgba(129,140,248,.12), transparent 60%);
-      opacity:.9; pointer-events:none;
-    }
-    .card-inner{ position:relative; padding: 16px; }
-    .icon{
-      width: 44px; height: 44px; border-radius: 14px;
-      border: 1px solid rgba(191,219,254,.18);
-      background: rgba(0,0,0,.22);
-      display:grid; place-items:center;
-      box-shadow: 0 16px 32px rgba(0,0,0,.28);
-      margin-bottom: 10px;
-    }
-    .card h4{ margin:0; font-size: 14px; font-weight: 950; letter-spacing: -0.01em; }
-    .card p{ margin: 8px 0 0; color: var(--muted); font-size: 13px; line-height: 1.6; }
 
-    /* ===== Screens (real images) ===== */
-    .shots{
-      display:grid;
-      grid-template-columns: 1fr .85fr;
-      gap: 14px;
+    .section-head h2 {
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1;
+      letter-spacing: -.06em;
+      max-width: 720px;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 390px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      padding: 26px;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      background: var(--card);
+      box-shadow: 0 18px 60px rgba(0,0,0,.22);
+      min-height: 240px;
+      transition: .4s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(57,216,255,.45);
+      background: var(--card-strong);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      right: -80px;
+      top: -80px;
+      background: rgba(47,125,255,.22);
+      filter: blur(8px);
+    }
+
+    .card ion-icon {
+      font-size: 34px;
+      color: var(--cyan);
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      font-size: 22px;
+      margin-bottom: 12px;
+      letter-spacing: -.03em;
+    }
+
+    .card p {
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .process {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 22px;
       align-items: stretch;
     }
-    .viewer{
-      border-radius: 22px;
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
-      border: 1px solid rgba(191,219,254,.18);
+
+    .phone-pwa {
+      border-radius: 42px;
+      border: 1px solid rgba(255,255,255,.14);
+      min-height: 620px;
+      padding: 18px;
+      background: linear-gradient(155deg, rgba(16,44,110,.68), rgba(3,7,18,.9));
       box-shadow: var(--shadow);
-      position:relative;
-      overflow:hidden;
-      min-height: 420px;
-    }
-    .viewer::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background:
-        radial-gradient(720px 260px at 20% 10%, rgba(96,165,250,.18), transparent 60%),
-        radial-gradient(680px 260px at 90% 55%, rgba(129,140,248,.14), transparent 60%),
-        radial-gradient(680px 260px at 50% 110%, rgba(34,211,238,.10), transparent 60%);
-      opacity:.95; pointer-events:none;
-    }
-    .viewer-inner{ position:absolute; inset:0; padding: 16px; display:grid; grid-template-rows: auto 1fr auto; gap: 12px; }
-    .viewer-top{ display:flex; align-items:center; justify-content:space-between; gap: 10px; }
-    .viewer-top .title{ font-weight: 950; letter-spacing:-0.01em; }
-    .viewer-top .hint{ color: var(--muted2); font-size: 12px; font-family: var(--mono); }
-
-    .frame{
-      border-radius: 18px;
-      background: rgba(0,0,0,.28);
-      border: 1px solid rgba(191,219,254,.14);
-      box-shadow: 0 18px 42px rgba(0,0,0,.35);
-      overflow:hidden;
-      position:relative;
-      display:grid;
-      cursor: zoom-in;
-    }
-    .frame .head{
-      padding: 10px 12px;
-      border-bottom: 1px solid rgba(191,219,254,.12);
-      display:flex; align-items:center; justify-content:space-between;
-      background: rgba(255,255,255,.03);
-      gap:10px;
-    }
-    .frame .head .left{
-      display:flex; gap: 8px; align-items:center;
-      font-family: var(--mono);
-      font-size: 12px;
-      color: rgba(234,240,255,.78);
-      min-width:0;
-    }
-    .path{
-      opacity:.85;
-      white-space: nowrap;
-      overflow:hidden;
-      text-overflow: ellipsis;
-      max-width: 46vw;
-    }
-    .frame img{
-      width: 100%;
-      height: 100%;
-      display:block;
-      object-fit: cover;
-      aspect-ratio: 16 / 10;
-    }
-    .frame .foot{
-      padding: 10px 12px;
-      border-top: 1px solid rgba(191,219,254,.12);
-      display:flex; justify-content:space-between; align-items:center;
-      color: rgba(234,240,255,.70);
-      font-size: 12px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
     }
 
-    .thumbs{
-      border-radius: 22px;
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
-      border: 1px solid rgba(191,219,254,.18);
-      box-shadow: var(--shadow2);
-      overflow:hidden;
-    }
-    .thumbs .list{ padding: 12px; display:grid; gap: 10px; }
-    .thumb{
-      display:flex; gap: 10px; align-items:center;
-      padding: 10px;
-      border-radius: 16px;
-      border: 1px solid rgba(191,219,254,.14);
-      background: rgba(0,0,0,.18);
-      cursor:pointer;
-      transition: transform .12s ease, border-color .12s ease, background .12s ease;
-    }
-    .thumb:hover{ transform: translateY(-1px); border-color: rgba(191,219,254,.30); background: rgba(0,0,0,.22); }
-    .thumb.active{ border-color: rgba(96,165,250,.45); background: rgba(96,165,250,.08); }
-    .thumb .mini{
-      width: 70px; height: 46px; border-radius: 12px;
-      border: 1px solid rgba(191,219,254,.12);
-      background: rgba(0,0,0,.22);
-      overflow:hidden;
-      flex: 0 0 auto;
-      position:relative;
-    }
-    .thumb .mini img{ width:100%; height:100%; object-fit: cover; display:block; filter:saturate(1.02) contrast(1.02); }
-    .thumb .meta{ display:flex; flex-direction:column; gap: 4px; min-width:0; }
-    .thumb .meta b{
-      font-size: 13px; font-weight: 950; letter-spacing:-0.01em;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    }
-    .thumb .meta span{
-      font-size: 12px; color: var(--muted2); line-height: 1.35;
-      overflow:hidden; display:-webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    .phone-pwa::before {
+      content: "";
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      background: rgba(57,216,255,.16);
+      border-radius: 50%;
+      filter: blur(20px);
+      animation: floatLogo 5s ease-in-out infinite;
     }
 
-    /* ===== Plans (cards) ===== */
-    .plan-row{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-    @media (max-width: 980px){ .plan-row{ grid-template-columns: 1fr; } }
+    .phone-screen {
+      width: min(300px, 85%);
+      height: 560px;
+      border-radius: 34px;
+      border: 8px solid #030915;
+      background: linear-gradient(180deg, #0a1b42, #050814);
+      position: relative;
+      overflow: hidden;
+      padding: 24px 18px;
+      box-shadow: 0 30px 90px rgba(0,0,0,.45);
+    }
 
-    .plan{
-      position:relative;
-      border-radius: 22px;
-      overflow:hidden;
-      background: linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.04));
-      border: 1px solid rgba(191,219,254,.18);
-      box-shadow: var(--shadow2);
-    }
-    .plan::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background:
-        radial-gradient(700px 260px at 20% 10%, rgba(96,165,250,.18), transparent 60%),
-        radial-gradient(650px 260px at 85% 55%, rgba(34,211,238,.12), transparent 60%),
-        radial-gradient(650px 260px at 50% 100%, rgba(167,139,250,.10), transparent 60%);
-      pointer-events:none;
-      opacity:.95;
-    }
-    .plan-inner{ position:relative; padding: 18px; display:grid; gap: 12px; }
-    .plan-top{ display:flex; align-items:flex-start; justify-content:space-between; gap: 10px; }
-    .tag{
-      width: fit-content;
-      font-size: 11px;
-      letter-spacing:.14em;
-      text-transform: uppercase;
-      font-weight: 950;
-      color: rgba(234,240,255,.82);
-      padding: 7px 9px;
+    .notch {
+      width: 90px;
+      height: 22px;
       border-radius: 999px;
-      border: 1px solid rgba(191,219,254,.16);
-      background: rgba(0,0,0,.18);
+      background: #02050c;
+      margin: -12px auto 28px;
     }
-    .plan h4{ margin:0; font-size: 18px; font-weight: 950; }
-    .price{
-      font-family: var(--mono);
-      color: rgba(234,240,255,.86);
-      font-size: 12px;
-      letter-spacing:.08em;
-      text-transform: uppercase;
-      padding-top: 2px;
-      text-align:right;
+
+    .app-card {
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 16px;
+      background: rgba(255,255,255,.055);
+      margin-bottom: 12px;
+      animation: appFloat 4s ease-in-out infinite;
     }
-    .bigprice{
-      font-size: 28px;
-      font-weight: 950;
-      letter-spacing:-0.02em;
-      margin-top: 6px;
+
+    .app-card:nth-child(3) { animation-delay: .6s; }
+    .app-card:nth-child(4) { animation-delay: 1.2s; }
+
+    @keyframes appFloat {
+      50% { transform: translateY(-6px); }
     }
-    .per{ font-family: var(--mono); font-size: 12px; color: var(--muted2); margin-top:-4px; }
-    .plan ul{ margin:0; padding: 0 0 0 18px; color: rgba(234,240,255,.78); font-size: 13px; line-height: 1.7; }
-    .pick{
-      border-radius: 14px;
-      padding: 11px 12px;
-      border: 1px solid rgba(191,219,254,.20);
-      background: rgba(255,255,255,.06);
-      color: rgba(234,240,255,.88);
-      font-weight: 950;
-      letter-spacing:.10em;
-      text-transform: uppercase;
-      font-size: 12px;
-      cursor:pointer;
-      transition: transform .15s ease, border-color .15s ease, background .15s ease;
-      width: 100%;
-      display:flex; align-items:center; justify-content:center; gap:10px;
+
+    .steps {
+      display: grid;
+      gap: 16px;
     }
-    .pick:hover{ transform: translateY(-1px); border-color: rgba(191,219,254,.34); background: rgba(96,165,250,.08); }
-    .featured{
-      outline: 2px solid rgba(96,165,250,.35);
-      box-shadow: 0 26px 90px rgba(0,0,0,.62);
-      transform: translateY(-2px);
+
+    .step {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 16px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: rgba(255,255,255,.045);
+      transition: .3s ease;
     }
-    .ribbon{
-      position:absolute; top: 14px; right: 14px;
-      font-size: 11px;
-      letter-spacing:.16em;
-      text-transform: uppercase;
-      font-weight: 950;
+
+    .step:hover {
+      transform: translateX(10px);
+      background: rgba(47,125,255,.09);
+    }
+
+    .step-number {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      background: linear-gradient(135deg, #2f7dff, #39d8ff);
+      color: #031027;
+    }
+
+    .step h3 {
+      margin-bottom: 8px;
+      font-size: 22px;
+    }
+
+    .step p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .projects-showcase {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .project {
+      min-height: 260px;
+      padding: 22px;
+      border-radius: 28px;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(47,125,255,.16), rgba(255,255,255,.035)),
+        rgba(5, 10, 26, .7);
+      position: relative;
+      overflow: hidden;
+      transition: .35s ease;
+    }
+
+    .project:hover {
+      transform: translateY(-10px) rotateX(4deg);
+      border-color: rgba(57,216,255,.45);
+    }
+
+    .project::after {
+      content: "";
+      position: absolute;
+      inset: auto -30px -40px auto;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 1px solid rgba(57,216,255,.25);
+      box-shadow: 0 0 60px rgba(47,125,255,.28);
+    }
+
+    .project span {
+      display: inline-flex;
       padding: 8px 10px;
       border-radius: 999px;
-      background: linear-gradient(90deg, rgba(96,165,250,.92), rgba(34,211,238,.86));
-      color: #05101f;
-      border: 1px solid rgba(255,255,255,.20);
-      box-shadow: 0 16px 30px rgba(0,0,0,.32);
-    }
-
-    /* ===== Plans comparison table ===== */
-    .table-wrap{
-      border-radius: 22px;
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
-      border: 1px solid rgba(191,219,254,.18);
-      box-shadow: var(--shadow2);
-      overflow:hidden;
-    }
-    .table-head{
-      padding: 14px 16px;
-      border-bottom: 1px solid rgba(191,219,254,.12);
-      display:flex; align-items:center; justify-content:space-between; gap: 12px;
-      background: rgba(255,255,255,.03);
-      flex-wrap:wrap;
-    }
-    .table-head b{ font-weight: 950; letter-spacing:-0.01em; }
-    .table-head span{ color: var(--muted2); font-size: 12px; font-family: var(--mono); }
-
-    .scroll-x{ overflow:auto; -webkit-overflow-scrolling: touch; }
-    table{
-      width:100%;
-      border-collapse: separate;
-      border-spacing: 0;
-      min-width: 920px;
-    }
-    thead th{
-      text-align:left;
-      padding: 12px 14px;
+      background: rgba(57,216,255,.1);
+      color: #bdeeff;
       font-size: 12px;
-      letter-spacing:.14em;
-      text-transform: uppercase;
-      font-weight: 950;
-      color: rgba(234,240,255,.78);
-      border-bottom: 1px solid rgba(191,219,254,.12);
-      background: rgba(0,0,0,.22);
-      position: sticky;
-      top: 0;
-      z-index: 2;
-    }
-    thead th:nth-child(2), thead th:nth-child(3), thead th:nth-child(4){ text-align:center; }
-    tbody td{
-      padding: 12px 14px;
-      border-bottom: 1px solid rgba(191,219,254,.10);
-      color: rgba(234,240,255,.80);
-      background: rgba(0,0,0,.14);
-      font-size: 13px;
-      vertical-align: middle;
-    }
-    tbody tr:hover td{ background: rgba(96,165,250,.06); }
-    tbody td:nth-child(2), tbody td:nth-child(3), tbody td:nth-child(4){ text-align:center; }
-
-    .yes{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(191,219,254,.16);
-      background: rgba(34,197,94,.10);
-      color: rgba(234,240,255,.90);
-      font-weight: 900;
-      letter-spacing:.08em;
-      text-transform: uppercase;
-      font-size: 11px;
-    }
-    .no{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(191,219,254,.16);
-      background: rgba(239,68,68,.10);
-      color: rgba(234,240,255,.88);
-      font-weight: 900;
-      letter-spacing:.08em;
-      text-transform: uppercase;
-      font-size: 11px;
-    }
-    .excl{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding: 7px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(191,219,254,.16);
-      background: rgba(96,165,250,.10);
-      color: rgba(234,240,255,.92);
-      font-weight: 900;
-      letter-spacing:.08em;
-      text-transform: uppercase;
-      font-size: 11px;
-      gap: 6px;
-    }
-    .excl i{
-      width: 8px; height: 8px; border-radius: 999px;
-      background: linear-gradient(90deg, rgba(96,165,250,.95), rgba(34,211,238,.90));
-      box-shadow: 0 0 0 4px rgba(96,165,250,.14);
-      display:inline-block;
+      font-weight: 800;
+      margin-bottom: 48px;
     }
 
-    /* ===== Footer ===== */
-    footer{
-      padding: 38px 0 54px;
-      border-top: 1px solid rgba(191,219,254,.12);
-      color: rgba(234,240,255,.70);
+    .project h3 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      letter-spacing: -.04em;
     }
-    .foot-grid{ display:flex; justify-content:space-between; gap: 16px; flex-wrap:wrap; align-items:flex-start; }
-    .small{ font-size: 12px; line-height: 1.6; color: var(--muted2); max-width: 90ch; }
 
-    /* ===== Menu circular (top-right, com margem segura) ===== */
-    .orb{
-      position: fixed;
-      top: 86px;
-      right: 26px;               /* <- NÃO COLADO NA LATERAL */
-      z-index: 90;
-      --core: 60px;
-      --radius: 88px;            /* desktop radius */
+    .project p {
+      color: var(--muted);
+      line-height: 1.65;
     }
-    .orb-core{
-      width: var(--core); height: var(--core);
-      border-radius: 50%;
-      border: 1px solid rgba(191,219,254,.22);
+
+    .contact {
+      padding-bottom: 140px;
+    }
+
+    .contact-box {
+      border-radius: 38px;
+      border: 1px solid rgba(57,216,255,.25);
       background:
-        radial-gradient(circle at 30% 30%, rgba(248,250,252,.22), transparent 60%),
-        radial-gradient(circle at 70% 70%, rgba(34,211,238,.14), transparent 60%),
-        linear-gradient(135deg, rgba(96,165,250,.32), rgba(129,140,248,.22));
-      box-shadow: 0 18px 48px rgba(0,0,0,.55);
-      display:grid; place-items:center;
-      overflow:hidden;
-      cursor:pointer;
-      user-select:none;
-      transition: transform .16s ease, filter .16s ease;
-    }
-    .orb-core:hover{ transform: translateY(-1px); filter:saturate(1.05); }
-    .orb-core:active{ transform: translateY(0px) scale(.99); }
-    .orb-core img{ width: 100%; height: 100%; object-fit: cover; filter: contrast(1.08) saturate(1.05); }
-
-    .orb-tip{
-      position:absolute;
-      right: calc(var(--core) + 12px);
-      top: 12px;
-      background: rgba(0,0,0,.32);
-      border: 1px solid rgba(191,219,254,.16);
-      border-radius: 999px;
-      padding: 10px 12px;
-      color: rgba(234,240,255,.76);
-      font-size: 12px;
-      letter-spacing:.06em;
-      text-transform: uppercase;
-      font-weight: 900;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 18px 40px rgba(0,0,0,.4);
-      white-space: nowrap;
-      opacity:.92;
+        radial-gradient(circle at 20% 20%, rgba(57,216,255,.18), transparent 28%),
+        linear-gradient(135deg, rgba(15, 36, 87, .86), rgba(5, 9, 23, .86));
+      box-shadow: var(--shadow);
+      padding: 42px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 28px;
+      align-items: center;
     }
 
-    .ring{
-      position:absolute;
-      inset: calc(-1 * (var(--radius) + 58px));
-      pointer-events:none;
-      opacity:0;
-      transform: scale(.92);
-      transition: opacity .18s ease, transform .22s ease;
-    }
-    .orb.open .ring{ opacity:1; transform: scale(1); pointer-events:auto; }
-    .ring::before{
-      content:"";
-      position:absolute; inset:0;
-      border-radius: 999px;
-      border: 1px dashed rgba(191,219,254,.20);
-      filter: drop-shadow(0 12px 22px rgba(0,0,0,.35));
-      opacity:.9;
+    .contact-box h2 {
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1;
+      letter-spacing: -.06em;
+      margin-bottom: 16px;
     }
 
-    .orb-item{
-      position:absolute;
-      left: 50%; top: 50%;
-      transform: translate(-50%,-50%);
-      width: 46px; height: 46px;
-      border-radius: 16px;
-      border: 1px solid rgba(191,219,254,.18);
-      background: rgba(0,0,0,.25);
-      box-shadow: 0 16px 30px rgba(0,0,0,.35);
-      display:grid; place-items:center;
-      cursor:pointer;
-      transition: transform .18s ease, background .18s ease, border-color .18s ease, opacity .18s ease;
-      opacity:0;
-      pointer-events:none;
+    .contact-box p {
+      color: var(--muted);
+      line-height: 1.8;
     }
-    .orb.open .orb-item{ opacity:1; pointer-events:auto; }
-    .orb-item:hover{
-      background: rgba(96,165,250,.10);
-      border-color: rgba(96,165,250,.45);
-    }
-    .orb-item svg{ width: 18px; height: 18px; }
 
-    /* Mobile: desce o botão (pra não cobrir topo), aumenta margem e reduz raio pra não cortar */
-    @media (max-width: 720px){
-      .orb{
-        top: auto;
-        bottom: 22px;
-        right: 18px;
-        --core: 58px;
-        --radius: 78px;
+    .contact-info {
+      display: grid;
+      gap: 12px;
+      min-width: 260px;
+    }
+
+    .info-line {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.045);
+      color: #dbeaff;
+      font-weight: 700;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: .75s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 960px) {
+      .hero,
+      .process,
+      .contact-box {
+        grid-template-columns: 1fr;
       }
-      .orb-tip{
-        right: calc(var(--core) + 10px);
-        top: 10px;
-        padding: 9px 11px;
-        font-size: 11px;
+
+      .hero-panel {
+        min-height: 520px;
       }
-      .path{ max-width: 64vw; }
+
+      .cards,
+      .projects-showcase {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .section-head {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .top-links {
+        display: none;
+      }
     }
 
-    /* ===== Lightbox ===== */
-    .lightbox{
-      position: fixed; inset:0;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding: 22px;
-      background: rgba(0,0,0,.72);
-      backdrop-filter: blur(10px);
-      z-index: 200;
+    @media (max-width: 620px) {
+      .page {
+        width: min(100% - 24px, 1180px);
+      }
+
+      header {
+        padding-top: 12px;
+      }
+
+      .hero {
+        padding-top: 34px;
+      }
+
+      .hero-actions,
+      .btn {
+        width: 100%;
+      }
+
+      .cards,
+      .projects-showcase,
+      .metric-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .dashboard-card {
+        inset: 18px;
+        padding: 18px;
+      }
+
+      .bars {
+        height: 160px;
+      }
+
+      .nav-shell {
+        height: 70px;
+        border-radius: 20px;
+      }
+
+      .nav-shell ul {
+        width: 310px;
+      }
+
+      .nav-shell li {
+        width: 54px;
+      }
+
+      .nav-shell li:nth-child(1).active ~ .indicator { transform: translateX(-8px); }
+      .nav-shell li:nth-child(2).active ~ .indicator { transform: translateX(56px); }
+      .nav-shell li:nth-child(3).active ~ .indicator { transform: translateX(120px); }
+      .nav-shell li:nth-child(4).active ~ .indicator { transform: translateX(184px); }
+      .nav-shell li:nth-child(5).active ~ .indicator { transform: translateX(248px); }
+
+      .indicator {
+        width: 62px;
+        height: 62px;
+      }
+
+      .contact-box {
+        padding: 26px;
+      }
     }
-    .lightbox.open{ display:flex; }
-    .lightbox-card{
-      width: min(1100px, 100%);
-      border-radius: 22px;
-      overflow:hidden;
-      border: 1px solid rgba(191,219,254,.18);
-      background: rgba(0,0,0,.35);
-      box-shadow: 0 30px 120px rgba(0,0,0,.70);
-    }
-    .lightbox-top{
-      padding: 12px 14px;
-      display:flex; align-items:center; justify-content:space-between; gap: 10px;
-      border-bottom: 1px solid rgba(191,219,254,.12);
-      background: rgba(255,255,255,.03);
-    }
-    .lightbox-top b{ font-weight: 950; }
-    .xbtn{
-      border:none; cursor:pointer;
-      border-radius: 12px;
-      padding: 10px 12px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(191,219,254,.16);
-      color: rgba(234,240,255,.86);
-      font-weight: 950;
-      letter-spacing:.10em;
-      text-transform: uppercase;
-      font-size: 12px;
-    }
-    .lightbox img{ width:100%; height:auto; display:block; }
-
-    /* ===== Reveal ===== */
-    .reveal{ opacity:0; transform: translateY(12px); transition: opacity .55s ease, transform .55s ease; will-change: opacity, transform; }
-    .reveal.in{ opacity:1; transform: translateY(0); }
-@media (max-width: 768px){
-
-  .thumb .meta span{
-    display: none !important;
-  }
-
-  .thumb .meta b{
-    font-size: 12px;
-  }
-
-}
-/* ===== TELAS: Mobile-first (somente ícones) ===== */
-@media (max-width: 768px){
-
-  /* coloca a lista de miniaturas abaixo do viewer */
-  .shots{
-    grid-template-columns: 1fr !important;
-  }
-
-  /* some com textos da lista (somente ícones) */
-  .thumb .meta{
-    display: none !important;
-  }
-
-  /* grade de ícones */
-  .thumbs .list{
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-    padding: 12px;
-  }
-
-  /* vira "tile" (quadradinho clicável) */
-  .thumb{
-    padding: 10px !important;
-    justify-content: center !important;
-  }
-
-  /* miniatura ocupa tudo do tile */
-  .thumb .mini{
-    width: 100% !important;
-    height: auto !important;
-    aspect-ratio: 1 / 1;     /* ícone quadrado */
-    border-radius: 16px;
-  }
-
-  .thumb .mini img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-/* Destaque discreto para o Master */
-#plano-master{
-  outline: 2px solid rgba(34,211,238,.28);
-}
-#plano-master .ribbon{
-  background: linear-gradient(90deg, rgba(34,211,238,.92), rgba(167,139,250,.86));
-}
-
-/* ===== TABELA: mobile sem arrastar (vira cards) ===== */
-@media (max-width: 768px){
-
-  /* some com o texto "arraste..." */
-  .table-head span{ display:none !important; }
-
-  /* remove scroll horizontal no mobile */
-  .scroll-x{ overflow: visible !important; }
-
-  /* esconde cabeçalho da tabela */
-  table thead{ display:none; }
-
-  /* tabela vira lista */
-  table, tbody, tr, td{ display:block; width:100%; }
-  table{ min-width: 0 !important; }
-
-  /* cada linha vira um card */
-  tbody tr{
-    margin: 12px;
-    border-radius: 18px;
-    overflow: hidden;
-    border: 1px solid rgba(191,219,254,.16);
-    background: rgba(0,0,0,.18);
-    box-shadow: 0 16px 36px rgba(0,0,0,.35);
-  }
-
-  /* primeira coluna (Função) vira título do card */
-  tbody tr td:first-child{
-    font-weight: 950;
-    letter-spacing: -.01em;
-    padding: 14px 14px 10px;
-    background: rgba(255,255,255,.03);
-    border-bottom: 1px solid rgba(191,219,254,.12);
-  }
-
-  /* colunas Essencial/Plus/Pró viram linhas com label + valor */
-  tbody tr td:not(:first-child){
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap: 10px;
-    padding: 10px 14px;
-    border-bottom: 1px solid rgba(191,219,254,.10);
-  }
-
-  /* label automático "Essencial / Plus / Pró" */
-  tbody tr td:not(:first-child)::before{
-    content: attr(data-label);
-    font-size: 11px;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    font-weight: 950;
-    color: rgba(234,240,255,.70);
-    font-family: var(--mono);
-  }
-
-  /* remove a última borda */
-  tbody tr td:last-child{ border-bottom: none; }
-
-  /* deixa os chips (Sim/Não/Exclusivo) bem alinhados */
-  .yes,.no,.excl{ margin-left:auto; }
-}
-
-@media (max-width: 768px){
-  .yes, .no, .excl{
-    font-size: 0 !important;       /* esconde o texto */
-    padding: 10px 12px !important; /* mantém o “pill” */
-    min-width: 44px;
-    justify-content: center;
-  }
-
-  .yes::after{
-    content: "✓";
-    font-size: 16px;
-    font-weight: 950;
-    letter-spacing: 0;
-  }
-
-  .no::after{
-    content: "✕";
-    font-size: 16px;
-    font-weight: 950;
-    letter-spacing: 0;
-  }
-
-  .excl::after{
-    content: "★";
-    font-size: 16px;
-    font-weight: 950;
-    letter-spacing: 0;
-  }
-
-  /* o pontinho do exclusivo pode sumir no mobile */
-  .excl i{ display:none; }
-}
-/* impede qualquer bloco de estourar a largura */
-.wrap, .topbar, .topbar-inner, section, main, header{
-  max-width: 100%;
-}
-
-img, svg{
-  max-width: 100%;
-}
-/* ===== orb 100% dentro da tela no mobile ===== */
-@media (max-width: 720px){
-  .orb{
-    right: 14px !important;
-    bottom: 16px !important;
-  }
-}
-/* ===== Mobile: esconder botões do topo (usar só o menu flutuante) ===== */
-@media (max-width: 720px){
-  .topbar .actions{
-    display: none !important;
-  }
-}
-/* Contato: grid automático (2/3 colunas conforme espaço) */
-/* Seu grid continua ok */
-#contato .grid-2{
-  display:grid !important;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)) !important;
-}
-
-/* CORREÇÃO DO BOTÃO */
-.btn{
-  display:inline-flex;
-  align-items:center;      /* centraliza vertical */
-  justify-content:center;
-  gap:10px;                /* substitui margin-right */
-  line-height:1;           /* mata o “baseline bug” */
-}
-
-.btn svg{
-  display:block;           /* remove baseline */
-  width:20px;
-  height:20px;
-  flex:0 0 20px;
-  margin:0;                /* não precisa mais do margin-right */
-  transform: translateY(0.5px); /* micro-ajuste visual (opcional, mas ajuda muito) */
-}
   </style>
 </head>
-
 <body>
-  <div class="grain"></div>
-
-  <!-- ===== Topbar ===== -->
-  <div class="topbar">
-    <div class="wrap topbar-inner">
-      <a class="brand" href="#top" aria-label="Ir para o topo">
-        <div class="brand-badge" title="RaudTraining">
-          <!-- Troque para sua logo real -->
-          <img src="logo_gif.gif" alt="Logo RaudTraining" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=&quot;font-weight:950;letter-spacing:-.02em&quot;>R</span>';">
-        </div>
-        <div>
-          <h1>RaudTraining</h1>
-          <p>Personais &amp; Academias • Painel Premium</p>
-        </div>
-      </a>
-
-      <div class="actions">
-        <a class="pill" href="#telas">Telas</a>
-        <a class="pill" href="#contato">Contato</a>
-        <a class="btn" href="#planos">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M12 2l2.7 5.6 6.2.9-4.5 4.4 1.1 6.1L12 16.9 6.5 19l1.1-6.1L3.1 8.5l6.2-.9L12 2z" stroke="#0b1220" stroke-width="1.8" stroke-linejoin="round"/>
-          </svg>
-          Planos
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <main id="top">
-    <!-- ===== Hero ===== -->
-    <header class="hero">
-      <div class="wrap hero-grid">
-        <div class="reveal">
-          <div class="kicker"><span class="dot"></span> Apresentação • RaudTraining</div>
-          <h2>
-            Um sistema com <span class="shine">cara premium</span> que organiza tudo: Aluno, Treino, Avaliação e Metas.
-          </h2>
-          <p>
-            Perfeito para personais e academias que querem parar de se perder em WhatsApp, planilhas e anotações soltas —
-            e começar a entregar uma experiência profissional para o aluno.
-          </p>
-
-          <div class="hero-cta">
-            <a class="btn" href="#planos">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M4 6h16M4 12h16M4 18h10" stroke="#0b1220" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-              Comparar planos
-            </a>
-            <a class="pill" href="#telas">Ver telas reais</a>
-            <a class="pill" href="#tabela">Tabela completa</a>
-          </div>
-
-        </div>
-
-        <div class="hero-card reveal" aria-label="Prévia real do sistema">
-          <div class="hero-card-inner">
-            <div class="chips">
-              <span class="chip">Dashboard</span>
-              <span class="chip">Notificações Importantes</span>
-              <span class="chip">Treinos</span>
-              <span class="chip">IA</span>
-            </div>
-
-            <!-- Troque as imagens pelos seus arquivos (nomes abaixo) -->
-            <div class="hero-shot" id="heroShot">
-              <div class="head">
-                <div class="left">
-                  <span class="badge" id="heroBadge">Dashboard</span>
-                  <span style="opacity:.65">•</span>
-                  <span style="opacity:.85;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" id="heroPath">/Dashboard</span>
-                </div>
-                <span class="badge">Real</span>
-              </div>
-
-              <!-- IMPORTANTE:
-                   Coloque seus arquivos na mesma pasta do HTML com esses nomes:
-                   1) planos.png
-                   2) login.png
-                   3) dashboard.png
-                   4) treinos.png
-              -->
-              <img id="heroImg" src="Dashboard.png" alt="Painel do Personal (RaudTraining)" onerror="this.style.display='none'; this.parentElement.insertAdjacentHTML('beforeend','<div style=&quot;padding:16px;color:rgba(234,240,255,.75);font-family:var(--mono);font-size:12px;&quot;> </div>');">
-
-              <div class="note">
-                Clique nas telas na seção “Telas reais” para alternar e ampliar.
-              </div>
-            </div>
-
-            <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:space-between; align-items:center;">
-              <span class="chip">Notificações inteligentes</span>
-              <span class="chip">Fluxo rápido no dia a dia</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- ===== Benefícios ===== -->
-    <section id="beneficios">
-      <div class="wrap">
-        <div class="sec-head reveal">
-          <div class="sec-title">
-            <h3>O que o RaudTraining resolve</h3>
-            
-          </div>
-        </div>
-
-        <div class="grid-3">
-          <div class="card reveal">
-            <div class="card-inner">
-              <div class="icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path d="M4 6h16M4 12h10M4 18h16" stroke="rgba(234,240,255,.85)" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <h4>Treinos sem bagunça</h4>
-              <p>Criação, edição, modelos e clonagem com consistência — sem planilhas quebrando e sem “copiar/colar” eterno.</p>
-            </div>
-          </div>
-
-          <div class="card reveal">
-            <div class="card-inner">
-              <div class="icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path d="M4 19V5m0 14h16M8 15v-3m4 3V8m4 7v-5" stroke="rgba(234,240,255,.85)" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <h4>Dashboard e evolução</h4>
-              <p>Indicadores, metas e histórico para o aluno ver progresso e manter constância (retenção aumenta muito).</p>
-            </div>
-          </div>
-
-          <div class="card reveal">
-            <div class="card-inner">
-              <div class="icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path d="M4 5h16v14H4V5z" stroke="rgba(234,240,255,.85)" stroke-width="2" stroke-linejoin="round"/>
-                  <path d="M4 7l8 6 8-6" stroke="rgba(234,240,255,.85)" stroke-width="2" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <h4>Feedbacks + IA</h4>
-              <p>Notificações inteligentes, feedbacks do aluno e recursos avançados no Pró com assistente e relatórios premium.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== Telas reais (ordem: Planos; Login; Dashboard; Treinos) ===== -->
-    <section id="telas">
-      <div class="wrap">
-        <div class="sec-head reveal">
-          <div class="sec-title">
-            <h3>Telas reais do sistema</h3>
-            <p>
-              Clique para trocar a tela e clique na tela grande para ampliar.
-            </p>
-          </div>
-        </div>
-
-        <div class="shots">
-          <div class="viewer reveal">
-            <div class="viewer-inner">
-              <div class="viewer-top">
-                <div class="title" id="viewerTitle">Tela de Login</div>
-                <div class="hint">clique nos atalhos ao lado</div>
-              </div>
-
-              <div class="frame" id="frame" title="Clique para ampliar">
-                <div class="head">
-                  <div class="left">
-                    <span class="badge" id="screenBadge">Linha do Tempo</span>
-                    <span style="opacity:.65">•</span>
-                    <span class="path" id="screenPath">/linha_do_tempo</span>
-                  </div>
-                  <span class="badge">Zoom</span>
-                </div>
-                <img id="screenImg" src="linha_do_tempo.png" alt="Linha do Tempo" />
-                <div class="foot">
-    
-                  <span style="font-family:var(--mono);opacity:.85;">Tap/Click para ampliar</span>
-                </div>
-              </div>
-
-              <div style="display:flex; gap:10px; justify-content:space-between; flex-wrap:wrap;">
-                <span class="chip">Responsivo (mobile)</span>
-                <span class="chip">UI premium</span>
-              </div>
-            </div>
-          </div>
-
-          <aside class="thumbs reveal" aria-label="Lista de telas">
-            <div class="list" id="thumbList">
-
-                
-                <div class="thumb active" data-title="Linha do Tempo" data-badge="linha_do_tempo" data-path="/linha_do_tempo" data-img="linha_do_tempo.png">
-                    <div class="mini"><img src="linha_do_tempo.png" alt="" onerror="this.style.display='none'"></div>
-                    <div class="meta">
-                        <b>Linha Do Tempo</b>
-                        <span>Entrada Personal/Aluno com visual premium e foco.</span>
-                    </div>
-                </div>
-                
-                <div class="thumb" data-title="Dashboard Inicial + Notificações/IA" data-badge="Dashboard" data-path="/dashboard" data-img="dashboard.png">
-                    <div class="mini"><img src="dashboard.png" alt="" onerror="this.style.display='none'"></div>
-                    <div class="meta">
-                        <b>Dashboard</b>
-                        <span>KPIs, notificações inteligentes e visão do dia.</span>
-                    </div>
-                </div>
-                <div class="thumb" data-title="Notificações Inteligentes" data-badge="IA/Notificações" data-path="/dashboard/notificacoes" data-img="notificacoes.png">
-                <div class="mini"><img src="notificacoes.png" alt="" onerror="this.style.display='none'"></div>
-                <div class="meta">
-                    <b>Notificações Inteligentes</b>
-                    <span>Sugestões automáticas, alertas e visão rápida por aluno em tempo real.</span>
-                </div>
-                </div>
-
-              <div class="thumb" data-title="Treinos (CRUD + Modelos + Exercícios)" data-badge="Treinos" data-path="/treinos" data-img="treinos.png">
-                <div class="mini"><img src="treinos.png" alt="" onerror="this.style.display='none'"></div>
-                <div class="meta">
-                  <b>Treinos</b>
-                  <span>Criação, edição, modelos, clonagem e banco de exercícios.</span>
-                </div>
-              </div>
-
-              <div class="thumb" data-title="Treinos, Avaliações e Evolução" data-badge="Tela Aluno" data-path="/Tela_aluno" data-img="Tela_aluno.png">
-                <div class="mini"><img src="Tela_aluno.png" alt="" onerror="this.style.display='none'"></div>
-                <div class="meta">
-                  <b>Tela do aluno</b>
-                  <span>Acesso ao treinos, Avaliações e Evolução com base nas avaliações.</span>
-                </div>
-              </div>
-
-            </div>
-          </aside>
-        </div>
-
-        <div class="small" style="margin-top:12px;">
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== Planos (cards + preços reais) ===== -->
-    <section id="planos">
-      <div class="wrap">
-        <div class="sec-head reveal">
-          <div class="sec-title">
-            <h3>Planos</h3>
-            
-          </div>
-        </div>
-
-        <div class="plan-row">
-          <div class="plan reveal">
-            <div class="plan-inner">
-              <div class="plan-top">
-                <div>
-                  <span class="tag">Essencial</span>
-                  <h4>Base completa</h4>
-                </div>
-                <div class="price">inicial</div>
-              </div>
-
-              <div>
-                <div class="bigprice">R$ 34,90</div>
-                <div class="per">por mês</div>
-              </div>
-
-              <ul>
-                <li>Alunos ilimitados</li>
-                <li>Gestão completa: Treinos + Avaliações</li>
-                <li>Banco de exercícios + modelos</li>
-                <li>Clonagem (simples) + dashboard básico</li>
-              </ul>
-
-              <button class="pick" data-scroll="#tabela">
-                Ver tabela completa
-              </button>
-            </div>
-          </div>
-
-          <div class="plan featured reveal">
-            <div class="ribbon">Mais escolhido</div>
-            <div class="plan-inner">
-              <div class="plan-top">
-                <div>
-                  <span class="tag">Plus</span>
-                  <h4>Mais controle</h4>
-                </div>
-                
-              </div>
-
-              <div>
-                <div class="bigprice">R$ 54,90</div>
-                <div class="per">por mês</div>
-              </div>
-
-              <ul>
-                <li>Tudo do Essencial</li>
-                <li>Agenda inteligente</li>
-                <li>Dashboard avançado</li>
-                <li>Feedbacks + timeline do aluno</li>
-                <li>Comparações avançadas de avaliações</li>
-              </ul>
-
-              <button class="pick" data-scroll="#tabela">
-                Comparar recursos
-              </button>
-            </div>
-          </div>
-
-          <div class="plan reveal">
-            <div class="plan-inner">
-              <div class="plan-top">
-                <div>
-                  <span class="tag">Pró</span>
-                  <h4>Exclusivos + IA</h4>
-                </div>
-                
-              </div>
-
-              <div>
-                <div class="bigprice">R$ 94,90</div>
-                <div class="per">por mês</div>
-              </div>
-
-              <ul>
-                <li>Tudo do Plus</li>
-                <li>Visão rápida do aluno (exclusivo)</li>
-                <li>Assistente do Personal (IA)</li>
-                <li>Linha do tempo completa + metas</li>
-                <li>Alertas e relatórios premium com IA</li>
-              </ul>
-
-              <button class="pick" data-scroll="#tabela">
-                Ver exclusividades
-              </button>
-            </div>
-          </div>
-
-          <div class="plan reveal" id="plano-master">
-  <div class="ribbon">Academias</div>
-  <div class="plan-inner">
-    <div class="plan-top">
-      <div>
-        <span class="tag">Master</span>
-        <h4>Exclusivo para Academias</h4>
-      </div>
-      
-    </div>
-
-    <div>
-      <div class="bigprice">Sob consulta</div>
-      <div class="per">projeto personalizado</div>
-    </div>
-
-    <ul>
-      <li>Tudo do Pró</li>
-      <li>Gestão de rotinas de academia</li>
-      <li>Relatórios e indicadores sob necessidade do gestor</li>
-      <li>Integrações e automações conforme operação</li>
-    </ul>
-
-    <button class="pick" data-scroll="#contato">
-      Falar sobre o Master
-    </button>
-  </div>
-</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== Tabela completa (sua planilha) ===== -->
-    <section id="tabela">
-      <div class="wrap">
-        <div class="sec-head reveal">
-          <div class="sec-title">
-            <h3>Tabela completa de funções</h3>
-
-          </div>
-        </div>
-
-        <div class="table-wrap reveal">
-          <div class="table-head">
-            <b>Comparativo de recursos</b>
-            <span>arraste na horizontal no celular</span>
-          </div>
-
-          <div class="scroll-x">
-            <table aria-label="Tabela de planos">
-              <thead>
-                <tr>
-                  <th>Função</th>
-                  <th>Essencial</th>
-                  <th>Plus</th>
-                  <th>Pró</th>
-                </tr>
-              </thead>
-              <tbody>
-<tr>
-  <td>Limite de alunos</td>
-  <td data-label="Essencial">ilimitado</td>
-  <td data-label="Plus">ilimitado</td>
-  <td data-label="Pró">Ilimitado</td>
-</tr>
-
-<tr>
-  <td>Tela do Aluno (evolução, treinos, frequência, avaliações etc.)</td>
-  <td data-label="Essencial"><span class="yes">Sim</span></td>
-  <td data-label="Plus"><span class="yes">Sim</span></td>
-  <td data-label="Pró"><span class="yes">Sim</span></td>
-</tr>
-
-<tr>
-  <td>Gestão completa de Treinos</td>
-  <td data-label="Essencial"><span class="yes">Sim</span></td>
-  <td data-label="Plus"><span class="yes">Sim</span></td>
-  <td data-label="Pró"><span class="yes">Sim</span></td>
-</tr>
-
-<tr>
-  <td>Gestão completa de Avaliações</td>
-  <td data-label="Essencial"><span class="yes">Sim</span></td>
-  <td data-label="Plus"><span class="yes">Sim</span></td>
-  <td data-label="Pró"><span class="yes">Sim</span></td>
-</tr>
-
-<tr>
-  <td>Gestão de alunos (criar/editar/excluir)</td>
-  <td data-label="Essencial"><span class="yes">Sim</span></td>
-  <td data-label="Plus"><span class="yes">Sim</span></td>
-  <td data-label="Pró"><span class="yes">Sim</span></td>
-</tr>
-
-<tr>
-  <td>Evolução básica do aluno</td>
-  <td data-label="Essencial"><span class="yes">Sim</span></td>
-  <td data-label="Plus"><span class="yes">Sim</span></td>
-  <td data-label="Pró"><span class="yes">Sim</span></td>
-</tr>
-
-<tr>
-  <td>Banco de Exercícios</td>
-  <td data-label="Essencial"><span class="yes">Sim</span></td>
-  <td data-label="Plus"><span class="yes">Sim</span></td>
-  <td data-label="Pró"><span class="yes">Sim</span></td>
-</tr>
-
-<tr>
-  <td>Modelos de treino</td>
-  <td data-label="Essencial"><span class="yes">Sim</span></td>
-  <td data-label="Plus"><span class="yes">Sim</span></td>
-  <td data-label="Pró"><span class="yes">Sim</span></td>
-</tr>
-
-<tr>
-  <td>Clonagem de treinos</td>
-  <td data-label="Essencial">
-    <span class="yes">Sim</span>
-    <span style="opacity:.7;font-family:var(--mono);font-size:12px;">(simples)</span>
-  </td>
-  <td data-label="Plus">
-    <span class="yes">Sim</span>
-    <span style="opacity:.7;font-family:var(--mono);font-size:12px;">(avançada)</span>
-  </td>
-  <td data-label="Pró">
-    <span class="yes">Sim</span>
-    <span style="opacity:.7;font-family:var(--mono);font-size:12px;">(avançada)</span>
-  </td>
-</tr>
-
-<tr>
-  <td>Comparações avançadas de avaliações</td>
-  <td data-label="Essencial"><span class="no">Não</span></td>
-  <td data-label="Plus"><span class="yes">Sim</span></td>
-  <td data-label="Pró"><span class="yes">Sim</span></td>
-</tr>
-
-<tr>
-  <td>Dashboard básico</td>
-  <td data-label="Essencial"><span class="no">Não</span></td>
-  <td data-label="Plus"><span class="yes">Sim</span></td>
-  <td data-label="Pró"><span class="yes">Sim</span></td>
-</tr>
-
-<tr>
-  <td>Agenda Inteligente</td>
-  <td data-label="Essencial"><span class="no">Não</span></td>
-  <td data-label="Plus"><span class="yes">Sim</span></td>
-  <td data-label="Pró"><span class="yes">Sim</span></td>
-</tr>
-
-<tr>
-  <td>Dashboard avançado</td>
-  <td data-label="Essencial"><span class="no">Não</span></td>
-  <td data-label="Plus"><span class="yes">Sim</span></td>
-  <td data-label="Pró"><span class="yes">Sim</span></td>
-</tr>
-
-<tr>
-  <td>Feedbacks de Treinos (Aluno)</td>
-  <td data-label="Essencial"><span class="no">Não</span></td>
-  <td data-label="Plus"><span class="yes">Sim</span></td>
-  <td data-label="Pró"><span class="yes">Sim</span></td>
-</tr>
-
-<tr>
-  <td>Timeline do Aluno</td>
-  <td data-label="Essencial"><span class="no">Não</span></td>
-  <td data-label="Plus"><span class="yes">Sim</span></td>
-  <td data-label="Pró"><span class="yes">Sim</span></td>
-</tr>
-
-<tr>
-  <td>Visão rápida do aluno</td>
-  <td data-label="Essencial"><span class="no">Não</span></td>
-  <td data-label="Plus"><span class="no">Não</span></td>
-  <td data-label="Pró"><span class="excl"><i></i>Exclusivo</span></td>
-</tr>
-
-<tr>
-  <td>Assistente do Personal (IA)</td>
-  <td data-label="Essencial"><span class="no">Não</span></td>
-  <td data-label="Plus"><span class="no">Não</span></td>
-  <td data-label="Pró"><span class="excl"><i></i>Exclusivo</span></td>
-</tr>
-
-<tr>
-  <td>Linha do tempo completa do aluno</td>
-  <td data-label="Essencial"><span class="no">Não</span></td>
-  <td data-label="Plus"><span class="no">Não</span></td>
-  <td data-label="Pró"><span class="excl"><i></i>Exclusivo</span></td>
-</tr>
-
-<tr>
-  <td>Metas inteligentes</td>
-  <td data-label="Essencial"><span class="no">Não</span></td>
-  <td data-label="Plus"><span class="no">Não</span></td>
-  <td data-label="Pró"><span class="excl"><i></i>Exclusivo</span></td>
-</tr>
-
-<tr>
-  <td>Alertas automáticos de desempenho</td>
-  <td data-label="Essencial"><span class="no">Não</span></td>
-  <td data-label="Plus"><span class="no">Não</span></td>
-  <td data-label="Pró"><span class="excl"><i></i>Exclusivo</span></td>
-</tr>
-
-<tr>
-  <td>Relatórios premium gerados com a Assistente do Personal</td>
-  <td data-label="Essencial"><span class="no">Não</span></td>
-  <td data-label="Plus"><span class="no">Não</span></td>
-  <td data-label="Pró"><span class="excl"><i></i>Exclusivo</span></td>
-</tr>
-
-<tr>
-  <td><b>Valores iniciais</b></td>
-  <td data-label="Essencial"><b>R$ 34,90</b></td>
-  <td data-label="Plus"><b>R$ 54,90</b></td>
-  <td data-label="Pró"><b>R$ 94,90</b></td>
-</tr>
-</tbody>
-            </table>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <section id="contato">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="sec-title">
-        <h3>Contato</h3>
-        <p>Fale comigo para parcerias, testes do RaudTraining ou suporte.</p>
-      </div>
-    </div>
-
-    <div class="grid-2">
-      <div class="card reveal">
-        <div class="card-inner">
-          <div class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M4 5h16v14H4V5z" stroke="rgba(234,240,255,.85)" stroke-width="2" stroke-linejoin="round"/>
-              <path d="M4 7l8 6 8-6" stroke="rgba(234,240,255,.85)" stroke-width="2" stroke-linejoin="round"/>
-            </svg>
-          </div>
-
-          <h4>raudsistemas@gmail.com</h4>
-          <p>Email oficial para contato e dúvidas.</p>
-
-          <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
-            <a class="btn" href="mailto:raudsistemas@gmail.com">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M4 5h16v14H4V5z" stroke="#0b1220" stroke-width="2" stroke-linejoin="round"/>
-                <path d="M4 7l8 6 8-6" stroke="#0b1220" stroke-width="2" stroke-linejoin="round"/>
-              </svg>
-              Enviar e-mail
-            </a>
-
-            <button class="pill" id="copyEmail" type="button">Copiar e-mail</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card reveal">
-        <div class="card-inner">
-          <div class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M16 3H8a5 5 0 0 0-5 5v8a5 5 0 0 0 5 5h8a5 5 0 0 0 5-5V8a5 5 0 0 0-5-5z" stroke="rgba(234,240,255,.85)" stroke-width="2"/>
-              <path d="M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke="rgba(234,240,255,.85)" stroke-width="2"/>
-              <path d="M17.5 6.5h.01" stroke="rgba(234,240,255,.85)" stroke-width="3" stroke-linecap="round"/>
-            </svg>
-          </div>
-
-          <h4>Instagram @raudsistemas</h4>
-          <p>Acompanhe atualizações e novidades do projeto.</p>
-
-          <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
-            <a class="btn" href="https://www.instagram.com/raudsistemas/" target="_blank" rel="noopener">
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M16 3H8a5 5 0 0 0-5 5v8a5 5 0 0 0 5 5h8a5 5 0 0 0 5-5V8a5 5 0 0 0-5-5z" stroke="#0b1220" stroke-width="2"/>
-                <path d="M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke="#0b1220" stroke-width="2"/>
-                <path d="M17.5 6.5h.01" stroke="#0b1220" stroke-width="3" stroke-linecap="round"/>
-              </svg>
-              Abrir Instagram
-            </a>
-
-            <button class="pill" id="copyInsta" type="button">Copiar link</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="card reveal">
-  <div class="card-inner">
-    <div class="icon" aria-hidden="true">
-      <!-- Ícone WhatsApp (SVG) -->
-<svg viewBox="0 0 24 24" aria-hidden="true">
-  <path d="M20 12c0 4.418-3.582 8-8 8a7.96 7.96 0 0 1-3.8-.96L4 20l1.06-4.06A7.96 7.96 0 0 1 4 12c0-4.418 3.582-8 8-8s8 3.582 8 8z"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"/>
-  <path d="M8.5 9c.3-.8.8-1 1.3-1h.4c.2 0 .4.1.5.4l.5 1.4c.1.2 0 .4-.1.6l-.3.4c-.1.1-.1.3 0 .4.3.6 1.1 1.6 2.5 2.2.2.1.3.1.4 0l.6-.7c.1-.2.3-.2.5-.1l1.5.6c.3.1.4.3.4.5 0 .6-.3 1.2-.8 1.6-.6.4-1.4.4-2.2.2-1.2-.3-2.9-1.4-4-3.2-.5-.8-.7-1.6-.5-2.3z"
-        fill="currentColor"/>
-</svg>
-    </div>
-
-    <h4>WhatsApp</h4>
-    <p>Atendimento rápido para dúvidas, testes e parcerias.</p>
-
-    <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
-      <a class="btn"
-         href="https://wa.me/558398480659?text=Ol%C3%A1%21%20Quero%20saber%20mais%20sobre%20o%20RaudTraining."
-         target="_blank" rel="noopener">
-        <!-- ícone simples -->
-<svg viewBox="0 0 24 24" aria-hidden="true">
-  <path d="M20 12c0 4.418-3.582 8-8 8a7.96 7.96 0 0 1-3.8-.96L4 20l1.06-4.06A7.96 7.96 0 0 1 4 12c0-4.418 3.582-8 8-8s8 3.582 8 8z"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"/>
-  <path d="M8.5 9c.3-.8.8-1 1.3-1h.4c.2 0 .4.1.5.4l.5 1.4c.1.2 0 .4-.1.6l-.3.4c-.1.1-.1.3 0 .4.3.6 1.1 1.6 2.5 2.2.2.1.3.1.4 0l.6-.7c.1-.2.3-.2.5-.1l1.5.6c.3.1.4.3.4.5 0 .6-.3 1.2-.8 1.6-.6.4-1.4.4-2.2.2-1.2-.3-2.9-1.4-4-3.2-.5-.8-.7-1.6-.5-2.3z"
-        fill="currentColor"/>
-</svg>
-        Contato WhatsApp
-      </a>
-
-      <button class="pill" id="copyWpp" type="button">Copiar link</button>
-    </div>
-  </div>
-</div>
-    </div>
-  </div>
-</section>
-
-    <footer>
-      <div class="wrap">
-        <div class="foot-grid">
-          <div style="display:flex; gap:12px; align-items:center;">
-            <div class="brand-badge" style="width:40px;height:40px;">
-              <img src="logo_gif.gif" alt="Logo RaudTraining" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=&quot;font-weight:950;letter-spacing:-.02em&quot;>R</span>';">
-            </div>
-            <div>
-              <div style="font-weight:950;letter-spacing:.10em;text-transform:uppercase;font-size:12px;">RaudTraining - Desenvolvido por <strong>Raudiney Farias</strong></div>
-            </div>
-          </div>
-
+  <header>
+    <div class="page topbar">
+      <a href="#inicio" class="brand">
+        <div class="logo-orbit">
+          <img src="logo.png" alt="Raud Labs">
           
         </div>
+        <div>
+          <div>Raud Labs</div>
+          <small style="color: var(--muted); font-weight: 600;">SaaS • PWA • Sistemas Web</small>
+        </div>
+      </a>
+
+      <nav class="top-links">
+        <a href="#solucoes">Soluções</a>
+        <a href="#processo">Processo</a>
+        <a href="#projetos">Projetos</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero page" id="inicio">
+      <div class="hero-copy reveal">
+        <div class="eyebrow">Softwares sob medida para negócios que querem escala</div>
+        <h1>Seu negócio pode ter um sistema com aparência de <span class="gradient-text">produto premium.</span></h1>
+        <p>
+          A Raud Labs cria sistemas web personalizados, SaaS multiempresa e soluções PWA que funcionam como aplicativo no celular, com gestão, automações, dashboards, permissões, relatórios e uma experiência feita para impressionar o cliente desde o primeiro acesso.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#contato"><ion-icon name="sparkles-outline"></ion-icon> Criar meu sistema</a>
+          <a class="btn btn-ghost" href="#projetos"><ion-icon name="grid-outline"></ion-icon> Ver projetos</a>
+        </div>
       </div>
-    </footer>
+
+      <div class="hero-panel reveal">
+        <div class="dashboard-card">
+          <div class="window-actions">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric"><small>Clientes</small><strong data-counter="124">0</strong></div>
+            <div class="metric"><small>Processos</small><strong data-counter="87">0</strong></div>
+            <div class="metric"><small>Tempo salvo</small><strong data-counter="63">0</strong></div>
+          </div>
+
+          <div class="chart-area">
+            <div class="orbit-chip">Dashboard em tempo real</div>
+            <div class="bars">
+              <span class="bar" style="--h: 38%; --d: .1s"></span>
+              <span class="bar" style="--h: 68%; --d: .2s"></span>
+              <span class="bar" style="--h: 46%; --d: .3s"></span>
+              <span class="bar" style="--h: 82%; --d: .4s"></span>
+              <span class="bar" style="--h: 58%; --d: .5s"></span>
+              <span class="bar" style="--h: 92%; --d: .6s"></span>
+              <span class="bar" style="--h: 74%; --d: .7s"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page reveal" id="solucoes">
+      <div class="section-head">
+        <h2>Sistemas que não parecem improviso. Parecem produto.</h2>
+        <p>Da ideia inicial ao painel administrativo, cada tela é pensada para ser útil, bonita, responsiva e preparada para crescer junto com o negócio.</p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <ion-icon name="business-outline"></ion-icon>
+          <h3>SaaS multiempresa</h3>
+          <p>Crie um sistema onde várias empresas usam a mesma plataforma, cada uma com seus dados, usuários, planos, permissões e área administrativa.</p>
+        </article>
+
+        <article class="card">
+          <ion-icon name="phone-portrait-outline"></ion-icon>
+          <h3>PWA com cara de app</h3>
+          <p>Seu sistema pode ser instalado na tela inicial do celular, abrir como aplicativo e entregar uma experiência muito mais profissional ao cliente.</p>
+        </article>
+
+        <article class="card">
+          <ion-icon name="analytics-outline"></ion-icon>
+          <h3>Dashboards e relatórios</h3>
+          <p>Gráficos, indicadores, fluxos e métricas para transformar dados soltos em decisões visuais, rápidas e fáceis de entender.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="page process reveal" id="processo">
+      <div class="phone-pwa">
+        <div class="phone-screen">
+          <div class="notch"></div>
+          <div class="app-card"><strong>Raud Labs</strong><br><small style="color: var(--muted);">Sistema instalado como app</small></div>
+          <div class="app-card"><strong>Pedidos, clientes e relatórios</strong><br><small style="color: var(--muted);">Tudo acessível pelo celular</small></div>
+          <div class="app-card"><strong>Gestão em tempo real</strong><br><small style="color: var(--muted);">Painéis responsivos e seguros</small></div>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="section-head" style="margin-bottom: 8px;">
+          <h2>Como seu sistema sai do papel.</h2>
+        </div>
+
+        <article class="step">
+          <div class="step-number">01</div>
+          <div>
+            <h3>Mapeamento do negócio</h3>
+            <p>Entendemos seus processos, telas necessárias, tipos de usuários, permissões, relatórios e o problema real que o software precisa resolver.</p>
+          </div>
+        </article>
+
+        <article class="step">
+          <div class="step-number">02</div>
+          <div>
+            <h3>Arquitetura personalizada</h3>
+            <p>Planejamos módulos, banco de dados, fluxos, integrações, regras, painel administrativo e estrutura SaaS, caso o produto precise vender acesso para outras empresas.</p>
+          </div>
+        </article>
+
+        <article class="step">
+          <div class="step-number">03</div>
+          <div>
+            <h3>Interface premium</h3>
+            <p>Criamos uma experiência visual moderna, responsiva e marcante, para que o cliente sinta que está usando uma solução profissional.</p>
+          </div>
+        </article>
+
+        <article class="step">
+          <div class="step-number">04</div>
+          <div>
+            <h3>Entrega e evolução</h3>
+            <p>Depois da primeira versão, o sistema pode evoluir com novas funções, automações, dashboards, integrações e melhorias de performance.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="page reveal" id="projetos">
+      <div class="section-head">
+        <h2>Projetos que mostram o nível da entrega.</h2>
+        <p>Espaço para destacar sistemas reais criados pela Raud Labs e direcionar o cliente para uma página com detalhes de cada solução.</p>
+      </div>
+
+      <div class="projects-showcase">
+        <article class="project">
+          <span>SaaS Fitness</span>
+          <h3>RaudTraining</h3>
+          <p>Gestão para academias e personal trainers com alunos, treinos, métricas e experiência responsiva.</p>
+        </article>
+
+        <article class="project">
+          <span>Aprovação Criativa</span>
+          <h3>ApprovePost</h3>
+          <p>Fluxo profissional para aprovação de postagens entre agência, designer e cliente.</p>
+        </article>
+
+        <article class="project">
+          <span>Helpdesk</span>
+          <h3>RDesk</h3>
+          <p>Gestão de chamados, solicitações internas e atendimento organizado entre setores.</p>
+        </article>
+
+        <article class="project">
+          <span>ERP Fiscal</span>
+          <h3>RCore</h3>
+          <p>Controle empresarial com módulos financeiros, estoque, fiscal, vendas e auditoria.</p>
+        </article>
+      </div>
+
+      <div style="margin-top: 24px; display: flex; justify-content: center;">
+        <a class="btn btn-primary" href="https://raudineyfarias.github.io/raudiney.projetos/index.html"><ion-icon name="rocket-outline"></ion-icon> Acessar meus projetos</a>
+      </div>
+    </section>
+
+    <section class="page contact reveal" id="contato">
+      <div class="contact-box">
+        <div>
+          <h2>Transforme sua operação em um software de verdade.</h2>
+          <p>
+            Um sistema personalizado pode centralizar processos, reduzir retrabalho, impressionar clientes e abrir caminho para vender sua própria plataforma como SaaS.
+          </p>
+        </div>
+
+        <div class="contact-info">
+          <div class="info-line"><ion-icon name="call-outline"></ion-icon> (83) 99848-0659</div>
+          <div class="info-line"><ion-icon name="logo-instagram"></ion-icon> @raudlabs</div>
+          <div class="info-line"><ion-icon name="person-outline"></ion-icon> Raudiney Farias</div>
+          <a class="btn btn-primary" href="https://wa.me/5583998480659" target="_blank" rel="noopener"><ion-icon name="logo-whatsapp"></ion-icon> Chamar no WhatsApp</a>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <!-- ===== Menu circular (botão topo com margem segura) ===== -->
-  <div class="orb" id="orb" aria-label="Menu rápido">
-    <div class="orb-tip" id="orbTip">Menu</div>
-
-    <div class="ring" aria-hidden="true">
-    <button class="orb-item" data-go="#contato" title="Contato" aria-label="Contato">
-      <svg viewBox="0 0 24 24" fill="none">
-        <path d="M4 5h16v14H4V5z" stroke="rgba(234,240,255,.9)" stroke-width="2" stroke-linejoin="round"/>
-        <path d="M4 7l8 6 8-6" stroke="rgba(234,240,255,.9)" stroke-width="2" stroke-linejoin="round"/>
-      </svg>
-    </button>
-
-      <button class="orb-item" data-go="#beneficios" title="Benefícios" aria-label="Benefícios">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M7 12l3 3 7-7" stroke="rgba(234,240,255,.9)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-
-      <button class="orb-item" data-go="#telas" title="Telas" aria-label="Telas">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M4 6h16v12H4V6z" stroke="rgba(234,240,255,.9)" stroke-width="2" stroke-linejoin="round"/>
-          <path d="M8 10h8M8 14h6" stroke="rgba(234,240,255,.9)" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </button>
-
-      <button class="orb-item" data-go="#planos" title="Planos" aria-label="Planos">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M12 2l2.7 5.6 6.2.9-4.5 4.4 1.1 6.1L12 16.9 6.5 19l1.1-6.1L3.1 8.5l6.2-.9L12 2z" stroke="rgba(234,240,255,.9)" stroke-width="1.8" stroke-linejoin="round"/>
-        </svg>
-      </button>
-
-      <button class="orb-item" data-go="#tabela" title="Tabela" aria-label="Tabela">
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M4 6h16M4 12h16M4 18h16" stroke="rgba(234,240,255,.9)" stroke-width="2" stroke-linecap="round"/>
-          <path d="M8 6v12M16 6v12" stroke="rgba(234,240,255,.9)" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </button>
-    </div>
-
-    <div class="orb-core" id="orbCore" role="button" tabindex="0" aria-label="Abrir menu">
-      <img src="logo_gif.gif" alt="Logo" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=&quot;font-weight:950;letter-spacing:-.02em&quot;>R</span>';">
-    </div>
-  </div>
-
-  <!-- ===== Lightbox ===== -->
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <div class="lightbox-card" role="dialog" aria-modal="true" aria-label="Visualização ampliada">
-      <div class="lightbox-top">
-        <b id="lbTitle">Tela</b>
-        <button class="xbtn" id="lbClose" type="button">Fechar</button>
-      </div>
-      <img id="lbImg" src="" alt="Imagem ampliada">
-    </div>
-  </div>
+  <nav class="nav-shell" aria-label="Menu principal">
+    <ul>
+      <li class="active"><a href="#inicio" aria-label="Início"><ion-icon name="home-outline"></ion-icon></a></li>
+      <li><a href="#solucoes" aria-label="Soluções"><ion-icon name="planet-outline"></ion-icon></a></li>
+      <li><a href="#processo" aria-label="Processo"><ion-icon name="git-branch-outline"></ion-icon></a></li>
+      <li><a href="#projetos" aria-label="Projetos"><ion-icon name="albums-outline"></ion-icon></a></li>
+      <li><a href="#contato" aria-label="Contato"><ion-icon name="chatbubbles-outline"></ion-icon></a></li>
+      <div class="indicator"></div>
+    </ul>
+  </nav>
 
   <script>
-    const $ = (q, el=document) => el.querySelector(q);
-    const $$ = (q, el=document) => Array.from(el.querySelectorAll(q));
+    const navItems = document.querySelectorAll('.nav-shell li');
+    const sections = document.querySelectorAll('section[id]');
+    const reveals = document.querySelectorAll('.reveal');
+    const counters = document.querySelectorAll('[data-counter]');
 
-    // ===== Reveal on scroll
-    const obs = new IntersectionObserver((entries)=>{
-      entries.forEach(en=>{
-        if(en.isIntersecting){
-          en.target.classList.add("in");
-          obs.unobserve(en.target);
+    navItems.forEach((item) => {
+      item.addEventListener('click', () => {
+        navItems.forEach((el) => el.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
         }
       });
-    }, {threshold: .14});
-    $$(".reveal").forEach(el=> obs.observe(el));
+    }, { threshold: 0.18 });
 
-    // ===== Scroll buttons
-    $$("[data-scroll]").forEach(btn=>{
-      btn.addEventListener("click", () => {
-        const sel = btn.getAttribute("data-scroll");
-        const target = $(sel);
-        if(target) target.scrollIntoView({behavior:"smooth", block:"start"});
+    reveals.forEach((el) => revealObserver.observe(el));
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navItems.forEach((item) => {
+            const link = item.querySelector('a');
+            item.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+          });
+        }
       });
-    });
+    }, { threshold: 0.55 });
 
-    // ===== Circular menu positioning (safe: never cuts)
-    const orb = $("#orb");
-    const orbCore = $("#orbCore");
-    const orbTip = $("#orbTip");
-    const items = $$(".orb-item", orb);
+    sections.forEach((section) => sectionObserver.observe(section));
 
-    function positionItems(){
-      // Spread in an arc away from nearest edges:
-      // On desktop (top-right): spread mostly left/down
-      // On mobile (bottom-right): spread mostly left/up
-      const isMobile = window.matchMedia("(max-width: 720px)").matches;
-      const radius = parseFloat(getComputedStyle(orb).getPropertyValue("--radius")) || 88;
+    function animateCounter(counter) {
+      const target = Number(counter.dataset.counter);
+      let current = 0;
+      const increment = Math.max(1, Math.ceil(target / 70));
 
-      const startAngle = isMobile ? 210 : 135; // degrees
-      const spread = isMobile ? 160 : 170;     // degrees
-      const count = items.length;
-      const step = (count > 1) ? (spread / (count - 1)) : 0;
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        counter.textContent = current + (target === 63 ? '%' : '+');
+      }, 22);
+    }
 
-      items.forEach((item, i) => {
-        const a = (startAngle - spread/2) + i*step;
-        const rad = a * Math.PI / 180;
-        const x = Math.cos(rad) * radius;
-        const y = Math.sin(rad) * radius;
-        item.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !entry.target.dataset.started) {
+          entry.target.dataset.started = 'true';
+          animateCounter(entry.target);
+        }
       });
-    }
-    positionItems();
-    window.addEventListener("resize", positionItems);
+    }, { threshold: 1 });
 
-    function toggleOrb(force){
-      const willOpen = (typeof force === "boolean") ? force : !orb.classList.contains("open");
-      orb.classList.toggle("open", willOpen);
-      orbTip.textContent = willOpen ? "Fechar" : "Menu";
-    }
-    orbCore.addEventListener("click", ()=> toggleOrb());
-    orbCore.addEventListener("keydown", (e)=>{
-      if(e.key === "Enter" || e.key === " "){
-        e.preventDefault(); toggleOrb();
-      }
+    counters.forEach((counter) => counterObserver.observe(counter));
+
+    document.addEventListener('mousemove', (event) => {
+      const panel = document.querySelector('.hero-panel');
+      if (!panel) return;
+      const x = (window.innerWidth / 2 - event.clientX) / 45;
+      const y = (window.innerHeight / 2 - event.clientY) / 45;
+      panel.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
     });
-
-    // click outside closes
-    document.addEventListener("click", (e)=>{
-      if(!orb.contains(e.target) && orb.classList.contains("open")){
-        toggleOrb(false);
-      }
-    });
-
-    // item -> go
-    items.forEach(item=>{
-      item.addEventListener("click", ()=>{
-        const sel = item.getAttribute("data-go");
-        const target = $(sel);
-        if(target) target.scrollIntoView({behavior:"smooth", block:"start"});
-        toggleOrb(false);
-      });
-    });
-
-    // ===== Screens: thumbs -> viewer + hero preview sync
-    const thumbs = $$(".thumb");
-    const viewerTitle = $("#viewerTitle");
-    const screenBadge = $("#screenBadge");
-    const screenPath  = $("#screenPath");
-    const screenImg   = $("#screenImg");
-
-    const heroBadge = $("#heroBadge");
-    const heroPath = $("#heroPath");
-    const heroImg  = $("#heroImg");
-
-    function setFromThumb(th){
-      thumbs.forEach(t=>t.classList.remove("active"));
-      th.classList.add("active");
-
-      const title = th.dataset.title || "Tela";
-      const badge = th.dataset.badge || "Tela";
-      const path  = th.dataset.path  || "/";
-      const img   = th.dataset.img   || "/linha_do_tempo.png";
-
-      viewerTitle.textContent = title;
-      screenBadge.textContent = badge;
-      screenPath.textContent  = path;
-      screenImg.src = img;
-      screenImg.alt = `Print: ${title}`;
-
-      // hero sync
-      heroBadge.textContent = title;
-      heroPath.textContent = path;
-      heroImg.src = img;
-      heroImg.alt = `Print: ${title}`;
-    }
-    thumbs.forEach(th => th.addEventListener("click", ()=> setFromThumb(th)));
-
-    // ===== Lightbox
-    const lightbox = $("#lightbox");
-    const lbTitle = $("#lbTitle");
-    const lbImg = $("#lbImg");
-    const lbClose = $("#lbClose");
-
-    function openLightbox(title, src){
-      lbTitle.textContent = title;
-      lbImg.src = src;
-      lightbox.classList.add("open");
-      lightbox.setAttribute("aria-hidden","false");
-    }
-    function closeLightbox(){
-      lightbox.classList.remove("open");
-      lightbox.setAttribute("aria-hidden","true");
-      lbImg.src = "";
-    }
-
-    $("#frame").addEventListener("click", ()=>{
-      openLightbox(viewerTitle.textContent, screenImg.src);
-    });
-    $("#heroShot").addEventListener("click", ()=>{
-      openLightbox(heroBadge.textContent, heroImg.src);
-    });
-
-    lbClose.addEventListener("click", closeLightbox);
-    lightbox.addEventListener("click", (e)=>{
-      if(e.target === lightbox) closeLightbox();
-    });
-    document.addEventListener("keydown", (e)=>{
-      if(e.key === "Escape" && lightbox.classList.contains("open")) closeLightbox();
-    });
-
-    // ===== Start state (keeps your order preference)
-    // Ensure the first click order is Planos -> Login -> Dashboard -> Treinos
-    // (currently active is Login; you can set Planos by uncommenting below)
-    // setFromThumb($$(".thumb")[0]);
-
-
-    // ===== Contato: copiar e-mail / link
-const copyEmailBtn = document.getElementById("copyEmail");
-if (copyEmailBtn){
-  copyEmailBtn.addEventListener("click", async ()=>{
-    try{
-      await navigator.clipboard.writeText("raudsistemas@gmail.com");
-      copyEmailBtn.textContent = "Copiado ✓";
-      setTimeout(()=> copyEmailBtn.textContent = "Copiar e-mail", 1200);
-    }catch{
-      alert("Não consegui copiar automaticamente. Copie manualmente: raudsistemas@gmail.com");
-    }
-  });
-}
-
-const copyInstaBtn = document.getElementById("copyInsta");
-if (copyInstaBtn){
-  copyInstaBtn.addEventListener("click", async ()=>{
-    const link = "https://www.instagram.com/raudsistemas/";
-    try{
-      await navigator.clipboard.writeText(link);
-      copyInstaBtn.textContent = "Copiado ✓";
-      setTimeout(()=> copyInstaBtn.textContent = "Copiar link", 1200);
-    }catch{
-      alert("Não consegui copiar automaticamente. Copie manualmente: " + link);
-    }
-  });
-}
-
-// ===== Contato: copiar link WhatsApp
-const copyWppBtn = document.getElementById("copyWpp");
-if (copyWppBtn){
-  copyWppBtn.addEventListener("click", async ()=>{
-    const link = "https://wa.me/558398480659?text=Ol%C3%A1%21%20Quero%20saber%20mais%20sobre%20o%20RaudTraining.";
-    try{
-      await navigator.clipboard.writeText(link);
-      copyWppBtn.textContent = "Copiado ✓";
-      setTimeout(()=> copyWppBtn.textContent = "Copiar link", 1200);
-    }catch{
-      alert("Não consegui copiar automaticamente. Copie manualmente: " + link);
-    }
-  });
-}
   </script>
 </body>
 </html>
-
-
-
